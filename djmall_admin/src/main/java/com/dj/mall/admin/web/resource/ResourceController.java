@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 资源处理类
+ */
 @RequestMapping("/auth/resource/")
 @RestController
 public class ResourceController {
@@ -38,6 +41,11 @@ public class ResourceController {
         return new ResultModel<>().success("新增成功");
     }
 
+    /**
+     * 修改资源
+     * @param resourceVoResp
+     * @return
+     */
     @RequestMapping("updateResource")
     public ResultModel<Object> updateResource(ResourceVoResp resourceVoResp){
         resourceService.update(DozerUtil.map(resourceVoResp, ResourceDTO.class));

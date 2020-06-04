@@ -39,6 +39,14 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
      */
     @Override
     public void save(ResourceDTO resourceDTO) throws BusinessException {
+        QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("p_id",resourceDTO.getPId()).or()
+                .eq("resource_name",resourceDTO.getResourceName()).or()
+                .eq("url",resourceDTO.getUrl())
+        ;
+        if (getOne(queryWrapper) != null){
+            throw new BusinessException("资源重复");
+        }
         save(DozerUtil.map(resourceDTO, Resource.class));
     }
 
@@ -64,6 +72,12 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         removeByIds(ids);
     }
 
+    /**
+     * 通过父级id查询用户
+     * @param id
+     * @return
+     * @throws BusinessException
+     */
     @Override
     public List<ResourceDTO> findByParentId(Integer id) throws BusinessException {
         QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
@@ -71,6 +85,12 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         return DozerUtil.mapList(super.list(queryWrapper), ResourceDTO.class);
     }
 
+    /**
+     * 通过id查询用户
+     * @param resourceId
+     * @return
+     * @throws BusinessException
+     */
     @Override
     public ResourceDTO findById(Integer resourceId) throws BusinessException {
         return DozerUtil.map(this.getById(resourceId),ResourceDTO.class);

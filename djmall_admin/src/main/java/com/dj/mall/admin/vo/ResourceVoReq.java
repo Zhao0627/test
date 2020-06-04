@@ -1,14 +1,13 @@
-package com.dj.mall.auth.dto.resource;
+package com.dj.mall.admin.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * 资源DTO
+ * 资源管理Vo类
  */
 @Data
-public class ResourceDTO implements Serializable {
+public class ResourceVoReq {
+
     /**
      * 资源id
      */
@@ -38,4 +37,7 @@ public class ResourceDTO implements Serializable {
      * 资源类型1、菜单，2、按钮
      */
     private Integer resourceType;
+
+
+
 }

@@ -6,6 +6,9 @@ import com.dj.mall.model.base.BusinessException;
 
 import java.util.List;
 
+/**
+ * 角色信息接口
+ */
 public interface RoleService {
     /**
      * 查询所有角色

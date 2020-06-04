@@ -8,6 +8,9 @@ import org.dozer.Mapping;
 
 import java.io.Serializable;
 
+/**
+ * 资源实体类
+ */
 @Data
 @TableName("djmall_auth_resource")
 public class Resource implements Serializable {

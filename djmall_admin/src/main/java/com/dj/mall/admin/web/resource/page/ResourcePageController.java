@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * 资源跳转处理类
+ */
 @RequestMapping("/auth/resource/")
 @Controller
 public class ResourcePageController {
@@ -18,11 +21,20 @@ public class ResourcePageController {
     @Reference
     private ResourceService resourceService;
 
+    /**
+     * 去展示
+     * @return
+     */
     @RequestMapping("toShow")
     public String toShow(){
         return "resource/show";
     }
 
+    /**
+     * 去新增
+     * @param model
+     * @return
+     */
     @RequestMapping("toSaveResource")
     public String toSaveResource(Model model){
         List<ResourceDTO> all = resourceService.findAll();
@@ -30,6 +42,12 @@ public class ResourcePageController {
         return "resource/insert";
     }
 
+    /**
+     * 去修改
+     * @param model
+     * @param resourceId
+     * @return
+     */
     @RequestMapping("toUpdateResource")
     public String toUpdateResource(Model model, Integer resourceId){
         List<ResourceDTO> all = resourceService.findAll();

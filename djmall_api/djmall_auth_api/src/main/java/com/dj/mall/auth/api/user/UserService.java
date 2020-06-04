@@ -4,6 +4,9 @@ package com.dj.mall.auth.api.user;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.BusinessException;
 
+/**
+ * 用户信息接口
+ */
 public interface UserService {
     /**
      * 根据用户名获取信息（登录）
