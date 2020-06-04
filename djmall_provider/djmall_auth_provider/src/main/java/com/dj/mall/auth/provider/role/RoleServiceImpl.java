@@ -1,6 +1,7 @@
 package com.dj.mall.auth.provider.role;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.dto.role.RoleDTO;
@@ -48,6 +49,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      */
     @Override
     public void save(RoleDTO roleDTO) throws BusinessException {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_name",roleDTO.getRoleName());
+        Role role = getOne(queryWrapper);
+        if (role != null){
+            throw new BusinessException("新增重复");
+        }
         save(DozerUtil.map(roleDTO, Role.class));
     }
 

@@ -19,6 +19,7 @@
 	}
 	
 	function insert(){
+        var index = layer.load();
         $.post("<%=request.getContextPath()%>/auth/resource/updateResource",
         		$("#fm").serialize(),
         		function(data){
@@ -69,6 +70,7 @@
 		</c:forEach>
 	</select>
 	</p>
+    <input type="hidden" name="resourceId" value="${resource.resourceId}">
 	<input type="button" value="提交" onclick="insert()" /> 
 </form>
 </body>

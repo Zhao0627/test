@@ -18,11 +18,11 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/zTree_v3/js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript">
 	var setting={
-        check:{
+/*        check:{
             enable: true,
             chkStyle: "checkbox",
             chkboxType: { "Y" : "s", "N" : "s" }
-        },
+        },*/
 		view:{
 			addHoverDom:addHoverDom,
 			removeHoverDom: removeHoverDom,
@@ -133,12 +133,6 @@
     function removeHoverDom(treeId, treeNode) {
 		$("#addBtn_"+treeNode.tId).unbind().remove();
 	};
-/* 	
- 	var treeObj = $.fn.zTree.getZTreeObj("tree");
-	var nodes = treeObj.getSelectedNodes();
-	if (nodes.length>0) {
-		treeObj.reAsyncChildNodes(nodes[0], "refresh");
-	} */
 	
 	function save(){
         layer.open({
@@ -152,10 +146,31 @@
 	}
 	
 	function del() {
-        /*window.location.href="<%=request.getContextPath()%>/auth/resource/deleteResource?resourceId="+;*/
+        var treeObj = $.fn.zTree.getZTreeObj("ztree");
+        var nodes = treeObj.getSelectedNodes();
+        $.post("<%=request.getContextPath()%>/auth/resource/deleteResource",
+            {"resourceId":nodes[0].resourceId},
+            function(data){
+                if (data.code==200) {
+                    layer.msg(data.msg)
+                    window.location.href="<%=request.getContextPath()%>/auth/resource/toShow";
+                    return true;
+                }
+                return false;
+            })
     }
 
 	function update() {
+        var treeObj = $.fn.zTree.getZTreeObj("ztree");
+        var nodes = treeObj.getSelectedNodes();
+        layer.open({
+            type: 2,
+            title: '修改',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['380px', '90%'],
+            content: "<%=request.getContextPath()%>/auth/resource/toUpdateResource?resourceId="+nodes[0].resourceId //iframe的url
+        });
         /*window.location.href="<%=request.getContextPath()%>/auth/resource/deleteResource?resourceId="+;*/
     }
 </script>

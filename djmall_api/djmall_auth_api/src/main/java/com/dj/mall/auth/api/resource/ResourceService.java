@@ -45,4 +45,6 @@ public interface ResourceService {
      * @throws BusinessException
      */
     List<ResourceDTO> findByParentId(Integer id)throws BusinessException;
+
+    ResourceDTO findById(Integer resourceId) throws BusinessException;
 }

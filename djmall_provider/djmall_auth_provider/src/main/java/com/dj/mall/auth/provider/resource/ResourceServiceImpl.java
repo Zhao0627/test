@@ -71,4 +71,9 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         return DozerUtil.mapList(super.list(queryWrapper), ResourceDTO.class);
     }
 
+    @Override
+    public ResourceDTO findById(Integer resourceId) throws BusinessException {
+        return DozerUtil.map(this.getById(resourceId),ResourceDTO.class);
+    }
+
 }

@@ -14,24 +14,17 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.all.js"></script>
     <script type="text/javascript">
             function add() {
-/*                $.post("<%=request.getContextPath()%>/auth/role/findRoleById",
-                    $("#fm").serialize(),
-                    function (data) {
-                        if(data.code == 200){
-
-                        }
-                    })*/
-
                 var index = layer.load();
                 $.post("<%=request.getContextPath()%>/auth/role/saveRole",
                     $("#fm").serialize(),
                     function (data) {
-                        if(data.code == 200){
+                        alert(data)
+                        /*if(data.code == 200){
                             layer.close(index);
                             layer.msg(data.msg, {icon: 1}, function(){
                                 parent.location.href="<%=request.getContextPath()%>/auth/role/toShow"
                             });
-                        }
+                        }*/
                     })
             }
     </script>

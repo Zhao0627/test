@@ -8,6 +8,7 @@ import com.dj.mall.auth.dto.role.RoleDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +50,7 @@ public class RoleController {
      */
     @RequestMapping("saveRole")
     public ResultModel<Object> saveRole(RoleVoResp roleVoResp){
+        Assert.hasLength(roleVoResp.getRoleName(), "角色名不能为空");
         roleService.save(DozerUtil.map(roleVoResp, RoleDTO.class));
         return new ResultModel<>().success("新增成功");
     }
