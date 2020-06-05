@@ -9,15 +9,6 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.all.js"></script>
 <script type="text/javascript">
-	function yesOrNo(Obj){
-		if (Obj==1) {
-			$("#pId").hide();
-		}
-		if (Obj==0) {
-			$("#pId").show();
-		}
-	}
-	
 	function insert(){
         var index = layer.load();
         $.post("<%=request.getContextPath()%>/auth/resource/updateResource",
@@ -54,22 +45,6 @@
             <option value="2">按钮</option>
         </select>
     </p>
-
-	<p>
-	是否上级
-	<label for="yes">是</label>
-	<input type="radio" id="yes" name="yes" onclick="yesOrNo(1)" >
-	<label for="no">否</label>
-	<input type="radio" id="no" name="yes" onclick="yesOrNo(0)" >
-	</p>
-	<p>
-	<select name="pId" hidden="" id="pId">
-		<option value="0">请选择父级</option>
-		<c:forEach items="${resourceList}" var="resource">
-			<option value="${resource.resourceId}">${resource.resourceName}</option>
-		</c:forEach>
-	</select>
-	</p>
     <input type="hidden" name="resourceId" value="${resource.resourceId}">
 	<input type="button" value="提交" onclick="insert()" /> 
 </form>

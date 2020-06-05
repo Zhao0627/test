@@ -1,7 +1,13 @@
 package com.dj.mall.admin.web.user.page;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.auth.api.role.RoleService;
+import com.dj.mall.auth.dto.role.RoleDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 用户跳转页面处理类
@@ -9,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/auth/user/")
 @Controller
 public class UserPageController {
+
+    @Reference
+    private RoleService roleService;
 
     /**
      * 去登陆
@@ -41,9 +50,11 @@ public class UserPageController {
      * 去新增用户
      * @return
      */
-    @RequestMapping("toRegister")
-    public String toRegister(){
-        return "user/register";
+    @RequestMapping("toInsert")
+    public String toRegister(Model model){
+        List<RoleDTO> role = roleService.findRoleAll();
+        model.addAttribute("role",role);
+        return "user/insert";
     }
 
     /**

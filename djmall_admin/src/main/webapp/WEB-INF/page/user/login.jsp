@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/admin.css" media="all">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/login.css" media="all">
+
 </head>
 <body>
 <form id="fm">
@@ -21,7 +22,7 @@
                 <div style="color: green;font-size: 45px;" align="left"><b>©DJ-mall</b></div><br/><br>
                 <div class="layui-form-item">
                     <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-                    <input type="text" name="userName" id="LAY-user-login-username" lay-verify="required" placeholder="用户名/手机号/邮箱" class="layui-input">
+                    <input type="text" name="userName" id="LAY-user-login-username" lay-verify="required" placeholder="用户名/手机号/邮箱" onblur="getUserSalt(this.value)" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
@@ -34,13 +35,14 @@
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" type="button" onclick="login()" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
                 </div>
+                <input type="hidden" name="salt" id="salt" >
                 <div class="layui-trans layui-form-item layadmin-user-login-other">
                     <label>社交账号登入</label>
                     <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
                     <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                     <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-                    <a href="<%=request.getContextPath()%>/user/toAdd" class="layadmin-user-jump-change layadmin-link">还没有账号？免费注册</a>
+                    <a href="<%=request.getContextPath()%>/auth/user/toInsert" class="layadmin-user-jump-change layadmin-link">还没有账号？免费注册</a>
                 </div>
             </div>
         </div>
@@ -59,12 +61,27 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.all.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/js/md5-min.js"></script>
 <script type="text/javascript">
     //判断当前窗口路径与加载路径是否一致。
     if(window.top.document.URL != document.URL){
         //将窗口路径与加载路径同步
         window.top.location = document.URL;
     }
+
+
+    function getUserSalt(userName){
+        if(userName != ""){
+            $.post("<%=request.getContextPath()%>/auth/user/getUserSalt",
+                {"userName":userName},
+                function(data){
+                    if(data.code == 200){
+                        $("#salt").val(data.data);
+                    }
+                })
+        }
+    }
+
     function login(){
         var bb = $("#LAY-user-login-password").val()=='';
         var aa = $("#LAY-user-login-username").val()=='';
@@ -78,6 +95,11 @@
             });
             return;
         }
+        var userPwd = $("#LAY-user-login-password").val();
+        var pwd = md5(userPwd);
+        var salt =  $("#salt").val();
+        var newPwd = md5(pwd + salt);
+        $("#LAY-user-login-password").val(newPwd);
         $.post("<%=request.getContextPath()%>/auth/user/login",
             $("#fm").serialize(),
             function(data){
@@ -87,7 +109,7 @@
                         ,icon: 16
                         ,time: 1500
                     }, function(){
-                        window.location.href="<%=request.getContextPath()%>/user/toLogin";
+                        window.location.href="<%=request.getContextPath()%>/auth/user/toLogin";
                     });
                 }
                 else{

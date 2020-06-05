@@ -46,5 +46,11 @@ public interface ResourceService {
      */
     List<ResourceDTO> findByParentId(Integer id)throws BusinessException;
 
+    /**
+     * 通过id查找
+     * @param resourceId
+     * @return
+     * @throws BusinessException
+     */
     ResourceDTO findById(Integer resourceId) throws BusinessException;
 }

@@ -135,21 +135,28 @@
 	};
 	
 	function save(){
+        var treeObj = $.fn.zTree.getZTreeObj("ztree");
+        var nodes = treeObj.getSelectedNodes();
         layer.open({
             type: 2,
             title: '新增',
             shadeClose: true,
             shade: 0.8,
             area: ['380px', '90%'],
-            content: "<%=request.getContextPath()%>/auth/resource/toSaveResource" //iframe的url
+            content: "<%=request.getContextPath()%>/auth/resource/toSaveResource?resourceId="+nodes[0].resourceId //iframe的url
         });
 	}
 	
 	function del() {
         var treeObj = $.fn.zTree.getZTreeObj("ztree");
         var nodes = treeObj.getSelectedNodes();
+        if (nodes.length<=0){
+            layer.msg("选择删除");
+            return;
+        }
+        var resourceId=nodes[0].resourceId;
         $.post("<%=request.getContextPath()%>/auth/resource/deleteResource",
-            {"resourceId":nodes[0].resourceId},
+            {"resourceId":resourceId},
             function(data){
                 if (data.code==200) {
                     layer.msg(data.msg)
@@ -161,8 +168,13 @@
     }
 
 	function update() {
+
         var treeObj = $.fn.zTree.getZTreeObj("ztree");
         var nodes = treeObj.getSelectedNodes();
+        if (nodes.length<=0){
+            layer.msg("选择修改");
+            return;
+        }
         layer.open({
             type: 2,
             title: '修改',

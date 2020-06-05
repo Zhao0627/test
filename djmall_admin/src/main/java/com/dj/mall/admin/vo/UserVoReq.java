@@ -38,4 +38,20 @@ public class UserVoReq {
      */
     private String salt;
 
+    /**
+     * 昵称
+     */
+    private String nickName;
+
+    /**
+     * 用户性别
+     */
+    private Integer userSex;
+
+    /**
+     * 用户级别
+     */
+    private Integer userLevel;
+
+
 }

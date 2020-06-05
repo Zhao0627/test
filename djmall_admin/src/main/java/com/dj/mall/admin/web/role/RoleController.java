@@ -29,9 +29,9 @@ public class RoleController {
      * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(){
+    public ResultModel<Object> show() throws Exception{
         List<RoleDTO> roleAll = roleService.findRoleAll();
-        return new ResultModel<>().success(roleAll);
+        return new ResultModel<>().success(DozerUtil.mapList(roleAll, RoleVoResp.class));
     }
 
     /**
@@ -39,7 +39,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("updateRole")
-    public ResultModel<Object> updateRole(RoleVoResp roleVoResp){
+    public ResultModel<Object> updateRole(RoleVoResp roleVoResp) throws Exception{
         roleService.update(DozerUtil.map(roleVoResp, RoleDTO.class));
         return new ResultModel<>().success("修改成功");
     }
@@ -49,7 +49,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("saveRole")
-    public ResultModel<Object> saveRole(RoleVoResp roleVoResp){
+    public ResultModel<Object> saveRole(RoleVoResp roleVoResp) throws Exception{
         Assert.hasLength(roleVoResp.getRoleName(), "角色名不能为空");
         roleService.save(DozerUtil.map(roleVoResp, RoleDTO.class));
         return new ResultModel<>().success("新增成功");
@@ -60,7 +60,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("deleteRole")
-    public ResultModel<Object> deleteRole(Integer id){
+    public ResultModel<Object> deleteRole(Integer id) throws Exception{
         roleService.delete(id);
         return new ResultModel<>().success("删除成功");
     }

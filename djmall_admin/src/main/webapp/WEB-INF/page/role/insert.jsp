@@ -18,13 +18,14 @@
                 $.post("<%=request.getContextPath()%>/auth/role/saveRole",
                     $("#fm").serialize(),
                     function (data) {
-                        alert(data)
-                        /*if(data.code == 200){
-                            layer.close(index);
-                            layer.msg(data.msg, {icon: 1}, function(){
-                                parent.location.href="<%=request.getContextPath()%>/auth/role/toShow"
-                            });
-                        }*/
+                        layer.close(index);
+                        if (data.code != 200) {
+                            layer.msg(data.msg, {icon: 5});
+                            return;
+                        }
+                        layer.msg(data.msg, {icon: 6}, function(){
+                            parent.location.href="<%=request.getContextPath()%>/auth/role/toShow"
+                        });
                     })
             }
     </script>

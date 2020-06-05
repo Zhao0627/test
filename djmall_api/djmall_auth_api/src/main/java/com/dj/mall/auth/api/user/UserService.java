@@ -14,6 +14,20 @@ public interface UserService {
      * @return
      * @throws BusinessException
      */
-    UserDTO getUserByUserName(UserDTO userDTO) throws BusinessException;
+    UserDTO getUserByUserName(UserDTO userDTO) throws Exception;
+
+    /**
+     * 注册去重
+     * @param userDTO
+     * @return
+     * @throws BusinessException
+     */
+    UserDTO findUserNamePhoneEmail(UserDTO userDTO)throws BusinessException;
+
+    /**
+     * 注册
+     * @param userDTO
+     */
+    void insertUser(UserDTO userDTO) throws Exception;
 
 }

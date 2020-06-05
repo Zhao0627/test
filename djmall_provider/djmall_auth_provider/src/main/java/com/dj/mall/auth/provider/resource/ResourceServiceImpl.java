@@ -40,7 +40,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     @Override
     public void save(ResourceDTO resourceDTO) throws BusinessException {
         QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("p_id",resourceDTO.getPId()).or()
+        queryWrapper.eq("p_id",resourceDTO.getPId())
                 .eq("resource_name",resourceDTO.getResourceName()).or()
                 .eq("url",resourceDTO.getUrl())
         ;

@@ -36,9 +36,10 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toSaveResource")
-    public String toSaveResource(Model model){
-        List<ResourceDTO> all = resourceService.findAll();
-        model.addAttribute("resource",all);
+    public String toSaveResource(Model model, Integer resourceId){
+        ResourceDTO resourceDTO = resourceService.findById(resourceId);
+        model.addAttribute("resourceName",resourceDTO.getResourceName());
+        model.addAttribute("resourceId",resourceId);
         return "resource/insert";
     }
 

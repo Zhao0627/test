@@ -27,7 +27,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("show")
-    public ResultModel<Object> show(){
+    public ResultModel<Object> show() throws Exception{
         return new ResultModel<>().success(resourceService.findAll());
     }
 
@@ -36,7 +36,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("saveResource")
-    public ResultModel<Object> saveResource(ResourceVoResp resourceVoResp){
+    public ResultModel<Object> saveResource(ResourceVoResp resourceVoResp) throws Exception{
         resourceService.save(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("新增成功");
     }
@@ -47,7 +47,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("updateResource")
-    public ResultModel<Object> updateResource(ResourceVoResp resourceVoResp){
+    public ResultModel<Object> updateResource(ResourceVoResp resourceVoResp) throws Exception{
         resourceService.update(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("修改成功");
     }
@@ -58,7 +58,7 @@ public class ResourceController {
      * @param resourceVoResp
      */
     @RequestMapping("deleteResource")
-    public ResultModel<Object> deleteResource(ResourceVoResp resourceVoResp) {
+    public ResultModel<Object> deleteResource(ResourceVoResp resourceVoResp) throws Exception{
         List<Integer> ids = new ArrayList<Integer>();
         ids.add(resourceVoResp.getResourceId());
         getIds(resourceVoResp.getResourceId(), ids);
@@ -73,7 +73,7 @@ public class ResourceController {
      * @param id
      * @param ids
      */
-    public void getIds(Integer id, List<Integer> ids) {
+    public void getIds(Integer id, List<Integer> ids) throws Exception{
         List<ResourceVoResp> resourceVoResp = DozerUtil.mapList(resourceService.findByParentId(id),ResourceVoResp.class);
         if (resourceVoResp != null && resourceVoResp.size() > 0) {
             for (ResourceVoResp resource : resourceVoResp) {

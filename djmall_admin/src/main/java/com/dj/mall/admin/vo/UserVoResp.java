@@ -34,4 +34,24 @@ public class UserVoResp {
      */
     private String userEmail;
 
+    /**
+     * 昵称
+     */
+    private String nickName;
+
+    /**
+     * 密码盐
+     */
+    private String salt;
+
+    /**
+     * 用户性别
+     */
+    private Integer userSex;
+
+    /**
+     * 用户级别
+     */
+    private Integer userLevel;
+
 }
