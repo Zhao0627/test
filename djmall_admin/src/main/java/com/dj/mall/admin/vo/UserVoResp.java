@@ -19,6 +19,7 @@ public class UserVoResp {
      */
     private String userName;
 
+
     /**
      *密码
      */
@@ -50,8 +51,33 @@ public class UserVoResp {
     private Integer userSex;
 
     /**
+     * 用户性别展示
+     */
+    private String userSexShow;
+
+    public void setUserSexShow(String userSexShow) {
+        this.userSexShow = userSexShow;
+    }
+
+    public String getUserSexShow() {
+        if (userSex==1){
+            return userSexShow="男";
+        }
+        return userSexShow="女";
+    }
+
+    /**
      * 用户级别
      */
     private Integer userLevel;
 
+    /**
+     * 用户级别
+     */
+    private String userLevelShow;
+
+    /**
+     * 用户状态 1 未激活 2已激活
+     */
+    private Integer activatedState;
 }

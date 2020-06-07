@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.auth.mapper.role.RoleResourceMapper">
+
+    <delete id="deletBatch">
+        delete from djmall_auth_role_resource where resource_id in
+        <foreach collection="resourceIds" item="resourceIds" separator="," open="(" close=")" >
+            #{resourceIds}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -48,4 +48,14 @@ public class RolePageController {
         return "role/insert";
     }
 
+    /**
+     * 去关联资源
+     * @return
+     */
+    @RequestMapping("toSaveRoleResource")
+    public String toSaveRoleResource(Integer id, Model model){
+        model.addAttribute("id",id);
+        return "role/role_resource";
+    }
+
 }

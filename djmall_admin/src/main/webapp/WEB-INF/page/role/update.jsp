@@ -20,10 +20,12 @@
                 function (data) {
                     if(data.code == 200){
                         layer.close(index);
-                        layer.msg(data.msg, {icon: 1}, function(){
+                        layer.msg(data.msg, {icon: 6}, function(){
                             parent.location.href="<%=request.getContextPath()%>/auth/role/toShow"
                         });
+                        return;
                     }
+                    layer.msg(data.msg,{icon: 5})
                 })
         }
     </script>

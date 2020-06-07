@@ -4,6 +4,8 @@ package com.dj.mall.auth.api.user;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.BusinessException;
 
+import java.util.List;
+
 /**
  * 用户信息接口
  */
@@ -14,7 +16,7 @@ public interface UserService {
      * @return
      * @throws BusinessException
      */
-    UserDTO getUserByUserName(UserDTO userDTO) throws Exception;
+    UserDTO getUserByUserName(UserDTO userDTO) throws BusinessException;
 
     /**
      * 注册去重
@@ -30,4 +32,17 @@ public interface UserService {
      */
     void insertUser(UserDTO userDTO) throws Exception;
 
+    /**
+     * 注册激活修改激活码
+     * @param id
+     * @throws BusinessException
+     */
+    void updateActivatedState(Integer id) throws BusinessException;
+
+    /**
+     * 查询有用户
+     * @param userDTO
+     * @return
+     */
+    List<UserDTO> findUserAll(UserDTO userDTO) throws BusinessException;
 }

@@ -35,7 +35,7 @@
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" type="button" onclick="login()" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
                 </div>
-                <input type="hidden" name="salt" id="salt" >
+                <input type="hidden" name="salt" id="salt" value="">
                 <div class="layui-trans layui-form-item layadmin-user-login-other">
                     <label>社交账号登入</label>
                     <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
@@ -104,7 +104,7 @@
             $("#fm").serialize(),
             function(data){
                 if(data.code!="200") {
-                    layer.msg('密码错误', {
+                    layer.msg(data.msg, {
                         offset: '15px'
                         ,icon: 16
                         ,time: 1500

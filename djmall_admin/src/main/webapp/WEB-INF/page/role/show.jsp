@@ -21,7 +21,7 @@
                         html += "<tr>"
                         html += "<td>"+role.roleId+"</td>"
                         html += "<td>"+role.roleName+"</td>"
-                        html += "<td><input type='button' value='关联资源' onclick='update("+role.roleId+")'/>"
+                        html += "<td><input type='button' value='关联资源' onclick='saveResource("+role.roleId+")'/>"
                         html += "<input type='button' value='编辑' onclick='update("+role.roleId+")'/>"
                         html += "<input type='button' value='删除' onclick='del("+role.roleId+")'/></td>>"
                         html += "</tr>"
@@ -60,6 +60,20 @@
                 shade: 0.8,
                 area: ['380px', '90%'],
                 content: "<%=request.getContextPath() %>/auth/role/toSaveRole" //iframe的url
+            });
+        }
+
+        /*
+        * 关联资源
+        * */
+        function saveResource(id) {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['380px', '90%'],
+                content: "<%=request.getContextPath() %>/auth/role/toSaveRoleResource?id="+id //iframe的url
             });
         }
     </script>

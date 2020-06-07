@@ -62,5 +62,10 @@ public class User implements Serializable {
      */
     private Integer userLevel;
 
+    /**
+     * 邮箱激活状态
+     */
+    private Integer activatedState;
+
 
 }

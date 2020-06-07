@@ -3,6 +3,7 @@ package com.dj.mall.auth.dto.role;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 角色DTO
@@ -19,5 +20,10 @@ public class RoleDTO implements Serializable {
      * 角色名称
      */
     private String roleName;
+
+    /**
+     * 资源ids
+     */
+    private List<Integer> resourceIds;
 
 }

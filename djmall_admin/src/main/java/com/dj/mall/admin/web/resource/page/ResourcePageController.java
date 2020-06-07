@@ -37,9 +37,17 @@ public class ResourcePageController {
      */
     @RequestMapping("toSaveResource")
     public String toSaveResource(Model model, Integer resourceId){
-        ResourceDTO resourceDTO = resourceService.findById(resourceId);
-        model.addAttribute("resourceName",resourceDTO.getResourceName());
-        model.addAttribute("resourceId",resourceId);
+        ResourceVoResp resourceVoResp = new ResourceVoResp();
+        if (resourceId!=0){
+            ResourceDTO resourceDTO = resourceService.findById(resourceId);
+            resourceVoResp.setResourceName(resourceDTO.getResourceName());
+            resourceVoResp.setResourceId(resourceId);
+        }
+        if (resourceId==0){
+            resourceVoResp.setResourceName("暂无上级");
+            resourceVoResp.setResourceId(resourceId);
+        }
+        model.addAttribute("resource",resourceVoResp);
         return "resource/insert";
     }
 

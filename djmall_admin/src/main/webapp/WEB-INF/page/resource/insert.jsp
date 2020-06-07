@@ -31,9 +31,9 @@
 </head>
 <body>
 <form id="fm">
-    <input type="hidden" value="${resourceId}" name="pId" >
+    <input type="hidden" value="${resource.resourceId}" name="pId" >
     <label for="resourceName_01">上级名称：</label>
-    <input type="text" value="${resourceName}" id="resourceName_01" style="outline:none;border: 0px"/>
+    <input type="text" value="${resource.resourceName}" id="resourceName_01" readonly="readonly" style="outline:none;border: 0px"/>
 	<p>
 	<label for="resourceName">资源名称：</label>
 	<input type="text" name="resourceName" id="resourceName">

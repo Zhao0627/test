@@ -3,15 +3,20 @@ package com.dj.mall.admin.web.role;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.vo.RoleVoReq;
 import com.dj.mall.admin.vo.RoleVoResp;
+import com.dj.mall.admin.vo.ZtreeData;
 import com.dj.mall.auth.api.role.RoleService;
+import com.dj.mall.auth.dto.ZtreeDataDTO;
 import com.dj.mall.auth.dto.role.RoleDTO;
+import com.dj.mall.auth.dto.role.RoleResourceDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +68,26 @@ public class RoleController {
     public ResultModel<Object> deleteRole(Integer id) throws Exception{
         roleService.delete(id);
         return new ResultModel<>().success("删除成功");
+    }
+
+    /**
+     * 资源关联
+     * @return
+     */
+    @RequestMapping("getRoleResource")
+    public ResultModel<Object> getRoleResource(Integer id) throws Exception{
+        List<ZtreeDataDTO> ztreeDataDTOList = roleService.getRoleResource(id);
+        return new ResultModel<>().success(ztreeDataDTOList);
+    }
+
+    /**
+     * 保存资源
+     * @return
+     */
+    @RequestMapping("save")
+    public ResultModel<Object> save(RoleVoResp roleVoResp) throws Exception{
+        roleService.saveRoleAndResource(DozerUtil.map(roleVoResp,RoleDTO.class));
+        return new ResultModel<>().success("保存成功");
     }
 
 }

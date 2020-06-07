@@ -2,6 +2,7 @@ package com.dj.mall.admin.web.user.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.auth.api.role.RoleService;
+import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.role.RoleDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class UserPageController {
 
     @Reference
     private RoleService roleService;
+
+    @Reference
+    private UserService userService;
 
     /**
      * 去登陆
@@ -64,6 +68,16 @@ public class UserPageController {
     @RequestMapping("toUpdate")
     public String toUpdate(){
         return "user/update";
+    }
+
+    /**
+     * 注册激活
+     * @return
+     */
+    @RequestMapping("toUpdateState")
+    public String toUpdateState(Integer id){
+        userService.updateActivatedState(id);
+        return "user/login";
     }
 
 }

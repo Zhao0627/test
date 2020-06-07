@@ -6,6 +6,7 @@ import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,10 @@ public class ResourceController {
      */
     @RequestMapping("saveResource")
     public ResultModel<Object> saveResource(ResourceVoResp resourceVoResp) throws Exception{
+        Assert.hasText(resourceVoResp.getResourceName(),"资源名不能为空");
+        Assert.hasText(resourceVoResp.getUrl(), "资源路径不能为空");
+        Assert.notNull(resourceVoResp.getPId(), "上级节点不能为空");
+        Assert.notNull(resourceVoResp.getResourceType(), "资源类型不能为空");
         resourceService.save(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("新增成功");
     }

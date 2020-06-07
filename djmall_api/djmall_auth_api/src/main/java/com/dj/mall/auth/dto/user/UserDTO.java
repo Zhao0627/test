@@ -57,4 +57,9 @@ public class UserDTO implements Serializable {
      */
     private Integer userLevel;
 
+    /**
+     * 邮箱激活状态 1 未激活 2已激活
+     */
+    private Integer activatedState;
+
 }

@@ -7,11 +7,15 @@ import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
+import com.dj.mall.model.util.PasswordSecurityUtil;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户处理类
@@ -71,6 +75,27 @@ public class UserController {
         return new ResultModel<>().success("注册成功");
     }
 
+    /**
+     * 用户管理
+     * @param userVoResp
+     * @param
+     * @return
+     */
+    @RequestMapping("show")
+    public Map<String,Object> show(UserVoResp userVoResp) throws Exception{
+        UserDTO userDTO = DozerUtil.map(userVoResp, UserDTO.class);
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",DozerUtil.mapList(userService.findUserAll(userDTO),UserVoResp.class));
+        map.put("code",0);
+        return map;
+    }
+
+    /**
+     * 获取盐
+     * @param userVoResp
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("getUserSalt")
     public ResultModel<Object> getUserSalt(UserVoResp userVoResp) throws Exception{
         UserDTO userDto = userService.getUserByUserName(DozerUtil.map(userVoResp,UserDTO.class));

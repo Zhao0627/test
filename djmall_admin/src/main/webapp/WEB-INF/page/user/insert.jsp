@@ -26,6 +26,7 @@
       <div class="layadmin-user-login-box layadmin-user-login-header">
       </div>
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+          <input type="hidden" name="activatedState" value="1">
         <!-- 用户名 -->
         
         <div class="layui-form-item">

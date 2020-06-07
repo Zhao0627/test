@@ -137,13 +137,17 @@
 	function save(){
         var treeObj = $.fn.zTree.getZTreeObj("ztree");
         var nodes = treeObj.getSelectedNodes();
+        var pId = 0 ;
+        if (nodes.length>0 ){
+            pId = nodes[0].resourceId;
+        }
         layer.open({
             type: 2,
             title: '新增',
             shadeClose: true,
             shade: 0.8,
             area: ['380px', '90%'],
-            content: "<%=request.getContextPath()%>/auth/resource/toSaveResource?resourceId="+nodes[0].resourceId //iframe的url
+            content: "<%=request.getContextPath()%>/auth/resource/toSaveResource?resourceId="+pId //iframe的url
         });
 	}
 	

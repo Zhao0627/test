@@ -40,7 +40,7 @@
                 {
                     name:"运营平台", open:false,
                         children:[
-                            {name: "用户管理", open: false, },
+                            {name: "用户管理", open: false,target:"right",url:"<%=request.getContextPath()%>/auth/user/toShow" },
                             { name:"基础管理", open:false,
                                 children: [
                                     { name:"运费",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"},
