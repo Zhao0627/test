@@ -30,6 +30,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         interceptorRegistration.excludePathPatterns("/auth/user/findUserNamePhoneEmail");
         interceptorRegistration.excludePathPatterns("/auth/user/getUserSalt");
         interceptorRegistration.excludePathPatterns("/auth/user/toUpdateState");
+        interceptorRegistration.excludePathPatterns("/auth/user/toUpdatePwd");
+        interceptorRegistration.excludePathPatterns("/auth/user/updatePwd");
         interceptorRegistration.excludePathPatterns("/static/**");
     }
 }

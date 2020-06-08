@@ -20,7 +20,7 @@ public interface UserService {
 
     /**
      * 注册去重
-     * @param userDTO
+     * @param userDTO 去重条件
      * @return
      * @throws BusinessException
      */
@@ -28,21 +28,46 @@ public interface UserService {
 
     /**
      * 注册
-     * @param userDTO
+     * @param userDTO 注册的用户
      */
     void insertUser(UserDTO userDTO) throws Exception;
 
     /**
      * 注册激活修改激活码
-     * @param id
+     * @param id 激活用户id
      * @throws BusinessException
      */
     void updateActivatedState(Integer id) throws BusinessException;
 
     /**
      * 查询有用户
-     * @param userDTO
+     * @param userDTO 模糊查询条件
      * @return
      */
     List<UserDTO> findUserAll(UserDTO userDTO) throws BusinessException;
+
+    /**
+     * 重置密码
+     * @param ids 重置ids
+     * @throws BusinessException
+     */
+    void resetPwd(Integer ids[], String emails[], String userName) throws Exception;
+
+    /**
+     *修改用户
+     * @param userDTO
+     */
+    void updateUser(UserDTO userDTO) throws BusinessException;
+
+    /**
+     * 获取验证码以及发送验证码
+     * @param userDTO
+     */
+    String getPhoneCode(UserDTO userDTO) throws BusinessException;
+
+    /**
+     * 通过手机号修改密码发送邮件
+     * @param userDTO
+     */
+    void updatePwdByPhone(UserDTO userDTO) throws BusinessException;
 }

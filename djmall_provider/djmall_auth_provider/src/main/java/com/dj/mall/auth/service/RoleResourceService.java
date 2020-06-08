@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RoleResourceService extends IService<RoleResource> {
 
-    void delete(List<Integer> resourceIds) throws Exception;
+    void delete(List<Integer> resourceIds,Integer roleId) throws Exception;
 }

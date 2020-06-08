@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface RoleResourceMapper extends BaseMapper<RoleResource> {
 
-    void deletBatch(@Param("resourceIds") List<Integer> resourceIds) throws Exception;
+    void deletBatch(@Param("resourceIds") List<Integer> resourceIds, @Param("roleId") Integer roleId) throws Exception;
 
 }

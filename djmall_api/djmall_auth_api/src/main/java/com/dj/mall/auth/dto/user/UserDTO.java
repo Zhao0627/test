@@ -1,8 +1,10 @@
 package com.dj.mall.auth.dto.user;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户DTO
@@ -61,5 +63,20 @@ public class UserDTO implements Serializable {
      * 邮箱激活状态 1 未激活 2已激活
      */
     private Integer activatedState;
+
+
+    /**
+     * 用户级别展示
+     */
+    private String userLevelShow;
+
+    /**
+     * 注册时间
+     */
+    private Date saveTime;
+    /**
+     * 重置密码
+     */
+    private String resetPwd;
 
 }

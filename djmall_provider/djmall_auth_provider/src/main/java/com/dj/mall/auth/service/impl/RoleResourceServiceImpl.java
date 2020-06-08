@@ -19,8 +19,8 @@ public class RoleResourceServiceImpl extends ServiceImpl<RoleResourceMapper, Rol
     private RoleResourceMapper roleResourceMapper;
 
     @Override
-    public void delete(List<Integer> resourceIds) throws Exception {
-        roleResourceMapper.deletBatch(resourceIds);
+    public void delete(List<Integer> resourceIds,Integer roleId) throws Exception {
+        roleResourceMapper.deletBatch(resourceIds,roleId);
     }
 }
 

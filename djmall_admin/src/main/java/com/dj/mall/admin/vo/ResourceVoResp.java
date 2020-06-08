@@ -38,6 +38,11 @@ public class ResourceVoResp {
      */
     private Integer resourceType;
 
+    /**
+     * 用户级别展示
+     */
+    private String userLevelShow;
+
 
 
 }

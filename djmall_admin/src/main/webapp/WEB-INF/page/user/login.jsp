@@ -30,12 +30,18 @@
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 20px;">
                     <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
-                    <a href="<%=request.getContextPath()%>/auth/user/toUpdatePwd" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+                    <a href="<%=request.getContextPath()%>/auth/user/toForgetPwd" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" type="button" onclick="login()" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
                 </div>
+
                 <input type="hidden" name="salt" id="salt" value="">
+               <%-- <input type="hidden" name="resetPwd" id="resetPwd" value="">--%>
+                <input type="hidden" name="userId" id="userId" value="">
+                <input type="hidden" name="userPwd1" id="userPwd1" value="">
+
+
                 <div class="layui-trans layui-form-item layadmin-user-login-other">
                     <label>社交账号登入</label>
                     <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
@@ -76,7 +82,10 @@
                 {"userName":userName},
                 function(data){
                     if(data.code == 200){
-                        $("#salt").val(data.data);
+                        $("#salt").val(data.data.salt);
+                        /*$("#resetPwd").val(data.data.resetPwd);*/
+                        $("#userId").val(data.data.userId);
+                        $("#userPwd1").val(data.data.userPwd);
                     }
                 })
         }
@@ -97,6 +106,16 @@
         }
         var userPwd = $("#LAY-user-login-password").val();
         var pwd = md5(userPwd);
+        if ($("#userPwd1").val()===pwd){
+            layer.msg("暂判定您的密码不安全，请前往修改密码", {
+                offset: '15px'
+                ,icon: 16
+                ,time: 1500
+            }, function(){
+                window.location.href="<%=request.getContextPath()%>/auth/user/toUpdatePwd?userId="+$("#userId").val();
+            });
+            return;
+        }
         var salt =  $("#salt").val();
         var newPwd = md5(pwd + salt);
         $("#LAY-user-login-password").val(newPwd);

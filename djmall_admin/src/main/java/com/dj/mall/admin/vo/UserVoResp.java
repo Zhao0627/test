@@ -2,6 +2,9 @@ package com.dj.mall.admin.vo;
 
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 用户信息展示模型
  */
@@ -80,4 +83,24 @@ public class UserVoResp {
      * 用户状态 1 未激活 2已激活
      */
     private Integer activatedState;
+
+    /**
+     * 注册时间
+     */
+    private Date saveTime;
+    /**
+     * 注册时间
+    */
+    private String saveTimeShow;
+
+
+    public String getSaveTimeShow() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return simpleDateFormat.format(saveTime);
+    }
+    /**
+     * 重置密码
+     */
+    private String resetPwd;
+
 }

@@ -14,66 +14,20 @@ import java.util.Date;
 /**
  * 实体类（用户表）
  */
-@TableName("djmall_auth_user")
+@TableName("user_login")
 @Data
-public class User implements Serializable {
+public class UserLoginTime implements Serializable {
 
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    @Mapping("userId")
     private Integer id;
 
     /**
-     * 用户名
+     * 登录用户id
      */
-    private String userName;
-
-    /**
-     * 密码
-     */
-    private String userPwd;
-
-    /**
-     * 手机号
-     */
-    private String userPhone;
-
-    /**
-     * 邮箱
-     */
-    private String userEmail;
-
-    /**
-     * 昵称
-     */
-    private String nickName;
-
-    /**
-     * 密码盐
-     */
-    private String salt;
-
-    /**
-     * 用户性别
-     */
-    private Integer userSex;
-
-    /**
-     * 用户级别
-     */
-    private Integer userLevel;
-
-    /**
-     * 邮箱激活状态
-     */
-    private Integer activatedState;
-
-    /**
-     * 重置密码
-     */
-    private String resetPwd;
+    private Integer userId;
 
     /**
      * 注册时间
@@ -82,7 +36,7 @@ public class User implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     //前台到后台转换Date格式
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    private Date saveTime;
+    private Date loginTime;
 
 
 }

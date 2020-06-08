@@ -179,7 +179,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //判断是否有多余 多余的删掉
         if (orderSet.size()>0){
             List<Integer> resourceIds = new ArrayList<>(orderSet);
-            roleResourceService.delete(resourceIds);
+            /*roleResourceService.delete(resourceIds,roleDTO.getRoleId());*/
+
+            QueryWrapper<RoleResource> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.eq("role_id",roleDTO.getRoleId());
+            queryWrapper1.in("resource_id",resourceIds);
+            roleResourceService.remove(queryWrapper1);
         }
         //判断是否有新增
         if (newSet.size()>0){

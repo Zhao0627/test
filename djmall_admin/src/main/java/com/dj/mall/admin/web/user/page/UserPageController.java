@@ -1,9 +1,11 @@
 package com.dj.mall.admin.web.user.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.vo.RoleVoResp;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.role.RoleDTO;
+import com.dj.mall.model.util.DozerUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,9 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toShow")
-    public String toShow(){
+    public String toShow(Model model){
+        List<RoleDTO> roleAll = roleService.findRoleAll();
+        model.addAttribute("role", DozerUtil.mapList(roleAll, RoleVoResp.class));
         return "user/show";
     }
 
@@ -45,9 +49,9 @@ public class UserPageController {
      * 去修改密码
      * @return
      */
-    @RequestMapping("toUpdatePwd")
+    @RequestMapping("toForgetPwd")
     public String toUpdatePwd(){
-        return "user/update_pwd";
+        return "user/forget_pwd";
     }
 
     /**
@@ -78,6 +82,16 @@ public class UserPageController {
     public String toUpdateState(Integer id){
         userService.updateActivatedState(id);
         return "user/login";
+    }
+
+    /**
+     * 重置密码
+     * @return
+     */
+    @RequestMapping("toUpdatePwd")
+    public String toUpdatePwd(Integer userId, Model model){
+        model.addAttribute("userId",userId);
+        return "/user/update_pwd";
     }
 
 }

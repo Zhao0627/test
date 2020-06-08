@@ -3,7 +3,7 @@
 <mapper namespace="com.dj.mall.auth.mapper.role.RoleResourceMapper">
 
     <delete id="deletBatch">
-        delete from djmall_auth_role_resource where resource_id in
+        delete from djmall_auth_role_resource where role_id = #{roleId} and resource_id in
         <foreach collection="resourceIds" item="resourceIds" separator="," open="(" close=")" >
             #{resourceIds}
         </foreach>

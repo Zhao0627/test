@@ -23,7 +23,7 @@
             chkStyle: "checkbox",
             chkboxType: { "Y" : "s", "N" : "s" }
         },*/
-		view:{
+/*		view:{
 			addHoverDom:addHoverDom,
 			removeHoverDom: removeHoverDom,
             selectedMulti:false,
@@ -46,7 +46,7 @@
         callback:{
         	beforeRename:zTreeBeforeRename,
         	beforeRemove: myBeforeRemove
-        },
+        },*/
         
 		data:{
 			simpleData: {

@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
@@ -10,6 +11,7 @@ import com.dj.mall.model.util.DozerUtil;
 import com.dj.mall.model.util.PasswordSecurityUtil;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -98,8 +100,72 @@ public class UserController {
      */
     @RequestMapping("getUserSalt")
     public ResultModel<Object> getUserSalt(UserVoResp userVoResp) throws Exception{
-        UserDTO userDto = userService.getUserByUserName(DozerUtil.map(userVoResp,UserDTO.class));
-        return new ResultModel<>().success(userDto.getSalt());
+        return new ResultModel<>().success(DozerUtil.map(userService.getUserByUserName(DozerUtil.map(userVoResp,UserDTO.class)),UserVoResp.class));
+    }
+
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("updateUser")
+    public ResultModel<Object> updateUser(Object user) throws Exception{
+        System.out.println(user.toString());
+        return null;
+    }
+
+    /**
+     * 重置密码
+     * @param ids
+     * @param emails
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("resetPwd")
+    public ResultModel resetPwd(Integer ids[],
+                                String emails[],
+                                HttpSession session) throws Exception {
+        UserVoResp user = (UserVoResp) session.getAttribute("user");
+        userService.resetPwd(ids, emails, user.getUserName());
+        return new ResultModel().success("重置成功");
+    }
+
+    /**
+     * 修改密码
+     * @param userVoReq
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("updatePwd")
+    public ResultModel updatePwd(UserVoReq userVoReq) throws Exception {
+        userService.updateUser(DozerUtil.map(userVoReq,UserDTO.class));
+        return new ResultModel().success("修改密码成功");
+    }
+
+    /**
+     * 根据手机号修改密码
+     * @param userVoReq
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("updatePwdByPhone")
+    public ResultModel updatePwdByPhone(UserVoReq userVoReq) throws Exception {
+        userService.updatePwdByPhone(DozerUtil.map(userVoReq,UserDTO.class));
+        return new ResultModel().success("修改密码成功");
+    }
+
+    /**
+     * 发送短信验证码
+     * @param userVoReq
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("getPhoneCode")
+    public ResultModel getPhoneCode(UserVoReq userVoReq) throws Exception {
+        String phoneCode = userService.getPhoneCode(DozerUtil.map(userVoReq, UserDTO.class));
+        return new ResultModel().success(phoneCode);
     }
 
 }
