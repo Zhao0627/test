@@ -1,5 +1,6 @@
 package com.dj.mall.auth.provider.user;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -7,10 +8,16 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dj.mall.auth.api.email.MailService;
 import com.dj.mall.auth.api.role.RoleService;
+import com.dj.mall.auth.api.user.UserLoginTimeService;
+import com.dj.mall.auth.api.user.UserRoleService;
 import com.dj.mall.auth.api.user.UserService;
+import com.dj.mall.auth.bo.user.UserBo;
 import com.dj.mall.auth.dto.role.RoleDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
+import com.dj.mall.auth.dto.user.UserLoginTimeDTO;
+import com.dj.mall.auth.dto.user.UserRoleDTO;
 import com.dj.mall.auth.entity.user.User;
+import com.dj.mall.auth.entity.user.UserLoginTime;
 import com.dj.mall.auth.mapper.user.UserMapper;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.util.DozerUtil;
@@ -33,11 +40,35 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    /**
+     * email接口
+     */
     @Autowired
     private MailService mailService;
 
+    /**
+     * 角色接口
+     */
     @Autowired
     private RoleService roleService;
+
+    /**
+     * mapper
+     */
+    @Autowired
+    private UserMapper userMapper;
+
+    /**
+     * 用户登录接口
+     */
+    @Autowired
+    private UserLoginTimeService userLoginTimeService;
+
+    /**
+     * 用户登录接口
+     */
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * 根据用户名获取信息（登录）
@@ -54,24 +85,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (null == user){
             throw new BusinessException("用户名/手机号/邮箱错误");
         }
+        UserRoleDTO userRoleDTO = userRoleService.getByUserId(user.getId());
         if (userDTO.getUserPwd()!=null){
-/*            try {
-                if (PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(user.getResetPwd())+user.getSalt()).equals(userDTO.getUserPwd())){
-                    throw new BusinessException("")
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
             if(!userDTO.getUserPwd().equals(user.getUserPwd())){
                 throw new BusinessException("密码错误");
             }
-            if (user.getUserLevel() == SystemConstant.EMAIL_STATES_2){
+            if (userRoleDTO.getRoleId() == SystemConstant.EMAIL_STATES_2){
                 if (user.getActivatedState().equals(SystemConstant.EMAIL_STATES_1)){
                     throw new BusinessException("邮箱未激活，请前往邮箱激活");
                 }
             }
+            UserLoginTimeDTO userLoginTime = new UserLoginTimeDTO();
+            userLoginTime.setLoginTime(new Date());
+            userLoginTime.setUserId(user.getId());
+            userLoginTimeService.save(userLoginTime);
         }
-        return DozerUtil.map(user,UserDTO.class);
+        UserDTO userDTO1 = DozerUtil.map(user, UserDTO.class);
+        if (userRoleDTO != null){
+            userDTO1.setUserLevel(userRoleDTO.getRoleId());
+            System.out.println(userDTO1.getSalt());
+        }
+        return userDTO1;
     }
 
     /**
@@ -85,7 +119,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public UserDTO findUserNamePhoneEmail(UserDTO userDTO) throws BusinessException {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_name", userDTO.getUserName()).or().eq("user_phone",userDTO.getUserPhone()).or().eq("user_email",userDTO.getUserEmail());
-        return DozerUtil.map(getOne(queryWrapper), UserDTO.class);
+        UserDTO userDTO1 = DozerUtil.map(getOne(queryWrapper), UserDTO.class);
+        if (userDTO1!=null){
+            UserRoleDTO userRoleDTO = userRoleService.getByUserId(userDTO1.getUserId());
+            userDTO1.setUserLevel(userRoleDTO.getRoleId());
+        }
+        return userDTO1;
     }
 
     /**
@@ -104,6 +143,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             e.printStackTrace();
         }
         save(DozerUtil.map(userDTO,User.class));
+        UserDTO userDTO2 = new UserDTO();
+        userDTO2.setUserName(userDTO.getUserName());
+        UserDTO userDTO1 = getUserByUserName(userDTO2);
+        userRoleService.insert(userDTO1.getUserId(),userDTO.getUserLevel());
         if (userDTO.getUserLevel()==SystemConstant.COMMERCIAL_ID){
             //通过邮箱查询
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -121,28 +164,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 注册激活修改激活码
      *
-     * @param id
+     * @param ids
      * @throws BusinessException
      */
     @Override
-    public void updateActivatedState(Integer id) throws BusinessException {
-        User user = new User();
-        user.setId(id);
-        user.setActivatedState(SystemConstant.EMAIL_STATES_2);
-        updateById(user);
-
-        PasswordSecurityUtil.generateRandom(6);
-
-        List<User> users = new ArrayList<>();//后台带的
-        List<User> userss = new ArrayList<>();//真实new的
-        for (User u: users) {
-            User us = new User();
-            us.setId(u.getId());
-            us.setActivatedState(u.getActivatedState());
-            us.setUserSex(u.getUserSex());
-            userss.add(us);
+    public void updateActivatedState(Integer[] ids) throws BusinessException {
+        List<User> userList = new ArrayList<>();
+        for (Integer id:ids) {
+            User user = new User();
+            user.setId(id);
+            user.setActivatedState(SystemConstant.EMAIL_STATES_2);
+            userList.add(user);
         }
-        updateBatchById(userss);
+        updateBatchById(userList);
     }
 
 
@@ -154,26 +188,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public List<UserDTO> findUserAll(UserDTO userDTO) throws BusinessException {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (!StringUtils.isEmpty(userDTO.getUserSex())){
-            queryWrapper.eq("user_sex",userDTO.getUserSex());
-        }
-        if (!StringUtils.isEmpty(userDTO.getUserLevel())){
-            queryWrapper.eq("user_level",userDTO.getUserLevel());
-        }
-        if (!StringUtils.isEmpty(userDTO.getActivatedState())){
-            queryWrapper.eq("activated_state",userDTO.getActivatedState());
-        }
-        if (""!= userDTO.getUserName() && !StringUtils.isEmpty(userDTO.getUserName())){
-            queryWrapper.like("user_name",userDTO.getUserName()).or().like("user_phone",userDTO.getUserName()).or().like("user_email",userDTO.getUserName());
-        }
-        List<User> userList = list(queryWrapper);
-        List<UserDTO> userDTOS = DozerUtil.mapList(userList, UserDTO.class);
-        for (int i = 0; i < userDTOS.size(); i++) {
-            RoleDTO role = roleService.findRoleById(userDTOS.get(i).getUserLevel());
-            userDTOS.get(i).setUserLevelShow(role.getRoleName());
-        }
-        return userDTOS;
+        UserBo userBo = DozerUtil.map(userDTO, UserBo.class);
+        return DozerUtil.mapList(userMapper.findUserAll(userBo),UserDTO.class);
     }
 
     /**
@@ -202,8 +218,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             String newDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
             String to = email;
             String subject = "重置密码";
-            String content = "'尊敬的"+userDTO1.getNickName()+",您的密码已被管理员"+userName+"于"+newDate+"重置为"+userDTO1.getResetPwd()+"。为了您的账户安全，请及时修改。"+
-                    "<a href='http://127.0.0.1:8081/admin/auth/user/toLogin'>点我去登录</a>";
+            String content = "尊敬的"+userDTO1.getNickName()+"，<br>"+"您的密码已被管理员"+userName+"于"+newDate+"重置为<font color='red'>"+userDTO1.getResetPwd()+"</font>。<br>为了您的账户安全，请及时修改。"+
+                    "<a href='http://127.0.0.1:8081/admin/auth/user/toLogin' style='color: red;text-decoration:none;'>点我去登录</a>";
             mailService.sendHtmlMail(to, subject, content);
         }
 
@@ -269,5 +285,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String content = "'您的帐户"+userNamePhoneEmail.getNickName()+"于"+newDate+"时进行密码修改成功。";
         mailService.sendHtmlMail(to, subject, content);
 
+    }
+
+    /**
+     * 通过id查
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public UserDTO findUserById(Integer id) throws BusinessException {
+        return DozerUtil.map(getById(id),UserDTO.class);
     }
 }

@@ -50,7 +50,7 @@
         });
         $.validator.setDefaults({
             submitHandler:function(){
-                $.post("<%=request.getContextPath()%>/auth/user/updatePwd",
+                $.post("<%=request.getContextPath()%>/auth/user/updatePwdByPhone",
                     $("#fm").serialize(),
                     function(data){
                         if(data.code!='200') {
@@ -93,7 +93,7 @@
                 <h2>用户修改密码</h2>
                 <p>欢迎小可爱加入</p>
             </div>
-            <input type="hidden" name="userId" value="${userId}" />
+            <input type="hidden" name="userPhone" value="${userPhone}" />
             <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
                 <!-- 密码 -->
                 <div class="layui-form-item">

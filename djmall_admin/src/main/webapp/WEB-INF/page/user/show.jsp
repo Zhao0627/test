@@ -62,7 +62,7 @@
     <label class="laber">级别查询</label>
     &nbsp;&nbsp;&nbsp;
     <c:forEach items="${role}" var="role">
-        ${role.roleName}<input type="radio" name="userLevel" value="${role.roleId}" class="userLevel">&nbsp;&nbsp;&nbsp;
+        ${role.roleName}&nbsp;&nbsp;&nbsp;<input type="radio" name="userLevel" value="${role.roleId}" class="userLevel">&nbsp;&nbsp;&nbsp;
     </c:forEach>
 
     &nbsp;&nbsp;&nbsp;
@@ -73,11 +73,11 @@
 		<option value="1" class="option1">未激活</option>
 </select>
 </form>
-<div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 50px" id="update">修改</button>&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 50px" id="activate">激活</button>&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 70px" id="update_pwd">重置密码</button>&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 50px" id="del">删除</button>&nbsp;&nbsp;&nbsp;
+<div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 50px" id="update">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 50px" id="activate">激活</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 70px" id="update_pwd">重置密码</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 50px" id="del">删除</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button style="height: 20px;width: 50px" id="mandate">授权</button>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -100,15 +100,17 @@ layui.use('table', function(){
     ,defaultToolbar: ['', '', ''] 
     ,cols: [[
         {type: 'checkbox', fixed: 'left'}
-      ,{field:'userId', title:'ID', width:80, fixed: 'left'}
-      ,{field:'userName', title:'用户名', width:120}
-      ,{field:'nickName', title:'昵称', width:120}
-      ,{field:'userPhone', title:'手机号', width:150}
+      ,{field:'userId', title:'ID', width:50, fixed: 'left'}
+      ,{field:'userName', title:'用户名', width:80}
+      ,{field:'nickName', title:'昵称', width:80}
+      ,{field:'userPhone', title:'手机号', width:130}
       ,{field:'userEmail', title:'邮箱', width:190}
       ,{field:'userSexShow', title:'性别', width:80}
       ,{field:'userLevelShow', title:'用户级别', width:100,}
+      ,{field:'stateShow', title:'状态', width:100,}
       ,{field:'saveTimeShow', title:'注册时间', width:180,}
-      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150,rowspan:"3"}
+      ,{field:'loginTime', title:'登录时间', width:180,}
+/*      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150,rowspan:"3"}*/
     ]]
     /* 单元格点击事件名 */
    	,even:true
@@ -119,21 +121,6 @@ layui.use('table', function(){
             type : "desc"
     }
   });
-
-
-  /* 双击跳转弹框查看用 */
-  table.on('rowDouble(test)', function(obj){
-			  //弹出一个iframe层 
-			layer.open({
-				  type: 2, 
-				  area: ['350px', '430px'],
-				  //不显示关闭
-				  closeBtn: 1 ,
-				  title:['报销单','padding-left:170px;color:white;background-color:#169bd5;font-size:10px;'],
-			/* ['点击A按钮触发','color:#fff;background-color:#01AAED;'], */
-				  content:'<%=request.getContextPath()%>/track/toTrack?id='+obj.data.id   /* //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no'] */
-				});
-	}); 
   
     /* 查询事件 */
   	$('#fm').on('click',function(){
@@ -160,14 +147,82 @@ layui.use('table', function(){
         for (var i = 0; i < data.length; i++) {
             ids.push(data[i].userId)
         }
-        alert(ids);
-        /*$.post("<%=request.getContextPath()%>/auth/user/updateUser",
-            {"user":JSON.stringify(data)},
-            function(data){
-                layer.msg(data.msg,function(){
-                    /!*window.location.href="<%=request.getContextPath()%>/acc/toAccShow";*!/
-                });
-            })*/
+        if (ids.length==0){
+            layer.msg("请选择一个");
+            return;
+        }
+        if (ids.length>1){
+            layer.msg("只能选择一个");
+            return;
+        }
+        //弹出一个iframe层
+        layer.open({
+            type: 2,
+            area: ['350px', '430px'],
+            //不显示关闭
+            closeBtn: 1 ,
+            title:['用户修改','padding-left:170px;color:white;background-color:#169bd5;font-size:10px;'],
+            /* ['点击A按钮触发','color:#fff;background-color:#01AAED;'], */
+            content: "<%=request.getContextPath()%>/auth/user/toUpdate?id="+ids[0]  /* //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no'] */
+        });
+    })
+
+    //激活
+    $('#activate').on('click',function(){
+        var checkStatus = table.checkStatus('test')
+            ,data = checkStatus.data;
+        var ids = [];
+        var userNames=[];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].activatedState===2){
+                userNames.push(data[i].userName);
+            }
+        }
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].activatedState===1){
+                ids.push(data[i].userId);
+            }
+        }
+        if (userNames.length>0){
+            layer.msg(userNames+"已激活", {
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+                if (ids.length>0){
+                    layer.confirm('您确定要激活用户吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        $.post("<%=request.getContextPath()%>/auth/user/updateState",
+                            {"ids":ids.join(',')},
+                            function(data){
+                                layer.msg(data.msg,function(){
+                                    window.location.href="<%=request.getContextPath()%>/auth/user/toShow";
+                                    return;
+                                });
+                            })
+                    }, function(){
+                        layer.msg('已取消');
+                    });
+                    return;
+                }
+            });
+            return;
+        }
+        if (ids.length>0){
+            layer.confirm('您确定要激活用户吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.post("<%=request.getContextPath()%>/auth/user/updateState",
+                    {"ids":ids.join(',')},
+                    function(data){
+                        layer.msg(data.msg,function(){
+                            window.location.href="<%=request.getContextPath()%>/auth/user/toShow";
+                            return;
+                        });
+                    })
+            }, function(){
+                layer.msg('已取消');
+            });
+        }
     })
 
     //重置密码
@@ -188,10 +243,13 @@ layui.use('table', function(){
         layer.confirm('您确定要重置密码吗？重置后的密码以邮件的方式进行通知', {
             btn: ['确定','取消'] //按钮
         }, function(){
+            debugger;
             $.post("<%=request.getContextPath()%>/auth/user/resetPwd",
                 {"ids":ids.join(','),"emails":emails.join(',')},
                 function(data){
-                    layer.msg(data.msg);
+                    layer.msg(data.msg,function(){
+                        window.location.href="<%=request.getContextPath()%>/auth/user/toShow";
+                    });
             })
         }, function(){
             layer.msg('已取消');

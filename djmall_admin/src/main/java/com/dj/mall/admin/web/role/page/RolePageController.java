@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/auth/role/")
 public class RolePageController {
 
+    /**
+     * 角色接口
+     */
     @Reference
     private RoleService roleService;
 

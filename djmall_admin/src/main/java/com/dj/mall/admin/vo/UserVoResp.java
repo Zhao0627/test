@@ -1,6 +1,8 @@
 package com.dj.mall.admin.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,6 +87,18 @@ public class UserVoResp {
     private Integer activatedState;
 
     /**
+     * 用户状态展示
+     */
+    private String stateShow;
+
+    public String getStateShow() {
+        if (activatedState==1){
+            return "未激活";
+        }
+        return "已激活";
+    }
+
+    /**
      * 注册时间
      */
     private Date saveTime;
@@ -98,9 +112,19 @@ public class UserVoResp {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return simpleDateFormat.format(saveTime);
     }
+
     /**
      * 重置密码
      */
     private String resetPwd;
+
+    /**
+     * 登陆时间
+     */
+    //后台到前台转换（”yyyy-MM-dd hh:mm:ss“）格式
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
+    //前台到后台转换Date格式
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date loginTime;
 
 }

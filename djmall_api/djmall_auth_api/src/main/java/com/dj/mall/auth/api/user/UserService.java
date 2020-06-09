@@ -34,13 +34,13 @@ public interface UserService {
 
     /**
      * 注册激活修改激活码
-     * @param id 激活用户id
+     * @param ids 激活用户id
      * @throws BusinessException
      */
-    void updateActivatedState(Integer id) throws BusinessException;
+    void updateActivatedState(Integer[] ids) throws BusinessException;
 
     /**
-     * 查询有用户
+     * 查询所有用户
      * @param userDTO 模糊查询条件
      * @return
      */
@@ -70,4 +70,11 @@ public interface UserService {
      * @param userDTO
      */
     void updatePwdByPhone(UserDTO userDTO) throws BusinessException;
+
+    /**
+     * 通过id查
+     * @param id
+     * @return
+     */
+    UserDTO findUserById(Integer id) throws BusinessException;
 }

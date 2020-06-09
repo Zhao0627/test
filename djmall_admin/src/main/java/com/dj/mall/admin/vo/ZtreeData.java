@@ -6,6 +6,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 树节点 类
+ */
 @Data
 public class ZtreeData implements Serializable {
 

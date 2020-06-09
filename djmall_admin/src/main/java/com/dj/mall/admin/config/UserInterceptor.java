@@ -17,7 +17,7 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-/*        HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         UserVoResp user = (UserVoResp) session.getAttribute("user");
         if (user==null){
             System.out.println("已拦截");
@@ -25,7 +25,7 @@ public class UserInterceptor implements HandlerInterceptor {
             return false;
 
         }
-        System.out.println("放过");*/
+        System.out.println("放过");
         return true;
     }
 }

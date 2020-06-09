@@ -2,6 +2,7 @@ package com.dj.mall.admin.web.user.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.vo.RoleVoResp;
+import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.role.RoleDTO;
@@ -19,9 +20,15 @@ import java.util.List;
 @Controller
 public class UserPageController {
 
+    /**
+     * 角色接口
+     */
     @Reference
     private RoleService roleService;
 
+    /**
+     * 用户接口
+     */
     @Reference
     private UserService userService;
 
@@ -70,7 +77,9 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdate")
-    public String toUpdate(){
+    public String toUpdate(Integer id, Model model){
+        UserVoResp user = DozerUtil.map(userService.findUserById(id), UserVoResp.class);
+        model.addAttribute("user",user);
         return "user/update";
     }
 
@@ -80,7 +89,9 @@ public class UserPageController {
      */
     @RequestMapping("toUpdateState")
     public String toUpdateState(Integer id){
-        userService.updateActivatedState(id);
+        Integer ids[] = new Integer[1];
+        ids[0]=id;
+        userService.updateActivatedState(ids);
         return "user/login";
     }
 
@@ -89,8 +100,8 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdatePwd")
-    public String toUpdatePwd(Integer userId, Model model){
-        model.addAttribute("userId",userId);
+    public String toUpdatePwd(String userPhone, Model model){
+        model.addAttribute("userPhone",userPhone);
         return "/user/update_pwd";
     }
 

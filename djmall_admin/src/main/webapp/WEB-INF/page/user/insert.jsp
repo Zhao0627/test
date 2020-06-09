@@ -73,7 +73,7 @@
               <label>级别</label>
               <div style="margin-top: -28px;margin-left: 50px">
                   <c:forEach items="${role}" var="role">
-                        <input type="radio" name="userLevel" value="${role.roleId}" id="userLevel" lay-verify="email" class="layui-input" checked title="${role.roleName}">
+                        <input type="radio" name="userLevel" value="${role.roleId}" lay-verify="email" class="layui-input" checked title="${role.roleName}">
                   </c:forEach>
               </div>
           </div>

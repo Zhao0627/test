@@ -61,11 +61,6 @@ public class User implements Serializable {
     private Integer userSex;
 
     /**
-     * 用户级别
-     */
-    private Integer userLevel;
-
-    /**
      * 邮箱激活状态
      */
     private Integer activatedState;
@@ -78,10 +73,6 @@ public class User implements Serializable {
     /**
      * 注册时间
      */
-    //后台到前台转换（”yyyy-MM-dd hh:mm:ss“）格式
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
-    //前台到后台转换Date格式
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date saveTime;
 
 

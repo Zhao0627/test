@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 /**
- * @author����Your-Name
- * @version����ʱ�䣺2019��12��1������10:17:33 ��˵��
+ * 三分天下类
  */
 @Controller
 @RequestMapping("/index/")
 public class IndexPageController {
 
+    /**
+     * 用户接口
+     */
     @Reference
     private UserService userService;
 

@@ -79,4 +79,9 @@ public class UserDTO implements Serializable {
      */
     private String resetPwd;
 
+    /**
+     * 用户d登录时间
+     */
+    private Date loginTime;
+
 }

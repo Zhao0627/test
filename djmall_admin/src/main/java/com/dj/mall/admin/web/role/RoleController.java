@@ -26,6 +26,9 @@ import java.util.List;
 @RequestMapping("/auth/role/")
 public class RoleController {
 
+    /**
+     * 角色接口
+     */
     @Reference
     private RoleService roleService;
 

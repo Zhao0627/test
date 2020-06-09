@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 实体类（用户表）
+ * 实体类（用户登录记录表）
  */
 @TableName("user_login")
 @Data
@@ -22,6 +22,7 @@ public class UserLoginTime implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
+    @Mapping("userLoginTimeId")
     private Integer id;
 
     /**

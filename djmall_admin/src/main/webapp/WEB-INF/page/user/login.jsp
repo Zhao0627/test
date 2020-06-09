@@ -37,7 +37,7 @@
                 </div>
 
                 <input type="hidden" name="salt" id="salt" value="">
-               <%-- <input type="hidden" name="resetPwd" id="resetPwd" value="">--%>
+                <input type="hidden" name="phone" id="phone" value="">
                 <input type="hidden" name="userId" id="userId" value="">
                 <input type="hidden" name="userPwd1" id="userPwd1" value="">
 
@@ -83,7 +83,7 @@
                 function(data){
                     if(data.code == 200){
                         $("#salt").val(data.data.salt);
-                        /*$("#resetPwd").val(data.data.resetPwd);*/
+                        $("#phone").val(data.data.userPhone);
                         $("#userId").val(data.data.userId);
                         $("#userPwd1").val(data.data.userPwd);
                     }
@@ -112,7 +112,7 @@
                 ,icon: 16
                 ,time: 1500
             }, function(){
-                window.location.href="<%=request.getContextPath()%>/auth/user/toUpdatePwd?userId="+$("#userId").val();
+                window.location.href="<%=request.getContextPath()%>/auth/user/toUpdatePwd?userPhone="+$("#phone").val();
             });
             return;
         }

@@ -16,12 +16,20 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
+/**
+ * 邮件发送实体类
+ */
 @Service
 @Component
 public class MailServiceImpl implements MailService {
-
+    /**
+     * 日志打印
+     */
     private final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
+    /**
+     * 获取邮件发送接口
+     */
     @Resource
     private JavaMailSender mailSender;
 

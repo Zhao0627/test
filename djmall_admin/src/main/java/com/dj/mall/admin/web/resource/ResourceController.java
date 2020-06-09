@@ -20,6 +20,9 @@ import java.util.List;
 @RestController
 public class ResourceController {
 
+    /**
+     * 资源接口
+     */
     @Reference
     private ResourceService resourceService;
 

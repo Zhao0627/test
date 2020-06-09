@@ -105,14 +105,14 @@ public class UserController {
 
     /**
      * 修改用户
-     * @param user
+     * @param userVoResp
      * @return
      * @throws Exception
      */
     @RequestMapping("updateUser")
-    public ResultModel<Object> updateUser(Object user) throws Exception{
-        System.out.println(user.toString());
-        return null;
+    public ResultModel<Object> updateUser(UserVoResp userVoResp) throws Exception{
+        userService.updateUser(DozerUtil.map(userVoResp,UserDTO.class));
+        return new ResultModel<Object>().success("修改成功");
     }
 
     /**
@@ -138,11 +138,13 @@ public class UserController {
      * @return
      * @throws Exception
      */
+/*
     @RequestMapping("updatePwd")
     public ResultModel updatePwd(UserVoReq userVoReq) throws Exception {
         userService.updateUser(DozerUtil.map(userVoReq,UserDTO.class));
         return new ResultModel().success("修改密码成功");
     }
+*/
 
     /**
      * 根据手机号修改密码
@@ -166,6 +168,18 @@ public class UserController {
     public ResultModel getPhoneCode(UserVoReq userVoReq) throws Exception {
         String phoneCode = userService.getPhoneCode(DozerUtil.map(userVoReq, UserDTO.class));
         return new ResultModel().success(phoneCode);
+    }
+
+    /**
+     * 修改状态
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("updateState")
+    public ResultModel updateState(Integer ids[]) throws Exception {
+        userService.updateActivatedState(ids);
+        return new ResultModel().success("修改成功");
     }
 
 }
