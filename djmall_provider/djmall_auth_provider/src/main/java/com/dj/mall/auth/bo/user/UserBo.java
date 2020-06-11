@@ -72,5 +72,10 @@ public class UserBo {
      */
     private String resetPwd;
 
+    /**
+     * 删除状态
+     */
+    private Integer isDel;
+
 
 }

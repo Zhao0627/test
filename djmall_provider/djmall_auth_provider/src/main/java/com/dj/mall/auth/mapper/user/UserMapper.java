@@ -20,4 +20,15 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<UserBo> findUserAll(@Param("userBo") UserBo userBo);
 
+    /**
+     * 级联删除
+     * @param ids
+     */
+    void deleteUserByIds(@Param("ids") Integer[] ids);
+
+    /**
+     * 级联批量修改
+     * @param ids
+     */
+    void updateUserIsDelByIds(@Param("ids")Integer []ids,@Param("isDel") Integer isDel);
 }

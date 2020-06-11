@@ -47,4 +47,9 @@ public class Resource implements Serializable {
      */
     private Integer resourceType;
 
+    /**
+     *  展示位置
+     */
+    private String target;
+
 }

@@ -2,6 +2,25 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dj.mall.auth.mapper.user.UserMapper">
 
+    <!--级联删除-->
+    <delete id="deleteUserByIds">
+        DELETE djmall_auth_user,djmall_auth_user_role FROM djmall_auth_user
+        LEFT JOIN djmall_auth_user_role ON djmall_auth_user.id = djmall_auth_user_role.user_id
+        WHERE djmall_auth_user.id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--级联修改-->
+    <update id="updateUserIsDelByIds">
+        UPDATE djmall_auth_user JOIN djmall_auth_user_role ON djmall_auth_user.id = djmall_auth_user_role.user_id
+            SET djmall_auth_user.is_del = 2 ,djmall_auth_user_role.is_del = #{isDel}
+                WHERE djmall_auth_user.id IN
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+    </update>
 
     <select id="findUserAll" resultType="com.dj.mall.auth.bo.user.UserBo">
         SELECT u.user_name AS user_name,u.user_pwd AS user_pwd,u.salt AS salt, u.user_email AS user_email,u.user_phone AS user_phone,u.nick_name AS nick_name,u.user_sex AS user_sex,u.activated_state AS activated_state,u.save_time AS save_time,u.reset_pwd AS reset_pwd,u.id AS user_id, MAX(l.login_time) AS login_time ,  r.role_name AS user_level_show,r.id AS user_level
@@ -9,7 +28,7 @@
         LEFT JOIN djmall_auth_user_role ur ON u.id = ur.user_id
         LEFT JOIN djmall_auth_role r ON r.id = ur.role_id
         where
-            1 = 1
+            u.is_del = #{userBo.isDel}
             <if test="null != userBo.userName and '' != userBo.userName">
                 AND (u.user_name like "%" #{userBo.userName} "%" or u.user_phone like "%" #{userBo.userName} "%" or u.user_email like "%" #{userBo.userName} "%")
             </if>

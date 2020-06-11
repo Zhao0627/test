@@ -9,6 +9,7 @@ import com.dj.mall.auth.entity.resource.Resource;
 import com.dj.mall.auth.mapper.resource.ResourceMapper;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.util.DozerUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,6 +21,9 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> implements ResourceService {
 
+    @Autowired
+    private ResourceMapper resourceMapper;
+
     /**
      * 查找所有资源
      * @return
@@ -27,7 +31,11 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
      */
     @Override
     public List<ResourceDTO> findAll() throws BusinessException {
-        return DozerUtil.mapList(super.list(),ResourceDTO.class);
+        List<Resource> list = super.list();
+        for (Resource resource:list){
+            resource.setUrl(null);
+        }
+        return DozerUtil.mapList(list,ResourceDTO.class);
     }
 
 
@@ -47,6 +55,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         if (getOne(queryWrapper) != null){
             throw new BusinessException("资源重复");
         }
+        resourceDTO.setTarget("right");
         save(DozerUtil.map(resourceDTO, Resource.class));
     }
 
@@ -96,4 +105,16 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         return DozerUtil.map(this.getById(resourceId),ResourceDTO.class);
     }
 
+    /**
+     * 通过用户查询资源
+     *
+     * @param userId
+     * @return
+     * @throws BusinessException
+     */
+    @Override
+    public List<ResourceDTO> getResourceByUserId(Integer userId) throws BusinessException {
+
+        return resourceMapper.getResourceByUserId(userId);
+    }
 }

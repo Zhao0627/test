@@ -22,4 +22,9 @@ public class UserRole implements Serializable {
      */
     private Integer roleId;
 
+    /**
+     * 删除状态
+     */
+    private Integer isDel;
+
 }

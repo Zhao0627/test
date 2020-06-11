@@ -28,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.Wrapper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,16 +83,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserDTO getUserByUserName(UserDTO userDTO) throws BusinessException {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_name",userDTO.getUserName()).or().eq("user_phone",userDTO.getUserName()).or().eq("user_email",userDTO.getUserName());
+        queryWrapper.eq("is_del",SystemConstant.IS_DEL_NO);
+        queryWrapper.and(Wrapper -> Wrapper.eq("user_name",userDTO.getUserName()).or().eq("user_phone",userDTO.getUserName()).or().eq("user_email",userDTO.getUserName()));
         User user = super.getOne(queryWrapper);
         if (null == user){
             throw new BusinessException("用户名/手机号/邮箱错误");
         }
         UserRoleDTO userRoleDTO = userRoleService.getByUserId(user.getId());
+        //判断输入密码了没有  （多个方法调用原因）
         if (userDTO.getUserPwd()!=null){
+            if (user.getIsDel().equals(SystemConstant.IS_DEL_YES)){
+                throw new BusinessException("用户未注册");
+            }
             if(!userDTO.getUserPwd().equals(user.getUserPwd())){
                 throw new BusinessException("密码错误");
             }
+            //判断是否是商户
             if (userRoleDTO.getRoleId() == SystemConstant.EMAIL_STATES_2){
                 if (user.getActivatedState().equals(SystemConstant.EMAIL_STATES_1)){
                     throw new BusinessException("邮箱未激活，请前往邮箱激活");
@@ -103,8 +112,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserDTO userDTO1 = DozerUtil.map(user, UserDTO.class);
         if (userRoleDTO != null){
             userDTO1.setUserLevel(userRoleDTO.getRoleId());
-            System.out.println(userDTO1.getSalt());
         }
+
         return userDTO1;
     }
 
@@ -118,11 +127,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserDTO findUserNamePhoneEmail(UserDTO userDTO) throws BusinessException {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_name", userDTO.getUserName()).or().eq("user_phone",userDTO.getUserPhone()).or().eq("user_email",userDTO.getUserEmail());
+        queryWrapper.eq("is_del",SystemConstant.IS_DEL_NO);
+        queryWrapper.and(Wrapper -> Wrapper.eq("user_name", userDTO.getUserName()).or().eq("user_phone",userDTO.getUserPhone()).or().eq("user_email",userDTO.getUserEmail()));
         UserDTO userDTO1 = DozerUtil.map(getOne(queryWrapper), UserDTO.class);
         if (userDTO1!=null){
             UserRoleDTO userRoleDTO = userRoleService.getByUserId(userDTO1.getUserId());
-            userDTO1.setUserLevel(userRoleDTO.getRoleId());
+            if (null!=userRoleDTO){
+                userDTO1.setUserLevel(userRoleDTO.getRoleId());
+            }
         }
         return userDTO1;
     }
@@ -139,6 +151,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userDTO.setSalt(salt);
             userDTO.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + userDTO.getSalt()));
             userDTO.setSaveTime(new Date());
+            userDTO.setIsDel(SystemConstant.IS_DEL_NO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,6 +164,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //通过邮箱查询
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_email", userDTO.getUserEmail());
+            queryWrapper.eq("is_del", SystemConstant.IS_DEL_NO);
             User user = getOne(queryWrapper);
             //邮件激活
             String to = user.getUserEmail();
@@ -189,6 +203,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<UserDTO> findUserAll(UserDTO userDTO) throws BusinessException {
         UserBo userBo = DozerUtil.map(userDTO, UserBo.class);
+        userBo.setIsDel(SystemConstant.IS_DEL_NO);
         return DozerUtil.mapList(userMapper.findUserAll(userBo),UserDTO.class);
     }
 
@@ -231,9 +246,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public void updateUser(UserDTO userDTO) throws BusinessException {
-        User user = getById(userDTO.getUserId());
         try {
-            userDTO.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd())+user.getSalt()));
+            userDTO.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd())+userDTO.getSalt()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -297,4 +311,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public UserDTO findUserById(Integer id) throws BusinessException {
         return DozerUtil.map(getById(id),UserDTO.class);
     }
+
+    /**
+     * 批量级联删除
+     *
+     * @param ids
+     */
+    @Override
+    public void deleteUserByIds(Integer[] ids) throws BusinessException {
+        userMapper.deleteUserByIds(ids);
+    }
+
+    /**
+     * 批量级联修改
+     *
+     * @param ids
+     */
+    @Override
+    public void updateUserIsDelByIds(Integer[] ids) throws BusinessException {
+        userMapper.updateUserIsDelByIds(ids,SystemConstant.IS_DEL_YES);
+    }
+
 }

@@ -39,5 +39,11 @@ public class ResourceVoReq {
     private Integer resourceType;
 
 
+    /**
+     *  展示位置
+     */
+    private String target;
+
+
 
 }

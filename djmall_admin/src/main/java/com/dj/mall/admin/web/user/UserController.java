@@ -3,12 +3,14 @@ package com.dj.mall.admin.web.user;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
+import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
 import com.dj.mall.model.util.PasswordSecurityUtil;
+import com.dj.mall.model.util.SystemConstant;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,9 @@ public class UserController {
     @Reference
     private UserService userService;
 
+    @Reference
+    private ResourceService resourceService;
+
     /**
      * 用户登录
      * @param userVoResp
@@ -40,7 +45,9 @@ public class UserController {
         Assert.hasLength(userVoResp.getUserName(), "用户名不能为空");
         Assert.hasLength(userVoResp.getUserPwd(), "密码不能为空");
         UserDTO userDto = userService.getUserByUserName(DozerUtil.map(userVoResp,UserDTO.class));
-        session.setAttribute("user",DozerUtil.map(userDto,UserVoResp.class));
+        List<ResourceDTO> resourceByUserId = resourceService.getResourceByUserId(userDto.getUserId());
+        userDto.setResourceDTOList(resourceByUserId);
+        session.setAttribute("user",userDto);
         return new ResultModel<>().success("登陆成功");
     }
 
@@ -55,6 +62,12 @@ public class UserController {
         UserDTO userDto = userService.findUserNamePhoneEmail(DozerUtil.map(userVoResp,UserDTO.class));
         if (userDto == null){
             return true;
+        }
+        else if (userDto.getIsDel()==SystemConstant.IS_DEL_YES){
+            return true;
+        }
+        else if (userDto.getIsDel()==SystemConstant.IS_DEL_NO){
+            return false;
         }
         return false;
     }
@@ -127,24 +140,10 @@ public class UserController {
     public ResultModel resetPwd(Integer ids[],
                                 String emails[],
                                 HttpSession session) throws Exception {
-        UserVoResp user = (UserVoResp) session.getAttribute("user");
+        UserDTO user = (UserDTO) session.getAttribute("user");
         userService.resetPwd(ids, emails, user.getUserName());
         return new ResultModel().success("重置成功");
     }
-
-    /**
-     * 修改密码
-     * @param userVoReq
-     * @return
-     * @throws Exception
-     */
-/*
-    @RequestMapping("updatePwd")
-    public ResultModel updatePwd(UserVoReq userVoReq) throws Exception {
-        userService.updateUser(DozerUtil.map(userVoReq,UserDTO.class));
-        return new ResultModel().success("修改密码成功");
-    }
-*/
 
     /**
      * 根据手机号修改密码
@@ -180,6 +179,12 @@ public class UserController {
     public ResultModel updateState(Integer ids[]) throws Exception {
         userService.updateActivatedState(ids);
         return new ResultModel().success("修改成功");
+    }
+
+    @RequestMapping("delUser")
+    public ResultModel delUser(Integer ids[]){
+        userService.updateUserIsDelByIds(ids);
+        return new ResultModel().success("删除成功");
     }
 
 }

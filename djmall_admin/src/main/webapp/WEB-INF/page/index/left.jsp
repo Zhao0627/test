@@ -20,70 +20,35 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/zTree_v3/js/jquery.ztree.excheck.js"></script>
 <title>Insert title here</title>
 <script type="text/javascript">
-			var setting = {
+    var setting = {
 					data:{
 						simpleData: {
 							//开启简单数据格式
 							enable:true,
 							//parentId
-							idKey:"id",
-							pIdKey:"parentId",
+							idKey:"resourceId",
+							pIdKey:"pid",
+
 						},
+                        key: {
+                            //名字
+                            name:"resourceName",
+                        },
 					},
 					async: {
 						enable: true,
-						target:"target",
-						url:"url"
+                        target : "right",
+						url:"url",
 					}
 			};
- 			var zNodes =[
-                {
-                    name:"运营平台", open:false,
-                        children:[
-                            {name: "用户管理", open: false,target:"right",url:"<%=request.getContextPath()%>/auth/user/toShow" },
-                            { name:"基础管理", open:false,
-                                children: [
-                                    { name:"运费",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"},
-                                    { name:"字典数据",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"},
-                                    { name:"商品属性维护",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"},
-                                    { name:"通用SKU维护",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"}
-                                ]},
-                            {name: "订单管理", open: false, },
-                            {name: "商品管理", open: false, },
-                            { name:"权限管理", open:false,
-                                children: [
-                                    {
-                                        name:"资源管理",target: "right", url:"<%=request.getContextPath()%>/auth/resource/toShow", open:false,
-                                            children :[
-                                                { name:"新增资源",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"},
-                                            ]
-
-                                    },
-                                    {
-                                        name:"角色管理",target: "right", url:"<%=request.getContextPath()%>/auth/role/toShow", open:false,
-                                        children :[
-                                            { name:"新增角色",target:"right",url:"<%=request.getContextPath()%>/auth/role/toShow"},
-                                            { name:"关联资源",target:"right",url:"<%=request.getContextPath()%>/base/toBaseShow"}
-                                        ]
-
-                                    },
-                                ]}
-                        ]
-                },
-
-		];
-		
-/*		$(function(){
-			$.post("<%=request.getContextPath()%>/menu/menuShow?token="+token,
+		$(function(){
+			$.post("<%=request.getContextPath()%>/index/getMean",
 					{},
 					function(data){
 						$.fn.zTree.init($("#treeDemo"),setting,data.data);
 					})
 			
-		})*/
-            $(function(){
-            $.fn.zTree.init($("#treeDemo"),setting,zNodes);
-            })
+		})
 </script>	
 </head>
 <body>

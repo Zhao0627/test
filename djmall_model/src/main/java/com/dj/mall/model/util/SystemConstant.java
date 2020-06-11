@@ -21,4 +21,14 @@ public class SystemConstant {
 	 */
     public static final Integer COMMERCIAL_ID = 2 ;
 
+	/**
+	 * 已删除为2
+	 */
+    public static final Integer IS_DEL_YES = 2 ;
+
+	/**
+	 * 未删除为1
+	 */
+    public static final Integer IS_DEL_NO = 1 ;
+
 }

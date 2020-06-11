@@ -44,5 +44,11 @@ public class ResourceVoResp {
     private String userLevelShow;
 
 
+    /**
+     *  展示位置
+     */
+    private String target;
+
+
 
 }

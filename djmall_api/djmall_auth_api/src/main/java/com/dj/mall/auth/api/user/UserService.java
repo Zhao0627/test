@@ -77,4 +77,16 @@ public interface UserService {
      * @return
      */
     UserDTO findUserById(Integer id) throws BusinessException;
+
+    /**
+     * 批量级联删除
+     * @param ids
+     */
+    void deleteUserByIds(Integer[] ids) throws BusinessException;
+
+    /**
+     * 批量级联修改
+     * @param ids
+     */
+    void updateUserIsDelByIds(Integer[] ids) throws BusinessException;
 }

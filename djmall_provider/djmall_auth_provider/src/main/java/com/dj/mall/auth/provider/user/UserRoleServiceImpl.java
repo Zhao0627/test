@@ -12,6 +12,7 @@ import com.dj.mall.auth.entity.user.UserRole;
 import com.dj.mall.auth.mapper.user.UserLoginTimeMapper;
 import com.dj.mall.auth.mapper.user.UserRoleMapper;
 import com.dj.mall.model.util.DozerUtil;
+import com.dj.mall.model.util.SystemConstant;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -30,6 +31,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     public UserRoleDTO getByUserId(Integer userId) {
         QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("is_del", SystemConstant.IS_DEL_NO);
         UserRole userRole = getOne(queryWrapper);
         return DozerUtil.map(userRole,UserRoleDTO.class);
     }
@@ -45,6 +47,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleId);
         userRole.setUserId(userId);
+        userRole.setIsDel(SystemConstant.IS_DEL_NO);
         save(userRole);
     }
 }

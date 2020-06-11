@@ -1,10 +1,12 @@
 package com.dj.mall.auth.dto.user;
 
+import com.dj.mall.auth.dto.resource.ResourceDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户DTO
@@ -83,5 +85,15 @@ public class UserDTO implements Serializable {
      * 用户d登录时间
      */
     private Date loginTime;
+
+    /**
+     * 删除状态
+     */
+    private Integer isDel;
+
+    /**
+     * 用户资源集合
+     */
+    List<ResourceDTO> resourceDTOList;
 
 }

@@ -8,16 +8,19 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@DependsOn("userInterceptor")
+@DependsOn("loginInterceptor")
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Autowired
-    private UserInterceptor userInterceptor;
+    private LoginInterceptor loginInterceptor;
+
+    @Autowired
+    private PermissionInterceptor permissionInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
         //把拦截器加入到spring容器中
-        InterceptorRegistration interceptorRegistration = interceptorRegistry.addInterceptor(userInterceptor);
+        InterceptorRegistration interceptorRegistration = interceptorRegistry.addInterceptor(loginInterceptor);
         //对拦截器进行配置
 
         //拦截的方法
@@ -36,5 +39,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         interceptorRegistration.excludePathPatterns("/auth/user/getPhoneCode");
         interceptorRegistration.excludePathPatterns("/auth/user/updatePwdByPhone");
         interceptorRegistration.excludePathPatterns("/static/**");
+
+        InterceptorRegistration permission = interceptorRegistry.addInterceptor(permissionInterceptor);
+        permission.addPathPatterns("/auth/user/toShow");
+        permission.addPathPatterns("/auth/role/toShow");
+        permission.addPathPatterns("/auth/resource/toShow");
+
+
     }
 }

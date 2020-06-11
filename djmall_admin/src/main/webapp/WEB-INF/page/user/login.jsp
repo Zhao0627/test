@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>登入 - 知名商城</title>
+    <title>登入 - 点金教育DJmall项目</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -28,6 +28,23 @@
                     <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
                     <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
                 </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                        </div>
+
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 10px;">
+                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="layui-form-item" style="margin-bottom: 20px;">
                     <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
                     <a href="<%=request.getContextPath()%>/auth/user/toForgetPwd" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>

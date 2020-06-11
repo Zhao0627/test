@@ -53,4 +53,12 @@ public interface ResourceService {
      * @throws BusinessException
      */
     ResourceDTO findById(Integer resourceId) throws BusinessException;
+
+    /**
+     * 通过用户查询
+     * @param userId
+     * @return
+     * @throws BusinessException
+     */
+    List<ResourceDTO> getResourceByUserId(Integer userId) throws BusinessException;
 }

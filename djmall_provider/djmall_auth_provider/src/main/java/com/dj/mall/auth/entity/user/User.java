@@ -75,5 +75,10 @@ public class User implements Serializable {
      */
     private Date saveTime;
 
+    /**
+     * 删除状态
+     */
+    private Integer isDel;
+
 
 }

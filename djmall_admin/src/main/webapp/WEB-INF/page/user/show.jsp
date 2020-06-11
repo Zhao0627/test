@@ -255,6 +255,31 @@ layui.use('table', function(){
             layer.msg('已取消');
         });
     })
+
+    //删除
+    $('#del').on('click',function(){
+        //获取选中数据
+        var checkStatus = table.checkStatus('test')
+            ,data = checkStatus.data;
+        //获取选中ids
+        var ids = [];
+        for (var i = 0; i < data.length; i++) {
+            ids.push(data[i].userId)
+        }
+        layer.confirm('您确定要删除该用户及其用户全部信息吗', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+                $.post("<%=request.getContextPath()%>/auth/user/delUser",
+                {"ids":ids.join(',')},
+                function(data){
+                    layer.msg(data.msg,function(){
+                        window.location.href="<%=request.getContextPath()%>/auth/user/toShow";
+                    });
+            })
+        }, function(){
+            layer.msg('已取消');
+        });
+    })
 })
 </script>
 </body>

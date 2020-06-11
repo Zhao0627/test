@@ -38,6 +38,7 @@
 <div align="center">
 <form id="fm">
     <input type="hidden" value="${user.userId}"  name="userId" />
+    <input type="hidden" value="${user.salt}"  name="salt" />
     用户名：<input type="text" name="userName" value="${user.userName}" /><br /><br />
     手机号：<input type="text" name="userPhone" value="${user.userPhone}" /><br /><br />
     邮箱号：<input type="text" name="userEmail" value="${user.userEmail}" /><br /><br />

@@ -55,6 +55,7 @@
 				//parentId
 				idKey:"resourceId",
 				pIdKey:"pid",
+                target : "da"
 			},
 			key: {
 				//名字

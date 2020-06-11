@@ -30,7 +30,6 @@
         if (btn!==obj){
             return;
         }
-
     }
 
 
@@ -171,6 +170,8 @@ $(function () {
           <label>图形验证码:</label>&nbsp;&nbsp;
           <input type="text" style="height: 31px;width: 140px" id="yanzhengma" onblur="yanzheng(this.value)"/>
           <input type="button" value="" id="btn" class="button" style="" /><br><br>
+
+
           <div class="layui-form-item">
               <div class="layui-row">
                   <div class="layui-col-xs7">
