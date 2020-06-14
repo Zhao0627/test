@@ -5,6 +5,7 @@ import com.dj.mall.admin.vo.ResourceVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.model.util.DozerUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toShow")
+    @RequiresPermissions("RESOURCE_MANAGER")
     public String toShow(){
         return "resource/show";
     }
@@ -36,6 +38,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toSaveResource")
+    @RequiresPermissions("RESOURCE_SAVE_BTN")
     public String toSaveResource(Model model, Integer resourceId){
         ResourceVoResp resourceVoResp = new ResourceVoResp();
         if (resourceId!=0){
@@ -58,6 +61,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toUpdateResource")
+    @RequiresPermissions("RESOURCE_UPDATE_BTN")
     public String toUpdateResource(Model model, Integer resourceId){
         List<ResourceDTO> all = resourceService.findAll();
         model.addAttribute("resourceList",all);

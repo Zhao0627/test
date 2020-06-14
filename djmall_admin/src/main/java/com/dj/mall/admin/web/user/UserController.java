@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ShiroRealm;
 import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
@@ -11,6 +12,10 @@ import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
 import com.dj.mall.model.util.PasswordSecurityUtil;
 import com.dj.mall.model.util.SystemConstant;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +53,10 @@ public class UserController {
         List<ResourceDTO> resourceByUserId = resourceService.getResourceByUserId(userDto.getUserId());
         userDto.setResourceDTOList(resourceByUserId);
         session.setAttribute("user",userDto);
+        //获取主体
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(userVoResp.getUserName(),userVoResp.getUserPwd());
+        subject.login(token);
         return new ResultModel<>().success("登陆成功");
     }
 
@@ -97,10 +106,10 @@ public class UserController {
      * @return
      */
     @RequestMapping("show")
+    @RequiresPermissions("USER_MANAGER")
     public Map<String,Object> show(UserVoResp userVoResp) throws Exception{
-        UserDTO userDTO = DozerUtil.map(userVoResp, UserDTO.class);
         Map<String,Object> map = new HashMap<>();
-        map.put("data",DozerUtil.mapList(userService.findUserAll(userDTO),UserVoResp.class));
+        map.put("data",DozerUtil.mapList(userService.findUserAll(DozerUtil.map(userVoResp, UserDTO.class)),UserVoResp.class));
         map.put("code",0);
         return map;
     }
@@ -123,6 +132,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("updateUser")
+    @RequiresPermissions("USER_UPDATE_BTN")
     public ResultModel<Object> updateUser(UserVoResp userVoResp) throws Exception{
         userService.updateUser(DozerUtil.map(userVoResp,UserDTO.class));
         return new ResultModel<Object>().success("修改成功");
@@ -137,6 +147,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("resetPwd")
+    @RequiresPermissions("USER_REST_PWD_BTN")
     public ResultModel resetPwd(Integer ids[],
                                 String emails[],
                                 HttpSession session) throws Exception {
@@ -182,6 +193,7 @@ public class UserController {
     }
 
     @RequestMapping("delUser")
+    @RequiresPermissions("USER_DELETE_BTN")
     public ResultModel delUser(Integer ids[]){
         userService.updateUserIsDelByIds(ids);
         return new ResultModel().success("删除成功");

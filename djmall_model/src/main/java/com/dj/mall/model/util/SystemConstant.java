@@ -31,4 +31,14 @@ public class SystemConstant {
 	 */
     public static final Integer IS_DEL_NO = 1 ;
 
+	/**
+	 * 菜单——1
+	 */
+    public static final Integer MENU_1 = 1 ;
+
+	/**
+	 * 按钮——2
+	 */
+    public static final Integer BUTTON_2 = 2 ;
+
 }

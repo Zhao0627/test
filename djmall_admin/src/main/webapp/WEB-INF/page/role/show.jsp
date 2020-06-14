@@ -1,6 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>Title</title>
@@ -21,9 +22,15 @@
                         html += "<tr>"
                         html += "<td>"+role.roleId+"</td>"
                         html += "<td>"+role.roleName+"</td>"
-                        html += "<td><input type='button' value='关联资源' onclick='saveResource("+role.roleId+")'/>"
-                        html += "<input type='button' value='编辑' onclick='update("+role.roleId+")'/>"
-                        html += "<input type='button' value='删除' onclick='del("+role.roleId+")'/></td>>"
+                        <shiro:hasPermission name="ROLE_RESOURCE_BTN">
+                            html += "<td><input type='button' value='关联资源' onclick='saveResource("+role.roleId+")'/>"
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="ROLE_UPDATE_BTN">
+                            html += "<input type='button' value='编辑' onclick='update("+role.roleId+")'/>"
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="ROLE_DELETE_BTN">
+                            html += "<input type='button' value='删除' onclick='del("+role.roleId+")'/></td>>"
+                        </shiro:hasPermission>
                         html += "</tr>"
                     }
                     $("#tab").html(html);
@@ -69,7 +76,7 @@
         function saveResource(id) {
             layer.open({
                 type: 2,
-                title: '新增',
+                title: '关联资源',
                 shadeClose: true,
                 shade: 0.8,
                 area: ['380px', '90%'],
@@ -82,7 +89,9 @@
 <table align="center" border="solid" style=" border-collapse:collapse;">
     <tr>
         <th>
+            <shiro:hasPermission name="ROLE_SAVE_BTN">
             <input type="button" value="新增" onclick="saveRole()">
+            </shiro:hasPermission>
         </th>
     </tr>
     <tr>

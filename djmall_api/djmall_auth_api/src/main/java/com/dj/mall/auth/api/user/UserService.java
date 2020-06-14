@@ -30,7 +30,7 @@ public interface UserService {
      * 注册
      * @param userDTO 注册的用户
      */
-    void insertUser(UserDTO userDTO) throws Exception;
+    void insertUser(UserDTO userDTO) throws BusinessException,Exception;
 
     /**
      * 注册激活修改激活码

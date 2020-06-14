@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,11 +74,21 @@
 </select>
 </form>
 <div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 50px" id="update">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button style="height: 20px;width: 50px" id="activate">激活</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <shiro:hasPermission name="USER_UPDATE_BTN">
+        <button style="height: 20px;width: 50px" id="update">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </shiro:hasPermission>
+    <shiro:hasPermission name="USER_ACTIVATE_BTN">
+        <button style="height: 20px;width: 50px" id="activate">激活</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </shiro:hasPermission>
+    <shiro:hasPermission name="USER_REST_PWD_BTN">
     <button style="height: 20px;width: 70px" id="update_pwd">重置密码</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </shiro:hasPermission>
+    <shiro:hasPermission name="USER_DELETE_BTN">
     <button style="height: 20px;width: 50px" id="del">删除</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </shiro:hasPermission>
+    <shiro:hasPermission name="USER_ROLE_BTN">
     <button style="height: 20px;width: 50px" id="mandate">授权</button>
+    </shiro:hasPermission>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <!-- 分页部分  -->

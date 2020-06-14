@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/login.css" media="all">
 
 </head>
+<script type="text/javascript">
+    function Refresh() {
+        $("#img").load(location.href + " #img");
+    }
+</script>
 <body>
 <form id="fm">
     <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
@@ -28,7 +33,7 @@
                     <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
                     <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
                 </div>
-
+<%--
                 <div class="layui-form-item">
                     <div class="layui-row">
                         <div class="layui-col-xs7">
@@ -37,12 +42,12 @@
                         </div>
 
                         <div class="layui-col-xs5">
-                            <div style="margin-left: 10px;">
-                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                            <div style="margin-left: 10px;" id="img">
+                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode" onclick="Refresh()">
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--%>
 
 
                 <div class="layui-form-item" style="margin-bottom: 20px;">

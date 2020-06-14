@@ -9,9 +9,11 @@ import com.dj.mall.auth.entity.resource.Resource;
 import com.dj.mall.auth.mapper.resource.ResourceMapper;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.util.DozerUtil;
+import com.dj.mall.model.util.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +116,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
      */
     @Override
     public List<ResourceDTO> getResourceByUserId(Integer userId) throws BusinessException {
-
-        return resourceMapper.getResourceByUserId(userId);
+        List<ResourceDTO> resourceDTOList = resourceMapper.getResourceByUserId(userId);
+        return resourceDTOList;
     }
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -194,9 +195,15 @@
 </head>
 <body>
 <div class="zTreeDemoBackground left">
-	<input type="button" value="新增" onclick="save()" />
-	<input type="button" value="编辑" onclick="update()" />
-	<input type="button" value="删除" onclick="del()" />
+    <shiro:hasPermission name="RESOURCE_SAVE_BTN">
+        <input type="button" value="新增" onclick="save()" />
+    </shiro:hasPermission>
+    <shiro:hasPermission name="RESOURCE_UPDATE_BTN">
+	    <input type="button" value="编辑" onclick="update()" />
+    </shiro:hasPermission>
+    <shiro:hasPermission name="RESOURCE_DELETE_BTN">
+	    <input type="button" value="删除" onclick="del()" />
+    </shiro:hasPermission>
  	<div id="ztree" class="ztree">
     </div>
 </div>

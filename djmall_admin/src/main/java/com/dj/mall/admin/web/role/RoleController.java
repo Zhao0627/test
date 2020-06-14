@@ -10,6 +10,7 @@ import com.dj.mall.auth.dto.role.RoleDTO;
 import com.dj.mall.auth.dto.role.RoleResourceDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -37,6 +38,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("show")
+    @RequiresPermissions("ROLE_MANAGER")
     public ResultModel<Object> show() throws Exception{
         List<RoleDTO> roleAll = roleService.findRoleAll();
         return new ResultModel<>().success(DozerUtil.mapList(roleAll, RoleVoResp.class));
@@ -47,6 +49,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("updateRole")
+    @RequiresPermissions("ROLE_UPDATE_BTN")
     public ResultModel<Object> updateRole(RoleVoResp roleVoResp) throws Exception{
         roleService.update(DozerUtil.map(roleVoResp, RoleDTO.class));
         return new ResultModel<>().success("修改成功");
@@ -57,6 +60,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("saveRole")
+    @RequiresPermissions("ROLE_SAVE_BTN")
     public ResultModel<Object> saveRole(RoleVoResp roleVoResp) throws Exception{
         Assert.hasLength(roleVoResp.getRoleName(), "角色名不能为空");
         roleService.save(DozerUtil.map(roleVoResp, RoleDTO.class));
@@ -68,6 +72,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("deleteRole")
+    @RequiresPermissions("ROLE_DELETE_BTN")
     public ResultModel<Object> deleteRole(Integer id) throws Exception{
         roleService.delete(id);
         return new ResultModel<>().success("删除成功");
@@ -78,6 +83,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("getRoleResource")
+    @RequiresPermissions("ROLE_RESOURCE_BTN")
     public ResultModel<Object> getRoleResource(Integer id) throws Exception{
         List<ZtreeDataDTO> ztreeDataDTOList = roleService.getRoleResource(id);
         return new ResultModel<>().success(ztreeDataDTOList);

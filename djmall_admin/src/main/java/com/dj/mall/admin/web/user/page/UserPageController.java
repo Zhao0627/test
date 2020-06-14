@@ -7,6 +7,7 @@ import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.role.RoleDTO;
 import com.dj.mall.model.util.DozerUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toShow")
+    @RequiresPermissions("USER_MANAGER")
     public String toShow(Model model){
         List<RoleDTO> roleAll = roleService.findRoleAll();
         model.addAttribute("role", DozerUtil.mapList(roleAll, RoleVoResp.class));
@@ -77,6 +79,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdate")
+    @RequiresPermissions("USER_UPDATE_BTN")
     public String toUpdate(Integer id, Model model){
         UserVoResp user = DozerUtil.map(userService.findUserById(id), UserVoResp.class);
         model.addAttribute("user",user);
@@ -100,6 +103,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdatePwd")
+    @RequiresPermissions("USER_REST_PWD_BTN")
     public String toUpdatePwd(String userPhone, Model model){
         model.addAttribute("userPhone",userPhone);
         return "/user/update_pwd";

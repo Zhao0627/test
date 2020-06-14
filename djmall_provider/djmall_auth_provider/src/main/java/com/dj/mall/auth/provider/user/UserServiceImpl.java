@@ -145,31 +145,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param userDTO
      */
     @Override
-    public void insertUser(UserDTO userDTO) throws BusinessException {
-        try {
-            String salt = PasswordSecurityUtil.generateSalt();
-            userDTO.setSalt(salt);
-            userDTO.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + userDTO.getSalt()));
-            userDTO.setSaveTime(new Date());
-            userDTO.setIsDel(SystemConstant.IS_DEL_NO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        save(DozerUtil.map(userDTO,User.class));
-        UserDTO userDTO2 = new UserDTO();
-        userDTO2.setUserName(userDTO.getUserName());
-        UserDTO userDTO1 = getUserByUserName(userDTO2);
-        userRoleService.insert(userDTO1.getUserId(),userDTO.getUserLevel());
+    public void insertUser(UserDTO userDTO) throws BusinessException,Exception {
+        User user1 = DozerUtil.map(userDTO, User.class);
+        String salt = PasswordSecurityUtil.generateSalt();
+        user1.setSalt(salt);
+
+        user1.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + salt));
+        System.out.println(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + userDTO.getSalt()));
+        user1.setSaveTime(new Date());
+        user1.setIsDel(SystemConstant.IS_DEL_NO);
+        save(user1);
+        userRoleService.insert(user1.getId(),userDTO.getUserLevel());
+
         if (userDTO.getUserLevel()==SystemConstant.COMMERCIAL_ID){
-            //通过邮箱查询
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("user_email", userDTO.getUserEmail());
-            queryWrapper.eq("is_del", SystemConstant.IS_DEL_NO);
-            User user = getOne(queryWrapper);
             //邮件激活
-            String to = user.getUserEmail();
+            String to = user1.getUserEmail();
             String subject = "注册激活登录";
-            String content = "'恭喜："+user.getNickName()+"注册成功，"+"点击<a href='http://127.0.0.1:8081/admin/auth/user/toUpdateState?id=\n"+user.getId()+"\n'>这里</a>激活";
+            String content = "'恭喜："+user1.getNickName()+"注册成功，"+"点击<a href='http://127.0.0.1:8081/admin/auth/user/toUpdateState?id=\n"+user1.getId()+"\n'>这里</a>激活";
             mailService.sendHtmlMail(to, subject, content);
         }
     }
@@ -257,7 +249,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取验证码以及发送验证码
      *
-     * @param userDTO
+     * @param userDTO 获取来的手机号
      */
     @Override
     public String getPhoneCode(UserDTO userDTO) throws BusinessException {

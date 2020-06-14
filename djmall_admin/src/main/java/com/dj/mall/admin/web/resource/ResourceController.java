@@ -6,6 +6,7 @@ import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("show")
+    @RequiresPermissions("RESOURCE_MANAGER")
     public ResultModel<Object> show() throws Exception{
         return new ResultModel<>().success(resourceService.findAll());
     }
@@ -40,6 +42,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("saveResource")
+    @RequiresPermissions("RESOURCE_SAVE_BTN")
     public ResultModel<Object> saveResource(ResourceVoResp resourceVoResp) throws Exception{
         Assert.hasText(resourceVoResp.getResourceName(),"资源名不能为空");
         Assert.hasText(resourceVoResp.getUrl(), "资源路径不能为空");
@@ -55,6 +58,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("updateResource")
+    @RequiresPermissions("RESOURCE_UPDATE_BTN")
     public ResultModel<Object> updateResource(ResourceVoResp resourceVoResp) throws Exception{
         resourceService.update(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("修改成功");
@@ -66,6 +70,7 @@ public class ResourceController {
      * @param resourceVoResp
      */
     @RequestMapping("deleteResource")
+    @RequiresPermissions("RESOURCE_DELETE_BTN")
     public ResultModel<Object> deleteResource(ResourceVoResp resourceVoResp) throws Exception{
         List<Integer> ids = new ArrayList<Integer>();
         ids.add(resourceVoResp.getResourceId());
