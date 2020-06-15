@@ -47,7 +47,6 @@
                     })
         }
 
-
         function update(roleId) {
             layer.open({
                 type: 2,

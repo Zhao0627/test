@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.user.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ResourceConstant;
 import com.dj.mall.admin.vo.RoleVoResp;
 import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.role.RoleService;
@@ -47,7 +48,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toShow")
-    @RequiresPermissions("USER_MANAGER")
+    @RequiresPermissions(ResourceConstant.USER_MANAGER)
     public String toShow(Model model){
         List<RoleDTO> roleAll = roleService.findRoleAll();
         model.addAttribute("role", DozerUtil.mapList(roleAll, RoleVoResp.class));
@@ -79,7 +80,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdate")
-    @RequiresPermissions("USER_UPDATE_BTN")
+    @RequiresPermissions(ResourceConstant.USER_UPDATE_BTN)
     public String toUpdate(Integer id, Model model){
         UserVoResp user = DozerUtil.map(userService.findUserById(id), UserVoResp.class);
         model.addAttribute("user",user);
@@ -103,7 +104,7 @@ public class UserPageController {
      * @return
      */
     @RequestMapping("toUpdatePwd")
-    @RequiresPermissions("USER_REST_PWD_BTN")
+    @RequiresPermissions(ResourceConstant.USER_REST_PWD_BTN)
     public String toUpdatePwd(String userPhone, Model model){
         model.addAttribute("userPhone",userPhone);
         return "/user/update_pwd";

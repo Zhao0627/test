@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.resource;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ResourceConstant;
 import com.dj.mall.admin.vo.ResourceVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
@@ -32,7 +33,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("show")
-    @RequiresPermissions("RESOURCE_MANAGER")
+    @RequiresPermissions(ResourceConstant.RESOURCE_MANAGER)
     public ResultModel<Object> show() throws Exception{
         return new ResultModel<>().success(resourceService.findAll());
     }
@@ -42,7 +43,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("saveResource")
-    @RequiresPermissions("RESOURCE_SAVE_BTN")
+    @RequiresPermissions(ResourceConstant.RESOURCE_SAVE_BTN)
     public ResultModel<Object> saveResource(ResourceVoResp resourceVoResp) throws Exception{
         Assert.hasText(resourceVoResp.getResourceName(),"资源名不能为空");
         Assert.hasText(resourceVoResp.getUrl(), "资源路径不能为空");
@@ -58,7 +59,7 @@ public class ResourceController {
      * @return
      */
     @RequestMapping("updateResource")
-    @RequiresPermissions("RESOURCE_UPDATE_BTN")
+    @RequiresPermissions(ResourceConstant.RESOURCE_UPDATE_BTN)
     public ResultModel<Object> updateResource(ResourceVoResp resourceVoResp) throws Exception{
         resourceService.update(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("修改成功");
@@ -70,7 +71,7 @@ public class ResourceController {
      * @param resourceVoResp
      */
     @RequestMapping("deleteResource")
-    @RequiresPermissions("RESOURCE_DELETE_BTN")
+    @RequiresPermissions(ResourceConstant.RESOURCE_DELETE_BTN)
     public ResultModel<Object> deleteResource(ResourceVoResp resourceVoResp) throws Exception{
         List<Integer> ids = new ArrayList<Integer>();
         ids.add(resourceVoResp.getResourceId());

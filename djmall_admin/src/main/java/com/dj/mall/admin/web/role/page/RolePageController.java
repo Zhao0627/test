@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.role.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ResourceConstant;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.dto.role.RoleDTO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,7 +27,7 @@ public class RolePageController {
      * @return
      */
     @RequestMapping("toShow")
-    @RequiresPermissions("ROLE_MANAGER")
+    @RequiresPermissions(ResourceConstant.ROLE_MANAGER)
     public String toShow(){
         return "role/show";
     }
@@ -38,7 +39,7 @@ public class RolePageController {
      * @return
      */
     @RequestMapping("toUpdateRole")
-    @RequiresPermissions("ROLE_UPDATE_BTN")
+    @RequiresPermissions(ResourceConstant.ROLE_UPDATE_BTN)
     public String toUpdateRole(Model model, Integer id){
         RoleDTO role = roleService.findRoleById(id);
         model.addAttribute("role",role);
@@ -50,7 +51,7 @@ public class RolePageController {
      * @return
      */
     @RequestMapping("toSaveRole")
-    @RequiresPermissions("ROLE_SAVE_BTN")
+    @RequiresPermissions(ResourceConstant.ROLE_SAVE_BTN)
     public String toSaveRole(){
         return "role/insert";
     }
@@ -60,7 +61,7 @@ public class RolePageController {
      * @return
      */
     @RequestMapping("toSaveRoleResource")
-    @RequiresPermissions("ROLE_RESOURCE_BTN")
+    @RequiresPermissions(ResourceConstant.ROLE_RESOURCE_BTN)
     public String toSaveRoleResource(Integer id, Model model){
         model.addAttribute("id",id);
         return "role/role_resource";

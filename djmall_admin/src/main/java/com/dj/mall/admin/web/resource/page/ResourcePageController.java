@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.resource.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ResourceConstant;
 import com.dj.mall.admin.vo.ResourceVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
@@ -27,7 +28,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toShow")
-    @RequiresPermissions("RESOURCE_MANAGER")
+    @RequiresPermissions(ResourceConstant.RESOURCE_MANAGER)
     public String toShow(){
         return "resource/show";
     }
@@ -38,7 +39,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toSaveResource")
-    @RequiresPermissions("RESOURCE_SAVE_BTN")
+    @RequiresPermissions(ResourceConstant.RESOURCE_SAVE_BTN)
     public String toSaveResource(Model model, Integer resourceId){
         ResourceVoResp resourceVoResp = new ResourceVoResp();
         if (resourceId!=0){
@@ -61,7 +62,7 @@ public class ResourcePageController {
      * @return
      */
     @RequestMapping("toUpdateResource")
-    @RequiresPermissions("RESOURCE_UPDATE_BTN")
+    @RequiresPermissions(ResourceConstant.RESOURCE_UPDATE_BTN)
     public String toUpdateResource(Model model, Integer resourceId){
         List<ResourceDTO> all = resourceService.findAll();
         model.addAttribute("resourceList",all);

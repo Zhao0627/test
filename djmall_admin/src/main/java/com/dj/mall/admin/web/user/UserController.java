@@ -1,6 +1,7 @@
 package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dj.mall.admin.config.ResourceConstant;
 import com.dj.mall.admin.config.ShiroRealm;
 import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
@@ -106,7 +107,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("show")
-    @RequiresPermissions("USER_MANAGER")
+    @RequiresPermissions(ResourceConstant.USER_MANAGER)
     public Map<String,Object> show(UserVoResp userVoResp) throws Exception{
         Map<String,Object> map = new HashMap<>();
         map.put("data",DozerUtil.mapList(userService.findUserAll(DozerUtil.map(userVoResp, UserDTO.class)),UserVoResp.class));
@@ -132,7 +133,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("updateUser")
-    @RequiresPermissions("USER_UPDATE_BTN")
+    @RequiresPermissions(ResourceConstant.USER_UPDATE_BTN)
     public ResultModel<Object> updateUser(UserVoResp userVoResp) throws Exception{
         userService.updateUser(DozerUtil.map(userVoResp,UserDTO.class));
         return new ResultModel<Object>().success("修改成功");
@@ -147,7 +148,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("resetPwd")
-    @RequiresPermissions("USER_REST_PWD_BTN")
+    @RequiresPermissions(ResourceConstant.USER_REST_PWD_BTN)
     public ResultModel resetPwd(Integer ids[],
                                 String emails[],
                                 HttpSession session) throws Exception {
@@ -193,7 +194,7 @@ public class UserController {
     }
 
     @RequestMapping("delUser")
-    @RequiresPermissions("USER_DELETE_BTN")
+    @RequiresPermissions(ResourceConstant.USER_DELETE_BTN)
     public ResultModel delUser(Integer ids[]){
         userService.updateUserIsDelByIds(ids);
         return new ResultModel().success("删除成功");
