@@ -53,6 +53,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         queryWrapper.eq("p_id",resourceDTO.getPId())
                 .eq("resource_name",resourceDTO.getResourceName()).or()
                 .eq("url",resourceDTO.getUrl())
+                .eq("resource_code",resourceDTO.getResourceCode())
         ;
         if (getOne(queryWrapper) != null){
             throw new BusinessException("资源重复");

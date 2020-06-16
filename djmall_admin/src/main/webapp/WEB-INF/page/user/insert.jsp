@@ -82,8 +82,8 @@
           <div class="layui-form-item">
               <label>性别</label>
               <div style="margin-top: -28px;margin-left: 50px">
-                  <input type="radio" name="userSex" value="1" id="userSex" lay-verify="email" class="layui-input" checked title="男">
-                  <input type="radio" name="userSex" value="2" id="userSex_" lay-verify="email" class="layui-input" title="女">
+                  <input type="radio" name="userSex" value="MAN" id="userSex" lay-verify="email" class="layui-input" checked title="男">
+                  <input type="radio" name="userSex" value="WOMAN" id="userSex_" lay-verify="email" class="layui-input" title="女">
               </div>
           </div>
 

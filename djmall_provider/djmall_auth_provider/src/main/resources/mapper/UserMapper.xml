@@ -23,10 +23,12 @@
     </update>
 
     <select id="findUserAll" resultType="com.dj.mall.auth.bo.user.UserBo">
-        SELECT u.user_name AS user_name,u.user_pwd AS user_pwd,u.salt AS salt, u.user_email AS user_email,u.user_phone AS user_phone,u.nick_name AS nick_name,u.user_sex AS user_sex,u.activated_state AS activated_state,u.save_time AS save_time,u.reset_pwd AS reset_pwd,u.id AS user_id, MAX(l.login_time) AS login_time ,  r.role_name AS user_level_show,r.id AS user_level
+        SELECT u.user_name AS user_name,u.user_pwd AS user_pwd,u.salt AS salt, u.user_email AS user_email,u.user_phone AS user_phone,u.nick_name AS nick_name,bd.`name` AS user_sex,bd1.`name` AS activated_state,u.save_time AS save_time,u.reset_pwd AS reset_pwd,u.id AS user_id, MAX(l.login_time) AS login_time ,  r.role_name AS user_level_show,r.id AS user_level
         FROM djmall_auth_user u LEFT JOIN user_login l ON u.id = l.user_id
         LEFT JOIN djmall_auth_user_role ur ON u.id = ur.user_id
         LEFT JOIN djmall_auth_role r ON r.id = ur.role_id
+        LEFT JOIN djmall_auth_base_data bd ON u.user_sex = bd.`code`
+        LEFT JOIN djmall_auth_base_data bd1 ON u.activated_state = bd1.`code`
         where
             u.is_del = #{userBo.isDel}
             <if test="null != userBo.userName and '' != userBo.userName">

@@ -115,9 +115,9 @@ layui.use('table', function(){
       ,{field:'nickName', title:'昵称', width:80}
       ,{field:'userPhone', title:'手机号', width:130}
       ,{field:'userEmail', title:'邮箱', width:190}
-      ,{field:'userSexShow', title:'性别', width:80}
+      ,{field:'userSex', title:'性别', width:80}
       ,{field:'userLevelShow', title:'用户级别', width:100,}
-      ,{field:'stateShow', title:'状态', width:100,}
+      ,{field:'activatedState', title:'状态', width:100,}
       ,{field:'saveTimeShow', title:'注册时间', width:180,}
       ,{field:'loginTime', title:'登录时间', width:180,}
 /*      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150,rowspan:"3"}*/

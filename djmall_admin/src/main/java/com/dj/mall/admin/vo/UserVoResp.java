@@ -53,23 +53,7 @@ public class UserVoResp {
     /**
      * 用户性别
      */
-    private Integer userSex;
-
-    /**
-     * 用户性别展示
-     */
-    private String userSexShow;
-
-    public void setUserSexShow(String userSexShow) {
-        this.userSexShow = userSexShow;
-    }
-
-    public String getUserSexShow() {
-        if (userSex==1){
-            return userSexShow="男";
-        }
-        return userSexShow="女";
-    }
+    private String userSex;
 
     /**
      * 用户级别
@@ -84,19 +68,7 @@ public class UserVoResp {
     /**
      * 用户状态 1 未激活 2已激活
      */
-    private Integer activatedState;
-
-    /**
-     * 用户状态展示
-     */
-    private String stateShow;
-
-    public String getStateShow() {
-        if (activatedState==1){
-            return "未激活";
-        }
-        return "已激活";
-    }
+    private String activatedState;
 
     /**
      * 注册时间

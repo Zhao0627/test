@@ -58,12 +58,12 @@ public class User implements Serializable {
     /**
      * 用户性别
      */
-    private Integer userSex;
+    private String userSex;
 
     /**
      * 邮箱激活状态
      */
-    private Integer activatedState;
+    private String activatedState;
 
     /**
      * 重置密码

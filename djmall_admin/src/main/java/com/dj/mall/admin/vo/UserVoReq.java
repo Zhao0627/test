@@ -46,7 +46,7 @@ public class UserVoReq {
     /**
      * 用户性别
      */
-    private Integer userSex;
+    private String userSex;
 
     /**
      * 用户级别

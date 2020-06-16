@@ -54,7 +54,7 @@ public class UserDTO implements Serializable {
     /**
      * 用户性别
      */
-    private Integer userSex;
+    private String userSex;
 
     /**
      * 用户级别
@@ -64,7 +64,7 @@ public class UserDTO implements Serializable {
     /**
      * 邮箱激活状态 1 未激活 2已激活
      */
-    private Integer activatedState;
+    private String activatedState;
 
 
     /**

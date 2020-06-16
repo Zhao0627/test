@@ -48,6 +48,7 @@ public class ResourceController {
         Assert.hasText(resourceVoResp.getResourceName(),"资源名不能为空");
         Assert.hasText(resourceVoResp.getUrl(), "资源路径不能为空");
         Assert.notNull(resourceVoResp.getPId(), "上级节点不能为空");
+        Assert.notNull(resourceVoResp.getResourceCode(), "资源编码不能为空");
         Assert.notNull(resourceVoResp.getResourceType(), "资源类型不能为空");
         resourceService.save(DozerUtil.map(resourceVoResp, ResourceDTO.class));
         return new ResultModel<>().success("新增成功");

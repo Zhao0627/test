@@ -99,7 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 throw new BusinessException("密码错误");
             }
             //判断是否是商户
-            if (userRoleDTO.getRoleId() == SystemConstant.EMAIL_STATES_2){
+            if (userRoleDTO.getRoleId() == SystemConstant.ROLE_ID){
                 if (user.getActivatedState().equals(SystemConstant.EMAIL_STATES_1)){
                     throw new BusinessException("邮箱未激活，请前往邮箱激活");
                 }

@@ -21,6 +21,21 @@ public class ResourceConstant {
     public static final String RESOURCE_MANAGER="RESOURCE_MANAGER";
 
     /**
+     * 字典管理
+     */
+    public static final String DICT_MANAGER="DICT_MANAGER";
+
+    /**
+     * 字典管理新增
+     */
+    public static final String DICT_SAVE_BTN="DICT_SAVE_BTN";
+
+    /**
+     * 字典管理修改
+     */
+    public static final String DICT_UPDATE_BTN="DICT_UPDATE_BTN";
+
+    /**
      * 用户激活
      */
     public static final String USER_ACTIVATE_BTN="USER_ACTIVATE_BTN";

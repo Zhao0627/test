@@ -9,12 +9,17 @@ public class SystemConstant {
 	/**
 	 * 邮箱激活状态未激活
 	 */
-    public static final Integer EMAIL_STATES_1 = 1 ;
+    public static final String EMAIL_STATES_1 = "INACTIVE" ;
 
 	/**
 	 * 邮箱激活状态已激活
 	 */
-    public static final Integer EMAIL_STATES_2 = 2 ;
+    public static final String EMAIL_STATES_2 = "NORMAL" ;
+
+	/**
+	 * 商户id
+	 */
+    public static final Integer ROLE_ID = 2 ;
 
 	/**
 	 * 商户id
@@ -40,5 +45,10 @@ public class SystemConstant {
 	 * 按钮——2
 	 */
     public static final Integer BUTTON_2 = 2 ;
+
+	/**
+	 * 基础数据表父级code
+	 */
+    public static final String P_CODE = "SYSTEM" ;
 
 }

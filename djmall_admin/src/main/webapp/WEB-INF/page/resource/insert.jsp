@@ -38,6 +38,10 @@
 	<label for="resourceName">资源名称：</label>
 	<input type="text" name="resourceName" id="resourceName">
 	</p>
+	<p>
+	<label for="resourceCode">资源编码：</label>
+	<input type="text" name="resourceCode" id="resourceCode">
+	</p>
 
     <p>
 	<label for="url">资源URL：</label>

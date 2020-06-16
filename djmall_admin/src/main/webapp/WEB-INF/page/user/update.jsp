@@ -44,8 +44,8 @@
     邮箱号：<input type="text" name="userEmail" value="${user.userEmail}" /><br /><br />
     性 &nbsp;&nbsp;
     别  &nbsp;&nbsp;&nbsp;
-    ：<input type="radio" name="userSex" value="1" <c:if test='${user.userSex==1}' >checked</c:if>>男&nbsp;
-            <input type="radio" name="userSex" value="2" <c:if test='${user.userSex==2}' >checked</c:if>>女<br><br>
+    ：<input type="radio" name="userSex" value="MAN" <c:if test='${user.userSex=="MAN"}' >checked</c:if>>男&nbsp;
+            <input type="radio" name="userSex" value="WOMAN" <c:if test='${user.userSex=="WOMAN"}' >checked</c:if>>女<br><br>
     <input type="button" value="修改" onclick="update()" />
 </form>
     <a style='color: red'></a>

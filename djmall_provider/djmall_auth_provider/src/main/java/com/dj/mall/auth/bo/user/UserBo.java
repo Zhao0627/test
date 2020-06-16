@@ -28,7 +28,7 @@ public class UserBo {
     /**
      * 用户性别
      */
-    private Integer userSex;
+    private String userSex;
 
     /**
      * 用户级别
@@ -38,7 +38,7 @@ public class UserBo {
     /**
      * 用户状态
      */
-    private Integer activatedState;
+    private String activatedState;
 
     /**
      * 昵称
