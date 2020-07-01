@@ -34,13 +34,13 @@
             <if test="null != userBo.userName and '' != userBo.userName">
                 AND (u.user_name like "%" #{userBo.userName} "%" or u.user_phone like "%" #{userBo.userName} "%" or u.user_email like "%" #{userBo.userName} "%")
             </if>
-            <if test="null != userBo.userSex ">
+            <if test="null != userBo.userSex and ''!= userBo.userSex">
                 AND u.user_sex= #{userBo.userSex}
             </if>
             <if test="null != userBo.userLevel ">
                 AND ur.role_id= #{userBo.userLevel}
             </if>
-            <if test="null != userBo.activatedState ">
+            <if test="null != userBo.activatedState and '' != userBo.activatedState ">
                 AND u.activated_state= #{userBo.activatedState}
             </if>
         GROUP BY

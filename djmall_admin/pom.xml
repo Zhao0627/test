@@ -42,10 +42,15 @@
 
         <dependency>
             <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_model</artifactId>
+            <artifactId>djmall_cmpt_api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.dj.mall</groupId>
+            <artifactId>djmall_model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!-- Spring Boot WEB 支持包-->
         <dependency>
@@ -79,9 +84,6 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-
-
-
     </dependencies>
 
 </project>

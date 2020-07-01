@@ -26,9 +26,8 @@
       <div class="layadmin-user-login-box layadmin-user-login-header">
       </div>
       <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-          <input type="hidden" name="activatedState" value="1">
+          <input type="hidden" name="activatedState" value="INACTIVE">
         <!-- 用户名 -->
-        
         <div class="layui-form-item">
          <p>
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="userName"></label>
@@ -82,8 +81,9 @@
           <div class="layui-form-item">
               <label>性别</label>
               <div style="margin-top: -28px;margin-left: 50px">
-                  <input type="radio" name="userSex" value="MAN" id="userSex" lay-verify="email" class="layui-input" checked title="男">
-                  <input type="radio" name="userSex" value="WOMAN" id="userSex_" lay-verify="email" class="layui-input" title="女">
+                  <c:forEach items="${basedataSex}" var="basedataSex">
+                    <input type="radio" name="userSex" value="${basedataSex.code}" id="userSex" lay-verify="email" class="layui-input" checked title="${basedataSex.name}">
+                  </c:forEach>
               </div>
           </div>
 

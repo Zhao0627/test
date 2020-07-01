@@ -1,0 +1,23 @@
+# 单机Redis
+spring:
+  redis:
+    host: localhost
+    database: 0
+    port: 6379
+
+
+# Dubbo
+dubbo:
+  application:
+    name: cmpt-service # 应用名
+    qos-enable: false # 关闭在线调试
+  registry:
+    address: zookeeper://localhost:2181 # 注册中心地址
+  protocol:
+    name: dubbo # 协议名
+    port: 20883 # 服务端口
+  consumer:
+    timeout: 60000
+    check: false
+server:
+  port: 8083

@@ -24,7 +24,7 @@
                         html += "<td>"+dict.pcode+"</td>"
                         <shiro:hasPermission name='DICT_UPDATE_BTN'>
                         html +="<td>"
-                        html += "<input type='button' value='修改' onclick=\"update('"+dict.code+"')\">"
+                        html += "<input type='button' value='修改' onclick=\"update('"+dict.code+","+dict.name+"')\">"
                         html += "</td>"
                         </shiro:hasPermission>
                         html += "</tr>"
@@ -35,7 +35,7 @@
 
         function update(code){
             var name;
-            name=prompt("请写出你要修改的名称");
+            name=prompt("请写出你要修改的名称",code.split(",")[1]);
             if (name==""){
                 layer.msg("请输入")
             }
@@ -45,7 +45,7 @@
             }
             if (name!=="" && name!==""){
                 $.post("<%=request.getContextPath()%>/dict/base",
-                    {"_method":"PUT","code":code,"name":name},
+                    {"_method":"PUT","code":code.split(",")[0],"name":name},
                     function (data) {
                         layer.msg(data.msg,function(){
                             window.location.href="<%=request.getContextPath()%>/dict/base/toShow"
@@ -56,6 +56,13 @@
         }
 
         function save() {
+/*            var pcode = $("#pcode").val();
+            var name = $("#name").val();
+            var code = $("#code").val();
+            if (pcode!="" && name!="" && code != ""){
+                layer.msg("必填项不得为空！");
+                return;
+            }*/
             $.post("<%=request.getContextPath()%>/dict/base",
                 $("#fm").serialize(),
                 function (data) {
@@ -78,8 +85,8 @@
         </c:forEach>
     </select><br>
 
-    分类名称&nbsp;&nbsp;&nbsp;<input type="text" name="name" /><br>
-    分类code&nbsp;&nbsp;&nbsp;<input type="text" name="code" /><br>
+    分类名称&nbsp;&nbsp;&nbsp;<input type="text" name="name" id="name" /><br>
+    分类code&nbsp;&nbsp;&nbsp;<input type="text" name="code" id="code" /><br>
 
     <input type="button" value="新增" onclick="save()"/>
     </shiro:hasPermission>

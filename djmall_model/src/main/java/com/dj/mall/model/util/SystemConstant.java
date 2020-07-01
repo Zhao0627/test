@@ -51,4 +51,14 @@ public class SystemConstant {
 	 */
     public static final String P_CODE = "SYSTEM" ;
 
+	/**
+	 * 性别父级查询
+	 */
+    public static final String SEX_P_CODE = "SEX_TYPE" ;
+
+	/**
+	 * 状态父级查询
+	 */
+    public static final String STATUS_P_CODE = "STATUS_TYPE" ;
+
 }

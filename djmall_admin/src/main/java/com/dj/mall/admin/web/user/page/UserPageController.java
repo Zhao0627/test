@@ -7,7 +7,10 @@ import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.role.RoleDTO;
+import com.dj.mall.dict.api.basedata.BaseDataService;
+import com.dj.mall.dict.dto.basedata.BaseDataDTO;
 import com.dj.mall.model.util.DozerUtil;
+import com.dj.mall.model.util.SystemConstant;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,12 @@ public class UserPageController {
     private UserService userService;
 
     /**
+     * 基础数据接口
+     */
+    @Reference
+    private BaseDataService baseDataService;
+
+    /**
      * 去登陆
      * @return
      */
@@ -51,7 +60,11 @@ public class UserPageController {
     @RequiresPermissions(ResourceConstant.USER_MANAGER)
     public String toShow(Model model){
         List<RoleDTO> roleAll = roleService.findRoleAll();
+        List<BaseDataDTO> basedataSex = baseDataService.getBasedataByPCode(SystemConstant.SEX_P_CODE);
+        List<BaseDataDTO> basedataStatus = baseDataService.getBasedataByPCode(SystemConstant.STATUS_P_CODE);
         model.addAttribute("role", DozerUtil.mapList(roleAll, RoleVoResp.class));
+        model.addAttribute("basedataStatus", basedataStatus);
+        model.addAttribute("basedataSex", basedataSex);
         return "user/show";
     }
 
@@ -71,6 +84,8 @@ public class UserPageController {
     @RequestMapping("toInsert")
     public String toRegister(Model model){
         List<RoleDTO> role = roleService.findRoleAll();
+        List<BaseDataDTO> basedataSex = baseDataService.getBasedataByPCode(SystemConstant.SEX_P_CODE);
+        model.addAttribute("basedataSex",basedataSex);
         model.addAttribute("role",role);
         return "user/insert";
     }

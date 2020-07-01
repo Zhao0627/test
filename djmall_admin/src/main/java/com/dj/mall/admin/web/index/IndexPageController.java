@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
+import com.dj.mall.cmpt.api.RedisService;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.SystemConstant;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,12 @@ public class IndexPageController {
      */
     @Reference
     private UserService userService;
+
+    /**
+     * Redis接口
+     */
+    @Reference
+    private RedisService redisService;
 
 	@RequestMapping("toIndex")
 	public String toIndex() {
@@ -65,7 +72,8 @@ public class IndexPageController {
     public ResultModel getMean(HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("user");
         List<ResourceDTO> resourceList = new ArrayList<>();
-        for (ResourceDTO resource:user.getResourceDTOList()) {
+        List<ResourceDTO> allRole = redisService.getHash("ALL_ROLE", "role" + user.getUserLevel());
+        for (ResourceDTO resource:allRole) {
             if (resource.getResourceType().equals(SystemConstant.MENU_1)){
                 resourceList.add(resource);
             };

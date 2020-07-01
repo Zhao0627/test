@@ -55,8 +55,9 @@
     &nbsp;&nbsp;&nbsp;&nbsp;
     <label class="laber">性别查询</label>
     &nbsp;&nbsp;&nbsp;
-    男：<input type="radio" class="userSex" name="userSex" value="1" title="男">&nbsp;&nbsp;&nbsp;
-    女：<input type="radio" class="userSex" name="userSex" value="2" title="女">
+    <c:forEach items="${basedataSex}" var="basedataSex">
+        ${basedataSex.name}：<input type="radio" class="userSex" name="userSex" value="${basedataSex.code}" title="${basedataSex.name}">&nbsp;&nbsp;&nbsp;
+    </c:forEach>
 
     &nbsp;&nbsp;&nbsp;
     <label class="laber">级别查询</label>
@@ -69,8 +70,9 @@
 <label class="laber">状态搜索:</label>
 	<select name='activatedState' id="activatedState" class="select1">
 		<option value="" >请选择！</option>
-		<option value="2" class="option1">正常</option>
-		<option value="1" class="option1">未激活</option>
+        <c:forEach items="${basedataStatus}" var="basedataStatus">
+            <option value="${basedataStatus.code}" class="option1">${basedataStatus.name}</option>
+        </c:forEach>
 </select>
 </form>
 <div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -184,12 +186,12 @@ layui.use('table', function(){
         var ids = [];
         var userNames=[];
         for (var i = 0; i < data.length; i++) {
-            if (data[i].activatedState===2){
+            if (data[i].activatedState=="正常"){
                 userNames.push(data[i].userName);
             }
         }
         for (var i = 0; i < data.length; i++) {
-            if (data[i].activatedState===1){
+            if (data[i].activatedState=="未激活"){
                 ids.push(data[i].userId);
             }
         }

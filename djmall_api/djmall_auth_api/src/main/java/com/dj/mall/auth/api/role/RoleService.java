@@ -2,6 +2,7 @@ package com.dj.mall.auth.api.role;
 
 
 import com.dj.mall.auth.dto.ZtreeDataDTO;
+import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.role.RoleDTO;
 import com.dj.mall.auth.dto.role.RoleResourceDTO;
 import com.dj.mall.model.base.BusinessException;
@@ -60,4 +61,10 @@ public interface RoleService {
      */
     void saveRoleAndResource(RoleDTO roleDTO) throws Exception;
 
+    /**
+     * 通过roleId查询资源
+     * @param roleId
+     * @return
+     */
+    List<ResourceDTO> findResourceByRoleId(Integer roleId);
 }

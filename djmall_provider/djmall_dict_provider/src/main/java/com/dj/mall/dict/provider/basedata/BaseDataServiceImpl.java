@@ -1,9 +1,11 @@
 package com.dj.mall.dict.provider.basedata;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dj.mall.cmpt.api.RedisService;
 import com.dj.mall.dict.api.basedata.BaseDataService;
 import com.dj.mall.dict.dto.basedata.BaseDataDTO;
 import com.dj.mall.dict.entity.basedata.BaseData;
@@ -20,6 +22,9 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class BaseDataServiceImpl extends ServiceImpl<BaseDataMapper, BaseData> implements BaseDataService {
+
+    @Reference
+    private RedisService redisService;
 
     /**
      * 获取基础数据表的全部信息
@@ -41,6 +46,7 @@ public class BaseDataServiceImpl extends ServiceImpl<BaseDataMapper, BaseData> i
     public void insertBaseData(BaseDataDTO baseDataDTO) throws BusinessException {
         baseDataDTO.setCode(baseDataDTO.getCode().toUpperCase());
         save(DozerUtil.map(baseDataDTO,BaseData.class));
+        redisService.pushHash(baseDataDTO.getPCode(),baseDataDTO.getCode(),baseDataDTO);
     }
 
     /**
@@ -68,6 +74,8 @@ public class BaseDataServiceImpl extends ServiceImpl<BaseDataMapper, BaseData> i
         UpdateWrapper<BaseData> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("code",baseDataDTO.getCode());
         update(DozerUtil.map(baseDataDTO,BaseData.class),updateWrapper);
+        BaseDataDTO baseDataDTO1 = this.getBasedataByCode(baseDataDTO.getCode());
+        redisService.pushHash(baseDataDTO1.getPCode(),baseDataDTO1.getCode(),baseDataDTO1);
     }
 
     /**
@@ -79,8 +87,16 @@ public class BaseDataServiceImpl extends ServiceImpl<BaseDataMapper, BaseData> i
      */
     @Override
     public List<BaseDataDTO> getBasedataByPCode(String pCode) throws BusinessException {
-        QueryWrapper<BaseData> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("p_code",pCode);
-        return DozerUtil.mapList(list(queryWrapper),BaseDataDTO.class);
+        List<BaseDataDTO> baseDataDTOS = redisService.getHashValues(pCode);
+        if (null == baseDataDTOS || baseDataDTOS.isEmpty()){
+            QueryWrapper<BaseData> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("p_code",pCode);
+            List<BaseDataDTO> baseData = DozerUtil.mapList(list(queryWrapper), BaseDataDTO.class);
+            for (BaseDataDTO base:baseData) {
+                redisService.pushHash(pCode,base.getCode(),base);
+            }
+            return baseData;
+        }
+        return baseDataDTOS;
     }
 }

@@ -9,7 +9,9 @@ import com.dj.mall.dict.dto.basedata.BaseDataDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
 import com.dj.mall.model.util.SystemConstant;
+import org.apache.el.util.Validation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,16 +38,6 @@ public class BaseDataController {
     }
 
     /**
-     * 通过code查询基础数据
-     * @param code
-     * @return
-     */
-    @GetMapping("getByCode")
-    public ResultModel getByCode(String code){
-        return new ResultModel().success(DozerUtil.map(baseDataService.getBasedataByCode(code), BaseDataVoResp.class));
-    }
-
-    /**
      * 新增基础数据
      * @param baseDataVoReq
      * @return
@@ -53,6 +45,9 @@ public class BaseDataController {
     @PostMapping("base")
     @RequiresPermissions(ResourceConstant.DICT_SAVE_BTN)
     public ResultModel save(BaseDataVoReq baseDataVoReq){
+        Assert.hasText(baseDataVoReq.getCode(),"请填写code");
+        Assert.hasText(baseDataVoReq.getPCode(),"请填写Pcode");
+        Assert.hasText(baseDataVoReq.getName(),"请填写name");
         baseDataService.insertBaseData(DozerUtil.map(baseDataVoReq, BaseDataDTO.class));
         return new ResultModel().success("新增成功");
     }

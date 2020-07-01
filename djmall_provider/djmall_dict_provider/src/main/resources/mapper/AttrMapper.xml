@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.dict.mapper.attr.AttrMapper">
+	<select id="findAllAttr" resultType="com.dj.mall.dict.bo.AttrBo">
+		SELECT
+			par.id as attrId,
+			par.attr_name,
+			GROUP_CONCAT(pav.attr_value) AS valueList
+		FROM
+			djmall_dict_product_attr par
+		LEFT JOIN djmall_dict_product_attr_value pav ON par.id = pav.attr_id
+		GROUP BY
+			par.id
+	</select>
+</mapper>

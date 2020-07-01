@@ -119,7 +119,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 注册去重
-     *
      * @param userDTO
      * @return
      * @throws BusinessException
@@ -151,7 +150,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user1.setSalt(salt);
 
         user1.setUserPwd(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + salt));
-        System.out.println(PasswordSecurityUtil.enCode32(PasswordSecurityUtil.enCode32(userDTO.getUserPwd()) + userDTO.getSalt()));
         user1.setSaveTime(new Date());
         user1.setIsDel(SystemConstant.IS_DEL_NO);
         save(user1);

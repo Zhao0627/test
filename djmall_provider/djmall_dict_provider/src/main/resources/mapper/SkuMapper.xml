@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.dict.mapper.sku.SkuMapper">
+	<select id="findAllSku" resultType="com.dj.mall.dict.bo.SkuBo">
+        SELECT
+            dpa.id,
+            dpsg.attr_id AS attrId,
+            d.`name` AS productShow,
+            d.`code` AS productType,
+            GROUP_CONCAT(dpa.attr_name) AS valueList
+        FROM
+            djmall_auth_base_data d
+				 LEFT JOIN djmall_dict_product_sku_gm dpsg ON dpsg.product_type = d.`code`
+        LEFT JOIN  djmall_dict_product_attr dpa ON dpa.id = dpsg.attr_id
+				WHERE d.p_code="PRODUCT_TYPE"
+        GROUP BY
+            dpsg.product_type
+	</select>
+</mapper>

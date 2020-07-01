@@ -1,5 +1,6 @@
 package com.dj.mall.auth.provider.role;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +14,7 @@ import com.dj.mall.auth.entity.role.Role;
 import com.dj.mall.auth.entity.role.RoleResource;
 import com.dj.mall.auth.mapper.role.RoleMapper;
 import com.dj.mall.auth.service.RoleResourceService;
+import com.dj.mall.cmpt.api.RedisService;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.util.DozerUtil;
 import org.apache.commons.lang3.ArrayUtils;
@@ -33,6 +35,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      */
     @Autowired
     private ResourceService resourceService;
+
+    /**
+     * Redis接口
+     */
+    @Reference
+    private RedisService redisService;
 
     /**
      * 资源角色接口
@@ -191,6 +199,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             roleResourceService.saveBatch(roleResourceList1);
         }
 
+        redisService.pushHash("ALL_ROLE","role"+roleDTO.getRoleId(),DozerUtil.mapList(findResourceByRoleId(roleDTO.getRoleId()),ResourceDTO.class));
 
 /*        //存放多个roleResource的list
         List<RoleResource> roleResourceList = new ArrayList<>();
@@ -213,5 +222,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         roleResourceService.saveBatch(roleResourceList);*/
     }
 
-
+    /**
+     * 通过roleId查询资源
+     *
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<ResourceDTO> findResourceByRoleId(Integer roleId) {
+        RoleMapper baseMapper = getBaseMapper();
+        List<Resource> resourceByRoleId = baseMapper.findResourceByRoleId(roleId);
+        return DozerUtil.mapList(resourceByRoleId,ResourceDTO.class);
+    }
 }

@@ -2,16 +2,13 @@ package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
-import com.dj.mall.admin.config.ShiroRealm;
 import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.api.user.UserService;
-import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
-import com.dj.mall.model.util.PasswordSecurityUtil;
 import com.dj.mall.model.util.SystemConstant;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -19,12 +16,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,8 +45,6 @@ public class UserController {
         Assert.hasLength(userVoResp.getUserName(), "用户名不能为空");
         Assert.hasLength(userVoResp.getUserPwd(), "密码不能为空");
         UserDTO userDto = userService.getUserByUserName(DozerUtil.map(userVoResp,UserDTO.class));
-        List<ResourceDTO> resourceByUserId = resourceService.getResourceByUserId(userDto.getUserId());
-        userDto.setResourceDTOList(resourceByUserId);
         session.setAttribute("user",userDto);
         //获取主体
         Subject subject = SecurityUtils.getSubject();
