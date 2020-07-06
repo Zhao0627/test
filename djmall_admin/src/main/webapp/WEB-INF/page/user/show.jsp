@@ -292,6 +292,37 @@ layui.use('table', function(){
             layer.msg('已取消');
         });
     })
+
+
+    // 授权
+    $('#mandate').on('click',function(){
+        //获取选中数据
+        var checkStatus = table.checkStatus('test')
+            ,data = checkStatus.data;
+        //获取选中ids
+        var ids = [];
+        for (var i = 0; i < data.length; i++) {
+            ids.push(data[i].userId)
+        }
+        if (ids.length==0){
+            layer.msg("请选择一个");
+            return;
+        }
+        if (ids.length>1){
+            layer.msg("只能选择一个");
+            return;
+        }
+        //弹出一个iframe层
+        layer.open({
+            type: 2,
+            area: ['350px', '430px'],
+            //不显示关闭
+            closeBtn: 1 ,
+            title:['用户授权','padding-left:170px;color:white;background-color:#169bd5;font-size:10px;'],
+            /* ['点击A按钮触发','color:#fff;background-color:#01AAED;'], */
+            content: "<%=request.getContextPath()%>/auth/user/toMandate?id="+ids[0]  /* //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no'] */
+        });
+    })
 })
 </script>
 </body>

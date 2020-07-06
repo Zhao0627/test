@@ -31,6 +31,11 @@ public class AttrVoResp implements Serializable {
     private String ValueList;
 
     /**
+     * 属性集合
+     */
+    private String valIdList;
+
+    /**
      * 判断是否勾选（默认不勾选）
      */
     private boolean checked = false;

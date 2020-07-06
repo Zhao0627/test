@@ -99,5 +99,4 @@ public class RoleController {
         roleService.saveRoleAndResource(DozerUtil.map(roleVoResp,RoleDTO.class));
         return new ResultModel<>().success("保存成功");
     }
-
 }

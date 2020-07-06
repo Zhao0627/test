@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.product.mapper.spu.ProductSpuMapper">
+    <update id="updateStatus">
+        UPDATE djmall_product_spu spu
+        JOIN djmall_product_sku sku ON spu.id = sku.product_id
+        SET sku.sku_status = #{status},
+                spu.`status` = #{status}
+        WHERE spu.id = #{id}
+    </update>
+
+    <select id="findSpuAll" resultType="com.dj.mall.product.bo.spu.ProductSpuBo">
+        select spu.*,spu.id AS productId,us.user_name AS userName,bd.name AS name,log.freight AS freight from djmall_product_spu spu
+        LEFT JOIN djmall_auth_base_data bd ON bd.`code` = spu.type
+        LEFT JOIN djmall_auth_user us ON us.id = spu.user_id
+        LEFT JOIN djmall_dict_product_logistics log ON spu.freight_id = log.id
+        where 1 = 1
+        <if test="null != productName and '' != productName">
+            AND spu.product_name like "%"#{productName}"%"
+        </if>
+        <if test="null != type and ''!= type ">
+            AND spu.type= #{type}
+        </if>
+    </select>
+</mapper>

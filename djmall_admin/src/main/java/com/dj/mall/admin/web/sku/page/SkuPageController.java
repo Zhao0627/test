@@ -35,13 +35,7 @@ public class SkuPageController {
     @RequestMapping("/toSkuAttr")
     @RequiresPermissions("SKU_ATTR_BUTTON")
     public String toSkuAttr(String productType,Model model){
-        List<SkuDTO> skuDTOList = skuService.findSkuByProductType(productType);
-        List<Integer> ArrIds = new ArrayList<>();
-        for (SkuDTO skus:skuDTOList) {
-            ArrIds.add(skus.getAttrId());
-        }
         model.addAttribute("productType",productType);
-        model.addAttribute("ArrIds",ArrIds);
         return "attr/sku_attr";
     }
 

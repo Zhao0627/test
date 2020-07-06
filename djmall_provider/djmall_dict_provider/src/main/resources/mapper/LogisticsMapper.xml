@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.dict.mapper.logistics.LogisticsMapper">
+    <select id="findLogAll" resultType="com.dj.mall.dict.bo.LogisticsBo">
+        SELECT
+            log.id AS freightId,
+            bd. `name` AS logisticsCompanyShow,
+            log.*,
+            bd.*
+        FROM
+            djmall_dict_product_logistics log
+        LEFT JOIN djmall_auth_base_data bd ON log.logistics_company = bd.`code`
+        ORDER BY log.id DESC
+    </select>
+</mapper>

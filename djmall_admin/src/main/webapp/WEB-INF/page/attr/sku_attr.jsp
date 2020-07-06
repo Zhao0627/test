@@ -14,19 +14,18 @@
             search();
         })
         function search() {
-            $.post("<%=request.getContextPath()%>/dict/attr/list",
-                {"ArrIds":$("#ArrIds").val()},
+            $.post("<%=request.getContextPath()%>/dict/attr/findAttrAllByAttrId",
+                {"productType":$("#productType").val()},
             function (data) {
                 var html = "";
                 for(var i = 0; i < data.data.length; i++ ){
                     var attr = data.data[i];
                     html += "<tr align='center'>"
-                   /* if (attr.checked==1){
-                        html += "<td><input type = 'checkbox' checked='true' id='check_"+i+"'  name = id value = '"+attr.attrId+"'></td>"
+                    if (attr.checked==1){
+                        html += "<td><input type = 'checkbox' checked id='check_"+i+"'  name = id value = '"+attr.attrId+"'></td>"
                     }else{
-                        html += "<td><input type = 'checkbox' checked='flase' id='check_"+i+"'  name = id value = '"+attr.attrId+"'></td>"
-                    }*/
-                    html += "<td><input type = 'checkbox' id='check_"+i+"'  name = id value = '"+attr.attrId+"'></td>"
+                        html += "<td><input type = 'checkbox' id='check_"+i+"'  name = id value = '"+attr.attrId+"'></td>"
+                    }
                     html += "<td id='attrId_'+i>"+attr.attrId+"</td>"
                     html += "<td>"+attr.attrName+"</td>"
                     html += "<td>"+attr.valueList+"</td>"
@@ -57,7 +56,6 @@
 <body>
 <form id="fm" >
         <input type="hidden" name="productType" id="productType" value="${productType}">
-        <input type="hidden" name="ArrIds" id="ArrIds" value="${ArrIds}">
         <shiro:hasPermission name='SKU_ATTR_SAVE_BTN'>
         <input type="button" value="保存" onclick="saveSku()"/>
         </shiro:hasPermission>

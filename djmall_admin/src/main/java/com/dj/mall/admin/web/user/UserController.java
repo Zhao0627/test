@@ -2,9 +2,11 @@ package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
+import com.dj.mall.admin.vo.RoleVoResp;
 import com.dj.mall.admin.vo.UserVoReq;
 import com.dj.mall.admin.vo.UserVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
+import com.dj.mall.auth.api.user.UserRoleService;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.user.UserDTO;
 import com.dj.mall.model.base.ResultModel;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Reference
     private ResourceService resourceService;
+
+    @Reference
+    private UserRoleService userRoleService;
 
     /**
      * 用户登录
@@ -190,6 +195,17 @@ public class UserController {
     public ResultModel delUser(Integer ids[]){
         userService.updateUserIsDelByIds(ids);
         return new ResultModel().success("删除成功");
+    }
+
+
+    /**
+     * 授权
+     * @return
+     */
+    @RequestMapping("mandate")
+    public ResultModel<Object> mandate(Integer roleId,Integer id) throws Exception{
+        userRoleService.mandate(roleId,id);
+        return new ResultModel().success("授权成功");
     }
 
 }

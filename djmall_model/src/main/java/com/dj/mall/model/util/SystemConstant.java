@@ -17,6 +17,11 @@ public class SystemConstant {
     public static final String EMAIL_STATES_2 = "NORMAL" ;
 
 	/**
+	 * 父级 商品类型
+	 */
+    public static final String PRODUCT_TYPE = "PRODUCT_TYPE" ;
+
+	/**
 	 * 商户id
 	 */
     public static final Integer ROLE_ID = 2 ;
@@ -60,5 +65,37 @@ public class SystemConstant {
 	 * 状态父级查询
 	 */
     public static final String STATUS_P_CODE = "STATUS_TYPE" ;
+
+	/**
+	 * 包邮价格为0
+	 */
+    public static final String PINKAGE_0 = "0";
+
+	/**
+	 * 包邮价格为0
+	 */
+    public static final String PINKAGE = "包邮" ;
+
+	/**
+	 * 元
+	 */
+    public static final String YUAN = "元" ;
+
+    /**
+	 * 物流公司code
+	 */
+    public static final String LOGISTICS_COMPANY = "LOGISTICS_COMPANY" ;
+
+    /**
+     * 商品下架
+     */
+    public static final String PRODUCT_DOWN = "PRODUCT_DOWN" ;
+
+    /**
+     * 商品上架
+     */
+    public static final String PRODUCT_UP = "PRODUCT_UP" ;
+
+    public static final Integer PRODUCT_DOWN_0 = 0;
 
 }

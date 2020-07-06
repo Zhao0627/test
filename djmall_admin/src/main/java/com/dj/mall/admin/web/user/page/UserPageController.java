@@ -125,4 +125,15 @@ public class UserPageController {
         return "/user/update_pwd";
     }
 
+    /**
+     * 重置密码
+     * @return
+     */
+    @RequestMapping("toMandate")
+    @RequiresPermissions(ResourceConstant.USER_ROLE_BTN)
+    public String toMandate(Integer id, Model model){
+        model.addAttribute("id",id);
+        return "/user/mandate";
+    }
+
 }

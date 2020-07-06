@@ -24,6 +24,12 @@ public class ResultModel<T> implements Serializable {
         return this;
     }
 
+    public ResultModel success(String msg) {
+        this.code = 200;
+        this.msg = msg;
+        return this;
+    }
+
     public ResultModel error(String msg) {
         this.code = -1;
         this.msg = msg;

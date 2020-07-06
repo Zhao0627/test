@@ -50,12 +50,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private MailService mailService;
 
     /**
-     * 角色接口
-     */
-    @Autowired
-    private RoleService roleService;
-
-    /**
      * mapper
      */
     @Autowired
@@ -164,7 +158,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
-
     /**
      * 注册激活修改激活码
      *
@@ -182,7 +175,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         updateBatchById(userList);
     }
-
 
     /**
      * 查询所有用户

@@ -2,6 +2,7 @@ package com.dj.mall.dict.api.attr;
 
 import com.dj.mall.dict.dto.attr.AttrDTO;
 import com.dj.mall.dict.dto.attr.AttrValueDTO;
+import com.dj.mall.dict.dto.sku.SkuDTO;
 import com.dj.mall.model.base.BusinessException;
 
 import java.util.List;
@@ -16,7 +17,14 @@ public interface AttrService {
      * @return
      * @throws BusinessException
      */
-    List<AttrDTO> findAllAttr(Integer[] ArrIds) throws BusinessException;
+    List<AttrDTO> findAllAttr(SkuDTO skuDTO) throws BusinessException;
+
+/*    *//**
+     *
+     * @param ArrIds
+     * @return
+     *//*
+    List<AttrDTO> findAttrAllByAttrId(Integer[] ArrIds) throws BusinessException;*/
 
     /**
      * 根据id查找商品属性
@@ -54,4 +62,11 @@ public interface AttrService {
      */
     void addAttr(AttrDTO attrDto)throws BusinessException;
 
+    /**
+     * 通过attrName条件查询信息
+     * @param attrName
+     * @return
+     * @throws BusinessException
+     */
+    AttrDTO findAttrByAttrName(String attrName) throws BusinessException;
 }

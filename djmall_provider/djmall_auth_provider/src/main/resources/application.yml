@@ -32,6 +32,9 @@ dubbo:
   consumer:
     timeout: 60000
     check: false
+  provider:
+    timeout: 6000
+
 
 # 日志
 logging:

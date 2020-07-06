@@ -89,4 +89,5 @@ public interface UserService {
      * @param ids
      */
     void updateUserIsDelByIds(Integer[] ids) throws BusinessException;
+
 }

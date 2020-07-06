@@ -10,6 +10,7 @@ import com.dj.mall.dict.api.attr.AttrService;
 import com.dj.mall.dict.bo.AttrBo;
 import com.dj.mall.dict.dto.attr.AttrDTO;
 import com.dj.mall.dict.dto.attr.AttrValueDTO;
+import com.dj.mall.dict.dto.sku.SkuDTO;
 import com.dj.mall.dict.entity.attr.Attr;
 import com.dj.mall.dict.entity.attr.AttrValue;
 import com.dj.mall.dict.mapper.attr.AttrMapper;
@@ -36,8 +37,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
      * @throws BusinessException
      */
     @Override
-    public List<AttrDTO> findAllAttr(Integer[] ArrIds) throws BusinessException {
-        List<AttrBo> attrBoList =  getBaseMapper().findAllAttr();
+    public List<AttrDTO> findAllAttr(SkuDTO skuDTO) throws BusinessException {
+        List<AttrBo> attrBoList =  getBaseMapper().findAllAttr(skuDTO);
         /*for (AttrBo attrBo:attrBoList) {
             for (Integer arrIds:ArrIds) {
                 if (arrIds==attrBo.getAttrId()){
@@ -47,6 +48,23 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
         }*/
         return DozerUtil.mapList(attrBoList,AttrDTO.class);
     }
+
+/*    *//**
+     * @param ArrIds
+     * @return
+     *//*
+    @Override
+    public List<AttrDTO> findAttrAllByAttrId(Integer[] ArrIds) throws BusinessException {
+        List<AttrBo> attrBoList =  getBaseMapper().findAllAttr();
+        *//*for (AttrBo attrBo:attrBoList) {
+            for (Integer arrIds:ArrIds) {
+                if (arrIds==attrBo.getAttrId()){
+                    attrBo.setChecked(1);
+                }
+            }
+        }*//*
+        return DozerUtil.mapList(attrBoList,AttrDTO.class);
+    }*/
 
     /**
      * 根据id查找商品属性
@@ -107,5 +125,19 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
     @Override
     public void addAttr(AttrDTO attrDto) throws BusinessException {
         save(DozerUtil.map(attrDto,Attr.class));
+    }
+
+    /**
+     * 通过attrName条件查询信息
+     *
+     * @param attrName
+     * @return
+     * @throws BusinessException
+     */
+    @Override
+    public AttrDTO findAttrByAttrName(String attrName) throws BusinessException {
+        QueryWrapper<Attr> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attr_name",attrName);
+        return DozerUtil.map(getOne(queryWrapper),AttrDTO.class);
     }
 }

@@ -33,6 +33,11 @@ public class AttrDTO implements Serializable{
     private String ValueList;
 
     /**
+     * 属性id集合
+     */
+    private String valIdList;
+
+    /**
      * checked:1 勾选 2 未勾选
      * 判断是否勾选（默认不勾选）
      */

@@ -95,4 +95,92 @@ public class ResourceConstant {
      */
     public static final String RESOURCE_DELETE_BTN = "RESOURCE_DELETE_BTN";
 
+    /**
+     * 属性管理
+     */
+    public static final String SKU_MANAGER = "SKU_MANAGER";
+
+    /**
+     * 商品属性管理
+     */
+    public static final String ATTR_MANAGER = "ATTR_MANAGER";
+
+    /**
+     * 属性值管理
+     */
+    public static final String ATTR_VALUE_BUTTON = "ATTR_VALUE_BUTTON";
+
+    /**
+     * 商品属性值新增
+     */
+    public static final String VALUE_ADD_BUTTON = "VALUE_ADD_BUTTON";
+
+    /**
+     * 商品属性值删除
+     */
+    public static final String VALUE_DEL_BUTTON = "VALUE_DEL_BUTTON";
+
+    /**
+     * 商品属性新增
+     */
+    public static final String ATTR_ADD_BUTTON = "ATTR_ADD_BUTTON";
+
+    /**
+     * 关联属性
+     */
+    public static final String SKU_ATTR_BUTTON = "SKU_ATTR_BUTTON";
+
+    /**
+     * 保存属性
+     */
+    public static final String SKU_ATTR_SAVE_BTN = "SKU_ATTR_SAVE_BTN";
+
+    /**
+     * 商品管理
+     */
+    public static final String PRODUCT_SPU_MANAGER = "PRODUCT_SPU_MANAGER";
+
+    /**
+     * 商品新增
+     */
+    public static final String PRODUCT_SAVE_BTN="PRODUCT_SAVE_BTN";
+
+    /**
+     * 商品修改
+     */
+    public static final String PRODUCT_UPDATE_BTN = "PRODUCT_UPDATE_BTN";
+
+    /**
+     * 商品上下架
+     */
+    public static final String PRODUCT_STAND_DOWN_BTN = "PRODUCT_STAND_DOWN_BTN";
+
+    /**
+     * 查看评论
+     */
+    public static final String PRODUCT_COMMENT_BTN ="PRODUCT_COMMENT_BTN";
+
+    /**
+     * 下载导入模板
+     */
+    public static final String PRODUCT_DOWNLOAD_BTN = "PRODUCT_DOWNLOAD_BTN";
+
+    /**
+     * 导入
+     */
+    public static final String PRODUCT_IMPORT_BTN = "PRODUCT_IMPORT_BTN";
+
+    /**
+     * 增量索引
+     */
+    public static final String PRODUCT_INCREMENT_BTN = "PRODUCT_INCREMENT_BTN";
+
+    /**
+     * 重构索引
+     */
+    public static final String PRODUCT_REFACTOR_BTN = "PRODUCT_REFACTOR_BTN";
+
+
+
+
 }
