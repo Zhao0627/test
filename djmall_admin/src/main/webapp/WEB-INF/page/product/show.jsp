@@ -27,31 +27,16 @@
 	.divtable{
 		white-space: nowrap;
 	}
-	.select1{
-		margin-right: 30px;
-		margin-left:6px;
-		width: 150px;
-		height:27px;
-		background: #95ecab;
-		text-align:center;
-		text-align-last:center;
-	}
 	.laber{
 		background: black;
 		color:white;
 		font-size: 16px;
 	}
-	.option1{
-		text-align-last:center;
-	}
-    .radio_type{
-        width: 20px;
-        height:20px;
-    }
 </style>
 </head>
 <body>
 <script src="<%=request.getContextPath()%>/static/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.all.js"></script>
 <br>
 <form class="fmtable" id="fm" >
     <label class="laber">名称</label>
@@ -60,45 +45,46 @@
     <label class="laber">分类</label>
     &nbsp;&nbsp;&nbsp;
     <c:forEach items="${productType}" var="productType">
-        ${productType.name}：<input type="radio" class="userSex" name="type" value="${productType.code}" title="${productType.name}">&nbsp;&nbsp;&nbsp;
+        ${productType.name}：<input type="checkbox" class="userSex" name="type" value="${productType.code}" title="${productType.name}" >&nbsp;&nbsp;&nbsp;
     </c:forEach>
 </form>
 <div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <shiro:hasPermission name="PRODUCT_SAVE_BTN">
-        <button style="height: 20px;width: 50px" id="save">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button style="height: 20px;width: 50px;border: none;background-color:transparent;outline: none;" id="save">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_UPDATE_BTN">
-        <button style="height: 20px;width: 50px" id="update">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button style="height: 20px;width: 50px;border: none;background-color:transparent;outline: none;" id="update">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_STAND_DOWN_BTN">
-    <button style="height: 20px;width: 70px" id="updown">上/下架</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 70px;border: none;background-color:transparent;outline: none;" id="updown">上/下架</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_COMMENT_BTN">
-    <button style="height: 20px;width: 70px" id="del">查看评论</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 70px;border: none;background-color:transparent;outline: none;" id="toAssess">查看评论</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_DOWNLOAD_BTN">
-    <button style="height: 20px;width: 100px" id="mandate">下载导入模板</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 100px;border: none;background-color:transparent;outline: none;" id="mandate">下载导入模板</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_IMPORT_BTN">
-    <button style="height: 20px;width: 50px" id="mandate">导入</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 50px;border: none;background-color:transparent;outline: none;" id="mandate">导入</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_INCREMENT_BTN">
-    <button style="height: 20px;width: 80px" id="mandate">增量索引</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 80px;border: none;background-color:transparent;outline: none;" id="addindexes">增量索引</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 
     <shiro:hasPermission name="PRODUCT_REFACTOR_BTN">
-    <button style="height: 20px;width: 80px" id="mandate">重构索引</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button style="height: 20px;width: 80px;border: none;background-color:transparent;outline: none;" id="refactorindexes">重构索引</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </shiro:hasPermission>
 </div><br>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <!-- 分页部分  -->
-<div id="demo7"></div>
+<div id="demo7" align="center">
+</div>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script type="text/javascript">
 layui.use('table', function(){
@@ -108,9 +94,8 @@ layui.use('table', function(){
   ,layer = layui.layer;
   table.render({
     elem: '#test'
-    ,id:"test"	//主键id
+    ,id:'test'	//主键id
     ,url:'<%=request.getContextPath()%>/product/spu/Show'
-   /*  ,where:{'token':token} */
     ,title: '用户数据表'
     /* 该参数可自由配置头部工具栏右侧的图标按钮  */
     ,defaultToolbar: ['', '', '']
@@ -122,29 +107,55 @@ layui.use('table', function(){
       ,{field:'statusShow', title:'状态', width:80}
       ,{field:'freight', title:'邮费', width:60}
       ,{field:'img', title:'商品图片', width:90, templet: function(d){
-              return '<div><img alt="" src=" http://qd0w08o2k.bkt.clouddn.com/'+d.img+'?imageView2/5/w/20/h/32/q/75" ></div>';
+              return '<div><img alt="" src=" http://qekjuppsu.bkt.clouddn.com/'+d.img+'?imageView2/5/w/20/h/32/q/75" ></div>';
               }}
       ,{field:'productDescribe', title:'描述', width:500}
       ,{field:'praise', title:'点赞量', width:80}
       ,{field:'orderNumber', title:'订单量', width:80}
     ]]
+/*      ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+          layout: ['prev', 'next'] //自定义分页布局
+          //,curr: 5 //设定初始在第 5 页
+          ,groups: 1 //只显示 1 个连续页码
+          ,first: false //不显示首页
+          ,last: false //不显示尾页
+
+      }*/
     /* 单元格点击事件名 */
-   	,even:true
+    ,even:true
    	/* 表格外观 */
     ,skin:"nob"
-    /*,initSort : {
-            field : "productId",
-            type : "desc"
-    }*/
   });
+
+    laypage.render({
+        elem: 'demo7'
+        ,count: ${spuCount}
+        ,layout: ['prev', 'next']
+        ,limit:3
+        ,jump: function(obj, first){
+            //首次不执行
+            if(!first){
+                table.reload('test', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        'page':obj.curr,
+                        'pageSize':obj.limit
+                    }
+                });
+            }
+        }
+    });
     /* 查询事件 */
   	$('#fm').on('change',function(){
-        var type= $('input[name="type"]:checked').val();
+        //获取input类型是checkBox并且 name="box"选中的checkBox的元素
+        var data = $('input:checkbox[name="type"]:checked').map(function () {
+            return $(this).val();
+        }).get().join(",");
+        //弹出结果
         var productName = $('#productName').val();
         table.reload('test', {
             method: 'post'
             , where: {
-                'type': type,
+                'type': data,
                'productName': productName
             }
         });
@@ -163,6 +174,53 @@ layui.use('table', function(){
             content: "<%=request.getContextPath()%>/product/spu/toSave"  /* //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no'] */
         });
     })
+
+
+    //增量索引
+    $('#addindexes').on('click',function(){
+       $.post("<%=request.getContextPath()%>/product/spu/addindexes",
+           {},
+           function (result) {
+           layer.msg("增量索引完成",function () {
+               var index = layer.load(3,{shade:0.3});
+               layer.close(index);
+               return;
+           })
+       })
+    })
+
+    //查看评论
+    $('#toAssess').on('click',function(){
+        var checkStatus = table.checkStatus('test'),
+            data = checkStatus.data;
+        var ids = [];
+        for (var i = 0; i < data.length; i++) {
+            ids.push(data[i].productId)
+        }
+        if (ids.length==0){
+            layer.msg("请选择一个");
+            return;
+        }
+        if (ids.length>1){
+            layer.msg("只能选择一个");
+            return;
+        }
+       window.location.href="<%=request.getContextPath()%>/comment/toAssessProduct?productId="+ids[0];
+    })
+
+    //重构索引
+    $('#refactorindexes').on('click',function(){
+       $.post("<%=request.getContextPath()%>/product/spu/refactorindexes",
+           {},
+           function (result) {
+               layer.msg("重构索引完成",function () {
+                   var index = layer.load(3,{shade:0.3});
+                   layer.close(index);
+                   return;
+               })
+       })
+    })
+
 
     //上下架
     $('#updown').on('click',function(){
@@ -198,6 +256,37 @@ layui.use('table', function(){
                 }
         })
     })
+
+
+    //商品修改
+    $('#update').on('click',function(){
+        var checkStatus = table.checkStatus('test'),
+            data = checkStatus.data;
+        var ids = [];
+        for (var i = 0; i < data.length; i++) {
+            ids.push(data[i].productId)
+        }
+        if (ids.length==0){
+            layer.msg("请选择一个");
+            return;
+        }
+        if (ids.length>1){
+            layer.msg("只能选择一个");
+            return;
+        }
+        //弹出一个iframe层
+        layer.open({
+            type: 2,
+            area: ['520px', '600px'],
+            //不显示关闭
+            closeBtn: 1 ,
+            title:['商品修改','padding-left:170px;color:white;background-color:#169bd5;font-size:10px;'],
+            /* ['点击A按钮触发','color:#fff;background-color:#01AAED;'], */
+            content: "<%=request.getContextPath()%>/product/spu/toUpdate?productId="+ids[0]  /* //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no'] */
+        });
+    })
+
+
 })
 </script>
 </body>

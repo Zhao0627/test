@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.order.mapper.order.OrderMapper">
+
+    <update id="updateOrderStatus">
+        UPDATE djmall_order ord
+        JOIN djmall_order_detail detail ON detail.parent_order_no = ord.order_no
+        JOIN djmall_order_info info ON info.parent_order_no = ord.order_no
+        JOIN djmall_product_sku sku ON detail.sku_id = sku.id
+        SET ord.order_status = #{orderStatus},
+                info.order_status = #{orderStatus},
+                detail.order_status = #{orderStatus}
+                <if test="orderStatus=='已取消'">
+                    ,sku.sku_count = (sku.sku_count+detail.buy_count)
+                    ,detail.cancel_time = now()
+                </if>
+                <if test="orderStatus=='待发货'">
+                    ,ord.pay_time = NOW(),info.pay_time = NOW()
+                </if>
+        WHERE
+            ord.order_no = #{parentOrderNo} and ord.buyer_id = #{userId}
+    </update>
+</mapper>

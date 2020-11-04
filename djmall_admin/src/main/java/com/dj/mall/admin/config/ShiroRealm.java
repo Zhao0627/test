@@ -3,7 +3,7 @@ package com.dj.mall.admin.config;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

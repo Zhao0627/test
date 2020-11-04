@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.role.RoleDTO;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

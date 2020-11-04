@@ -5,7 +5,9 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/djmall_zw?characterEncoding=UTF-8&useOldAliasMetadataBehavior=true&useSSL=false
-
+  data:
+    solr:
+      host: http://localhost:8079/solr/SolrCore_djmall # solr访问地址/core地址
 # Mybatis-plus
 mybatis-plus:
   type-aliases-package: com.dj.mall.product.entity # 类别名
@@ -34,3 +36,5 @@ logging:
       debug
 server:
   port: 8084
+  # spring.data.solr.host
+

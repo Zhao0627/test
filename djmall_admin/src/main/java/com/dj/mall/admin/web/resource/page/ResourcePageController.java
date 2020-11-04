@@ -2,7 +2,7 @@ package com.dj.mall.admin.web.resource.page;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
-import com.dj.mall.admin.vo.ResourceVoResp;
+import com.dj.mall.admin.vo.resource.ResourceVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.model.util.DozerUtil;

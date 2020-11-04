@@ -3,6 +3,7 @@ package com.dj.mall.product.bo.sku;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 public class ProductSkuBo implements Serializable {
@@ -15,7 +16,7 @@ public class ProductSkuBo implements Serializable {
     /**
      * sku价格
      */
-    private Double skuPrice;
+    private BigDecimal skuPrice;
     /**
      * sku库存
      */

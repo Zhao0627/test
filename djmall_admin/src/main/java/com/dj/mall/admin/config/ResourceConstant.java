@@ -11,6 +11,11 @@ public class ResourceConstant {
     public static final String USER_MANAGER = "USER_MANAGER";
 
     /**
+     * 用户管理
+     */
+    public static final String ORDER_MANAGER = "ORDER_MANAGER";
+
+    /**
      * 角色管理
      */
     public static final String ROLE_MANAGER="ROLE_MANAGER";

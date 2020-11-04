@@ -3,6 +3,7 @@ package com.dj.mall.product.dto.sku;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 public class ProductSkuDTO implements Serializable {
@@ -15,7 +16,7 @@ public class ProductSkuDTO implements Serializable {
     /**
      * sku价格
      */
-    private Double skuPrice;
+    private BigDecimal skuPrice;
     /**
      * sku库存
      */
@@ -53,4 +54,18 @@ public class ProductSkuDTO implements Serializable {
      * 是否默认
      */
     private String isDefault;
+
+    /**
+     * 是否默认展示
+     */
+    private String isDefaultShow="";
+
+    public String getIsDefaultShow() {
+        if (isDefault.equals("DEFAULT")){
+            return "是";
+        }else {
+            return "不是";
+        }
+    }
+
 }

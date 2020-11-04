@@ -7,6 +7,7 @@ import lombok.Data;
 import org.dozer.Mapping;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -68,5 +69,34 @@ public class ProductSpuBo implements Serializable {
      * freight展示
      */
     private String  freight;
+
+    /**
+     * sku表数据
+     */
+    private ProductSkuDTO productSkuDTO;
+
+    /**
+     * sku价格
+     */
+    private BigDecimal skuPrice;
+    /**
+     * sku库存
+     */
+    private Integer skuCount;
+
+    /**
+     * SKU折扣,0表示无折扣
+     */
+    private Integer skuRate;
+
+    /**
+     * sku表的id
+     */
+    private Integer productSkuId;
+
+    /**
+     * sku表的属性值
+     */
+    private String skuAttrValueNames;
 
 }

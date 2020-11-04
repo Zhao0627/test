@@ -14,7 +14,7 @@ import com.dj.mall.auth.entity.role.Role;
 import com.dj.mall.auth.entity.role.RoleResource;
 import com.dj.mall.auth.mapper.role.RoleMapper;
 import com.dj.mall.auth.service.RoleResourceService;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.util.DozerUtil;
 import org.apache.commons.lang3.ArrayUtils;

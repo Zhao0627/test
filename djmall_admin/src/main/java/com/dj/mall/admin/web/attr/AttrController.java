@@ -1,9 +1,8 @@
 package com.dj.mall.admin.web.attr;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dj.mall.admin.vo.AttrVoReq;
-import com.dj.mall.admin.vo.AttrVoResp;
-import com.dj.mall.admin.vo.SkuVoResp;
+import com.dj.mall.admin.vo.attr.AttrVoResp;
+import com.dj.mall.admin.vo.sku.SkuVoResp;
 import com.dj.mall.dict.api.attr.AttrService;
 import com.dj.mall.dict.api.sku.SkuService;
 import com.dj.mall.dict.dto.attr.AttrDTO;
@@ -12,11 +11,9 @@ import com.dj.mall.dict.dto.sku.SkuDTO;
 import com.dj.mall.model.base.BusinessException;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -74,7 +71,7 @@ public class AttrController {
      * 商品属性展示
      */
     @PostMapping("/valueList")
-    @RequiresPermissions("ATTR_MANAGER")
+    @RequiresPermissions("ATTR_VALUE_MANAGER")
     public ResultModel findValueAll(Integer attrId) throws BusinessException {
         List<AttrValueDTO> attrDtoList = attrService.findAllValue(attrId);
         return new ResultModel().success(attrDtoList);

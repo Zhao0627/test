@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.dozer.Mapping;
 
+import java.math.BigDecimal;
+
 /**
  * 商品表
  */
@@ -23,7 +25,7 @@ public class ProductSku {
     /**
      * sku价格
      */
-    private Double skuPrice;
+    private BigDecimal skuPrice;
     /**
      * sku库存
      */

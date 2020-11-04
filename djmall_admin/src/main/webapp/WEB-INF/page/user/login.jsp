@@ -11,81 +11,58 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/admin.css" media="all">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/login.css" media="all">
-
 </head>
-<script type="text/javascript">
-    function Refresh() {
-        $("#img").load(location.href + " #img");
-    }
-</script>
 <body>
-<form id="fm">
-    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <form id="fm">
+        <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 
-        <div class="layadmin-user-login-main">
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-                <div style="color: green;font-size: 45px;" align="left"><b>©DJ-mall</b></div><br/><br>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-                    <input type="text" name="userName" id="LAY-user-login-username" lay-verify="required" placeholder="用户名/手机号/邮箱" onblur="getUserSalt(this.value)" class="layui-input">
-                </div>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-                    <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
-                </div>
-<%--
-                <div class="layui-form-item">
-                    <div class="layui-row">
-                        <div class="layui-col-xs7">
-                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
-                        </div>
-
-                        <div class="layui-col-xs5">
-                            <div style="margin-left: 10px;" id="img">
-                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode" onclick="Refresh()">
-                            </div>
-                        </div>
+            <div class="layadmin-user-login-main">
+                <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                    <div style="color: green;font-size: 45px;" align="left"><b>©DJ-mall</b></div><br/><br>
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                        <input type="text" name="userName" id="LAY-user-login-username" lay-verify="required" placeholder="用户名/手机号/邮箱" onblur="getUserSalt(this.value)" class="layui-input">
                     </div>
-                </div>--%>
+                    <div class="layui-form-item">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                        <input type="password" name="userPwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+                    </div>
 
+                    <div class="layui-form-item" style="margin-bottom: 20px;">
+                        <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
+                        <a href="<%=request.getContextPath()%>/auth/user/toForgetPwd" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" type="button" onclick="login()" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+                    </div>
 
-                <div class="layui-form-item" style="margin-bottom: 20px;">
-                    <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
-                    <a href="<%=request.getContextPath()%>/auth/user/toForgetPwd" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
-                </div>
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" type="button" onclick="login()" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
-                </div>
+                    <input type="hidden" name="salt" id="salt" value="">
+                    <input type="hidden" name="phone" id="phone" value="">
+                    <input type="hidden" name="userId" id="userId" value="">
+                    <input type="hidden" name="userPwd1" id="userPwd1" value="">
 
-                <input type="hidden" name="salt" id="salt" value="">
-                <input type="hidden" name="phone" id="phone" value="">
-                <input type="hidden" name="userId" id="userId" value="">
-                <input type="hidden" name="userPwd1" id="userPwd1" value="">
+                    <div class="layui-trans layui-form-item layadmin-user-login-other">
+                        <label>社交账号登入</label>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                        <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-
-                <div class="layui-trans layui-form-item layadmin-user-login-other">
-                    <label>社交账号登入</label>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-
-                    <a href="<%=request.getContextPath()%>/auth/user/toInsert" class="layadmin-user-jump-change layadmin-link">还没有账号？免费注册</a>
+                        <a href="<%=request.getContextPath()%>/auth/user/toInsert" class="layadmin-user-jump-change layadmin-link">还没有账号？免费注册</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="layui-trans layadmin-user-login-footer">
-            <p>© 2019® <a href="http://www.layui.com/" target="_blank">点金教育Djmall</a></p>
-            <p>
-                <span><a href="http://www.layui.com/admin/#get" target="_blank">VIP授权</a></span>
-                <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线售出</a></span>
-                <span><a href="http://www.layui.com/admin/" target="_blank">前往djmall官网</a></span>
-            </p>
-        </div>
+            <div class="layui-trans layadmin-user-login-footer">
+                <p>© 2019® <a href="http://www.dianit.cn/" target="_blank">点金教育Djmall</a></p>
+                <p>
+                    <span><a href="http://www.layui.com/admin/#get" target="_blank">VIP授权</a></span>
+                    <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线售出</a></span>
+                    <span><a href="http://localhost:8085/platform/shop/toIndexShow" target="_blank">前往djmall官网</a></span>
+                </p>
+            </div>
 
-    </div>
-</form>
+        </div>
+    </form>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/layui/layui.all.js"></script>
@@ -166,4 +143,5 @@
     }
 </script>
 </body>
+
 </html>

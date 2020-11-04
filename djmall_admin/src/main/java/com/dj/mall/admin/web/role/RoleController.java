@@ -2,23 +2,17 @@ package com.dj.mall.admin.web.role;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
-import com.dj.mall.admin.vo.RoleVoReq;
-import com.dj.mall.admin.vo.RoleVoResp;
-import com.dj.mall.admin.vo.ZtreeData;
+import com.dj.mall.admin.vo.role.RoleVoResp;
 import com.dj.mall.auth.api.role.RoleService;
 import com.dj.mall.auth.dto.ZtreeDataDTO;
 import com.dj.mall.auth.dto.role.RoleDTO;
-import com.dj.mall.auth.dto.role.RoleResourceDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,7 +63,7 @@ public class RoleController {
     }
 
     /**
-     * 角色新增操作
+     * 角色删除操作
      * @return
      */
     @RequestMapping("deleteRole")

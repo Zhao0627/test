@@ -2,9 +2,8 @@ package com.dj.mall.admin.web.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
-import com.dj.mall.admin.vo.RoleVoResp;
-import com.dj.mall.admin.vo.UserVoReq;
-import com.dj.mall.admin.vo.UserVoResp;
+import com.dj.mall.admin.vo.user.UserVoReq;
+import com.dj.mall.admin.vo.user.UserVoResp;
 import com.dj.mall.auth.api.resource.ResourceService;
 import com.dj.mall.auth.api.user.UserRoleService;
 import com.dj.mall.auth.api.user.UserService;

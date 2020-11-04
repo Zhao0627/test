@@ -2,14 +2,12 @@ package com.dj.mall.admin.web.basedata;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.admin.config.ResourceConstant;
-import com.dj.mall.admin.vo.BaseDataVoReq;
-import com.dj.mall.admin.vo.BaseDataVoResp;
+import com.dj.mall.admin.vo.basedata.BaseDataVoReq;
+import com.dj.mall.admin.vo.basedata.BaseDataVoResp;
 import com.dj.mall.dict.api.basedata.BaseDataService;
 import com.dj.mall.dict.dto.basedata.BaseDataDTO;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.DozerUtil;
-import com.dj.mall.model.util.SystemConstant;
-import org.apache.el.util.Validation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;

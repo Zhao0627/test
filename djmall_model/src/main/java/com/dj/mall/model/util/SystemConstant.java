@@ -5,6 +5,65 @@ package com.dj.mall.model.util;
  *
  */
 public class SystemConstant {
+    /**
+     * 评价表的父级id
+     */
+    public static final Integer COMMENT_PARENT_ID=-1;
+
+    /**
+     * 评价表的状态---删除
+     */
+    public static final Integer COMMENT_IS_DEL_YES=1;
+
+    /**
+     * 评价表的状态---正常
+     */
+    public static final Integer COMMENT_IS_DEL_NO=0;
+
+    /**
+     * 订单的状态——待支付
+     */
+    public static final String ORDER_STATUS_PAY="待支付";
+
+    /**
+     * 订单的状态——已取消
+     */
+    public static final String ORDER_STATUS_CANCEL="已取消";
+
+    /**
+     * 购物车的状态
+     */
+    public static final String SHOP_CAR_IS_DEL_YES="YES";
+
+    /**
+     * 购物车的状态
+     */
+    public static final String SHOP_CAR_IS_DEL_NO="NO";
+
+    /**
+     * 支付方式的父级id
+     */
+    public static final String PAY_TYPE="PAY_TYPE";
+
+    /**
+     * 商品默认
+     */
+    public static final String DEFAULT="DEFAULT";
+
+    /**
+     * 商品默认
+     */
+    public static final String NO_DEFAULT="NODEFAULT";
+
+    /**
+     * 买家
+     */
+    public static final Integer BUYER_ID=10;
+
+    /**
+     * 保留小数位
+     */
+    public static final Integer DECIMAL_PLACES_2 = 2;
 
 	/**
 	 * 邮箱激活状态未激活
@@ -30,6 +89,11 @@ public class SystemConstant {
 	 * 商户id
 	 */
     public static final Integer COMMERCIAL_ID = 2 ;
+
+	/**
+	 * 管理员id
+	 */
+    public static final Integer ADMIN_ID = 3;
 
 	/**
 	 * 已删除为2
@@ -96,6 +160,14 @@ public class SystemConstant {
      */
     public static final String PRODUCT_UP = "PRODUCT_UP" ;
 
+    /**
+     * 下架商品的状态
+     */
     public static final Integer PRODUCT_DOWN_0 = 0;
+
+    /**
+     * token
+     */
+    public static final String TOKEN = "TOKEN";
 
 }

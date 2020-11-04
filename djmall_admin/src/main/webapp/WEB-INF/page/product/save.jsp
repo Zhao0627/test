@@ -24,6 +24,7 @@
                     for(var i = 0; i < data.data.length; i++ ){
                         var sku = data.data[i];
                         html += "<tr id='skuAttr'>"
+                        html += "<input type='hidden' name='attrId' value='"+sku.attrId+"'/>"
                         html += "<td><input type='hidden' name='attrName' value='"+sku.attrName+"'/>"+sku.attrName+"</td>"
                         html += "<td>"
                         for (var j = 0; j < sku.valueList.split(",").length; j++){
@@ -55,8 +56,8 @@
                     }
                     var html = "";
                     html += "<tr>";
-                    html += "<td class=''>" + $("#attrName").val()+"</td>";
-                    html += "<input type='hidden' name='attrName' value='"+$("#attrName").val()+"'/>";
+                    html += "<input type='hidden' name='attrId' value='-1'/>";
+                    html += "<td><input type='hidden' name='attrName' value='"+$("#attrName").val()+"'/>" + $("#attrName").val()+"</td>";
                     var values = $("#attrValue").val().split(",");
                     html += "<td>"
                     for(var i=0; i<values.length; i++){
@@ -75,6 +76,7 @@
             var attrValues = [];
             var attrValueIds = [];
             var attrName = [];
+            var attrId = [];
             var trs = $("#tbd").find("tr");
             for (var i = 0; i <trs.length ; i++) {
                 //获取每行的数据
@@ -83,6 +85,8 @@
                 var values = $(td[1]).find(":checked");
                 var valIds =  $(td[1]).find(":hidden");
                 var a =  $(td[0]).find("input").val();
+                var b =  $(trs[i]).find("input").val();
+                attrId.push(b)
                 attrName.push(a);
                 var value   = [];
                 var valuess = [];
@@ -97,13 +101,15 @@
                     attrValues.push(value);
                 }
             }
+
             var skuAttrNames = attrName.join(",");
+            var attrIds = attrId.join(",");
             var dkejValues = dkej(attrValues);
             var dkejValueIds = dkej(attrValueIds);
             var html="";
             for (var q = 0; q < dkejValues.length; q++) {
                 var m = q + 1;
-                html += "<tr>"
+                html += "<tr id="+'tr_'+q+" >"
                 html += "<td>"+m+"</td>"
                 html += "<td> <input type='hidden' name='SkuList["+q+"].skuAttrValueNames' value='"+dkejValues[q]+"'/>"+dkejValues[q]+"</td>"
                 html += "<input type='hidden' name='SkuList["+q+"].skuAttrValueIds' value='"+dkejValueIds[q]+"'/>"
@@ -112,7 +118,8 @@
                 html += "<td><input type='text' name='SkuList["+q+"].skuRate'/></td>"
                 html += "<td><input type='button' value='移除' onclick='delSku("+q+")'/></td>"
                 html += "<input type='hidden' name='SkuList["+q+"].skuStatus' value='PRODUCT_UP'/>"
-                html += "<td><input type='text' name='SkuList["+q+"].skuAttrNames'value='"+skuAttrNames+"' /></td>";
+                html += "<input type='hidden' name='SkuList["+q+"].skuAttrNames'value='"+skuAttrNames+"' />";
+                html += "<input type='hidden' name='SkuList["+q+"].skuAttrIds'value='"+attrIds+"' />";
                 html += "<input type='hidden' name='skuList["+q+"].isDefault' value='DEFAULT'/>";
                 html += "</tr>"
             }
@@ -151,12 +158,11 @@
             return e;
         }
         
-        function delSku() {
+        function delSku(q) {
             $("#tr_"+q).remove();
         }
         
         function add() {
-            var index = layer.load(3,{shade:0.3});
             $.ajax({
                 url : "<%=request.getContextPath()%>/product/spu/Add",
                 type : "POST",
@@ -165,22 +171,25 @@
                 processData : false,
                 contentType : false,
                 success : function(data) {
-                    if (data.code == 200) {
-                        layer.msg(data.msg, {icon : 1});
+                    layer.msg(data.msg, {icon : 1},function () {
+                        var index = layer.load(3,{shade:0.3});
                         layer.close(index);
                         return;
-                    } else {
-                        layer.msg(data.msg, {icon : 0});
-                        return;
-                    }
+                    });
                 },
                 error : function(data) {
+                    layer.msg(data.msg, {icon : 1},function () {
+                        var index = layer.load(3,{shade:0.3});
+                        layer.close(index);
+                        return;
+                    });
                 }
             });
         }
     </script>
 </head>
 <body>
+<center>
 <form id="fm">
     <label>名称</label>
     <input type="text" name="productName" /><br>
@@ -224,5 +233,6 @@
     <input type="hidden" name="status" value="PRODUCT_UP">
     <input type="button" value="新增" onclick="add()">
 </form>
+</center>
 </body>
 </html>

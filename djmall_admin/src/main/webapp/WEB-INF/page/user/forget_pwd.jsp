@@ -57,9 +57,9 @@ $().ready(function() {
 		   	userPwd: {
 		       required: "请输入密码!",
 		     }
-		   }, 
+		   },
 		});
-		}); 
+		});
 		$.validator.setDefaults({
 			submitHandler:function(){
             if ($("#userPwd").val()!==$("#userPwd1").val()){
@@ -104,7 +104,6 @@ $(function () {
             {"userPhone":$("#userPhone").val()},
             function (data) {
                 $("#dataCode").val(data.data);
-                alert(data.data);
         })
     })
 })

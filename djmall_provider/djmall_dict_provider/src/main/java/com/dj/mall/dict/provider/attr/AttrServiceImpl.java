@@ -4,8 +4,6 @@ package com.dj.mall.dict.provider.attr;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dj.mall.auth.dto.ZtreeDataDTO;
-import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.dict.api.attr.AttrService;
 import com.dj.mall.dict.bo.AttrBo;
 import com.dj.mall.dict.dto.attr.AttrDTO;

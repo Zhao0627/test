@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dj.mall.order.mapper.detail.OrderDetailMapper">
+
+    <select id="findMyOrderAll" resultType="com.dj.mall.order.bo.detail.OrderDetailBo">
+        SELECT
+            <if test="orderStatus=='待支付'">
+                GROUP_CONCAT(DISTINCT spu.product_name SEPARATOR '，') AS productNameList,
+            </if>
+            detail.child_order_no,
+            spu.product_name,
+            detail.buy_count,
+            detail.pay_money,
+            base.`name`,
+            detail.freight_price,
+            detail.create_time,
+            detail.order_status,
+            detail.sku_info,
+            detail.sku_price,
+            detail.sku_rate,
+            info.pay_time,
+            detail.parent_order_no,
+            info.total_buy_count,
+            info.total_pay_money,
+            info.total_freight,
+            detail.id AS detailId,
+            info.receiver_province,
+            info.receiver_city,
+            info.receiver_county,
+            info.receiver_detail,
+            info.receiver_name,
+            info.receiver_phone,
+            detail.sku_price*detail.buy_count+detail.freight_price AS grossMoney,
+            users.user_name,
+            ord.total_freight AS orderTotalFreight,
+            ord.total_money AS orderTotalMoney,
+            ord.total_pay_money AS orderTotalPayMoney,
+            ord.total_buy_count AS orderTotalBuyCount,
+            detail.cancel_time,
+            detail.buyer_message,
+            detail.buyer_id,
+            detail.sku_id,
+            detail.product_id,
+            com.id AS commentId,
+            com.is_del AS commentIsDel
+        FROM
+            djmall_order_detail detail
+        LEFT JOIN djmall_order_info info ON detail.child_order_no = info.order_no
+        LEFT JOIN djmall_product_spu spu ON detail.product_id=spu.id
+        LEFT JOIN djmall_auth_base_data base ON base.`code`=info.pay_type
+        LEFT JOIN djmall_auth_user users ON detail.business_id = users.id
+        LEFT JOIN djmall_order ord ON ord.order_no=detail.parent_order_no
+        LEFT JOIN djmall_comment com ON com.product_id = spu.id
+        WHERE 1 = 1
+            <if test="null!=orderStatus">
+                <if test="orderStatus=='待收货'">
+                    AND detail.order_status != '待支付' AND detail.order_status != '已取消' AND detail.order_status != '已完成'
+                </if>
+                <if test="orderStatus!='待收货'">
+                    AND detail.order_status = #{orderStatus}
+                </if>
+            </if>
+            <if test="null!=userId">
+                AND detail.buyer_id = #{userId}
+            </if>
+            <if test="null!=businessId">
+                AND detail.business_id = #{businessId}
+            </if>
+            <if test="null!=parentOrderNo">
+                AND detail.parent_order_no=#{parentOrderNo}
+            </if>
+            <if test="orderStatus=='待支付' and parentOrderNo == null ">
+                GROUP BY detail.parent_order_no
+            </if>
+            <if test="null!=parentOrderNo ">
+                GROUP BY detail.sku_id
+            </if>
+    </select>
+
+
+</mapper>

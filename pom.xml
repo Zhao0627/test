@@ -12,6 +12,8 @@
         <module>djmall_admin</module>
         <module>djmall_model</module>
         <module>djmall_api</module>
+        <module>djmall_platform</module>
+        <module>djmall_task</module>
     </modules>
 
     <!-- 控制SpringBoot的版本-->
@@ -101,15 +103,4 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <!--构建信息-->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

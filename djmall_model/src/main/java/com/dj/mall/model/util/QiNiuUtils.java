@@ -30,7 +30,7 @@ public class QiNiuUtils {
     public static final String ACCESS_KEY = "dVB-xjed5zrD6RgwnnT1F-n4zBknla2CKZTZTPo4";
     public static final String SECRET_KEY = "dSjUMTrIc6eBZ913i4s-0-hBPLCih0tyyyIB090L";
     // 要上传的空间名
-    public static final String BUCKET_NAME = "1905-djmall";
+    public static final String BUCKET_NAME = "1905-djmall-zw";
 
 	public static String upload(MultipartFile file) {
 		// 构造一个带指定 Region 对象的配置类

@@ -1,7 +1,7 @@
 package com.dj.mall.admin.web.logistics;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dj.mall.admin.vo.LogisticsVoResp;
+import com.dj.mall.admin.vo.logistics.LogisticsVoResp;
 import com.dj.mall.dict.api.logistics.LogisticsService;
 import com.dj.mall.dict.dto.logistics.LogisticsDTO;
 import com.dj.mall.model.base.ResultModel;

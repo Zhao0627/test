@@ -23,7 +23,7 @@ public class UserRole implements Serializable {
     private Integer roleId;
 
     /**
-     * 删除状态
+     * 删除状态是否删除   1 删除 2 未删
      */
     private Integer isDel;
 

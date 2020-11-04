@@ -4,6 +4,7 @@ import com.dj.mall.product.dto.sku.ProductSkuDTO;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -66,4 +67,62 @@ public class ProductSpuDTO implements Serializable {
      * sku的list集合
      */
     private List<ProductSkuDTO> SkuList;
+
+    /**
+     * types
+     */
+    private List<String> types;
+
+    /**
+     * 分页初始
+     */
+    private Integer page;
+
+    /**
+     * 分页数量
+     */
+    private Integer pageSize;
+
+    /**
+     * sku表数据
+     */
+    private ProductSkuDTO productSkuDTO;
+
+    /**
+     * sku价格
+     */
+    private BigDecimal skuPrice;
+    /**
+     * sku库存
+     */
+    private Integer skuCount;
+
+    /**
+     * SKU折扣,0表示无折扣
+     */
+    private Integer skuRate;
+
+    /**
+     * sku表的id
+     */
+    private Integer productSkuId;
+
+    /**
+     * sku表的属性值
+     */
+    private String skuAttrValueNames;
+
+    private Double startPrice;
+
+    private Double endPrice;
+    /**
+     * 现价
+     */
+    private BigDecimal newPrice;
+
+    /**
+     * 原价
+     */
+    private BigDecimal oldPrice;
+
 }

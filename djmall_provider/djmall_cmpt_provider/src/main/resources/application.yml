@@ -5,7 +5,6 @@ spring:
     database: 0
     port: 6379
 
-
 # Dubbo
 dubbo:
   application:

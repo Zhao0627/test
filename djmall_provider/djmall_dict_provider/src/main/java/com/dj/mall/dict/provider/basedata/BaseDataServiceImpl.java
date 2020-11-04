@@ -5,7 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import com.dj.mall.dict.api.basedata.BaseDataService;
 import com.dj.mall.dict.dto.basedata.BaseDataDTO;
 import com.dj.mall.dict.entity.basedata.BaseData;

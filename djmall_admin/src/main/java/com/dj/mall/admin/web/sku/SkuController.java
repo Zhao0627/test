@@ -1,7 +1,7 @@
 package com.dj.mall.admin.web.sku;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dj.mall.admin.vo.SkuVoResp;
+import com.dj.mall.admin.vo.sku.SkuVoResp;
 import com.dj.mall.dict.api.sku.SkuService;
 import com.dj.mall.dict.dto.sku.SkuDTO;
 import com.dj.mall.model.base.BusinessException;

@@ -16,12 +16,12 @@ spring:
       filter:
         enabled: true # Rest 隐藏表单过滤
 # Dubbo
-dubbo:
-  application:
-    name: admin # 应用名
-    qos-enable: false # 关闭在线调试
-  registry:
-    address: zookeeper://localhost:2181 # 注册中心地址
-  consumer:
-    check: false
-    timeout: 60000
+#dubbo:
+#  application:
+#    name: admin # 应用名
+#    qos-enable: false # 关闭在线调试
+#  registry:
+#    address: zookeeper://localhost:2181 # 注册中心地址
+#  consumer:
+#    check: false
+#    timeout: 60000

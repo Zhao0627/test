@@ -1,10 +1,11 @@
 package com.dj.mall.cmpt.pro;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -368,6 +369,17 @@ public class RedisServiceImpl implements RedisService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * Key-获取Key对应类型
+     *
+     * @param key
+     * @return NONE(" none ")/STRING("string")/LIST("list")/SET("set")/ZSET("zset")/HASH("hash");
+     */
+    @Override
+    public DataType type(String key) {
+        return null;
     }
 
 /*    @Override

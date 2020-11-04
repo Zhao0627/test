@@ -18,8 +18,81 @@
         <if test="null != productName and '' != productName">
             AND spu.product_name like "%"#{productName}"%"
         </if>
-        <if test="null != type and ''!= type ">
-            AND spu.type= #{type}
+        <if test="null != userId ">
+            AND spu.user_id = ${userId}
         </if>
+        <if test="null != type and ''!= type ">
+            AND spu.type in
+            <foreach collection="types" separator="," open="(" close=")" item="types">
+                #{types}
+            </foreach>
+        </if>
+        limit #{page},#{pageSize}
+    </select>
+    <select id="findShopAll" resultType="com.dj.mall.product.bo.spu.ProductSpuBo">
+        SELECT
+        spu.*, spu.id AS productId,
+        bd. NAME AS NAME,
+        log.freight AS freight,
+        sku.*,
+        sku.id AS productSkuId
+        FROM
+        djmall_product_spu spu
+        LEFT JOIN djmall_auth_base_data bd ON bd.`code` = spu.type
+        LEFT JOIN djmall_auth_user us ON us.id = spu.user_id
+        LEFT JOIN djmall_dict_product_logistics log ON spu.freight_id = log.id
+        LEFT JOIN djmall_product_sku sku ON sku.product_id = spu.id
+        WHERE
+        1 = 1 and sku.is_default = "DEFAULT" AND spu.`status` = #{status}
+        <if test="null != productName and '' != productName">
+            AND spu.product_name like "%"#{productName}"%"
+        </if>
+        <if test="null != type and ''!= type ">
+            AND spu.type in
+            <foreach collection="types" separator="," open="(" close=")" item="types">
+                #{types}
+            </foreach>
+        </if>
+        GROUP BY spu.id
+        limit #{page},#{pageSize}
+    </select>
+    <select id="findShopByProductSkuId" resultType="com.dj.mall.product.bo.spu.ProductSpuBo">
+        SELECT
+        spu.*, spu.id AS productId,
+        bd. NAME AS NAME,
+        log.freight AS freight,
+        sku.*,
+        sku.id AS productSkuId
+        FROM
+        djmall_product_spu spu
+        LEFT JOIN djmall_auth_base_data bd ON bd.`code` = spu.type
+        LEFT JOIN djmall_auth_user us ON us.id = spu.user_id
+        LEFT JOIN djmall_dict_product_logistics log ON spu.freight_id = log.id
+        LEFT JOIN djmall_product_sku sku ON sku.product_id = spu.id
+        WHERE
+        1 = 1 and sku.is_default = "DEFAULT" AND spu.`status` = #{status} AND sku.id = #{productSkuId}
+    </select>
+    <select id="findShopByProductSkuIds" resultType="com.dj.mall.product.bo.spu.ProductSpuBo">
+        SELECT
+        spu.*, spu.id AS productId,
+        bd. NAME AS NAME,
+        log.freight AS freight,
+        sku.*,
+        sku.id AS productSkuId
+        FROM
+        djmall_product_spu spu
+        LEFT JOIN djmall_auth_base_data bd ON bd.`code` = spu.type
+        LEFT JOIN djmall_auth_user us ON us.id = spu.user_id
+        LEFT JOIN djmall_dict_product_logistics log ON spu.freight_id = log.id
+        LEFT JOIN djmall_product_sku sku ON sku.product_id = spu.id
+        WHERE
+        1 = 1
+         <if test="null!=IsDefault and ''!=IsDefault">
+             sku.is_default = #{IsDefault}
+         </if>
+         AND spu.`status` = "PRODUCT_UP" AND sku.id in
+        <foreach collection="skuIds" item="skuId" open="(" close=")" separator=",">
+            #{skuId}
+        </foreach>
     </select>
 </mapper>

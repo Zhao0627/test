@@ -1,0 +1,5 @@
+# spring.data.solr.host
+spring:
+  data:
+    solr:
+      host: http://localhost:8079/solr/SolrCore_djmall # solr访问地址/core地址

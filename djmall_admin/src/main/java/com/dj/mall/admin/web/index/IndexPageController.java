@@ -4,15 +4,13 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dj.mall.auth.api.user.UserService;
 import com.dj.mall.auth.dto.resource.ResourceDTO;
 import com.dj.mall.auth.dto.user.UserDTO;
-import com.dj.mall.cmpt.api.RedisService;
+import com.dj.mall.cmpt.api.RedisService.RedisService;
 import com.dj.mall.model.base.ResultModel;
 import com.dj.mall.model.util.SystemConstant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;

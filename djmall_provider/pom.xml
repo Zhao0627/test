@@ -17,6 +17,7 @@
         <module>djmall_dict_provider</module>
         <module>djmall_cmpt_provider</module>
         <module>djmall_product_provider</module>
+        <module>djmall_order_provider</module>
     </modules>
 
     <!--添加依赖-->
@@ -45,6 +46,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.1</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.3.1.tmp</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>

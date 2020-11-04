@@ -5,12 +5,18 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/djmall_zw?characterEncoding=UTF-8&useOldAliasMetadataBehavior=true&useSSL=false
-
+  rabbitmq:
+    host: 192.168.85.131
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
+    connection-timeout: 60000
   mail:
     host: smtp.qq.com #SMTP服务器地址
     port: 25
     username: 1392495684@qq.com #登陆账号
-    password: rcfwuyxfwulkgiad #登陆密码（或授权码）
+    password: acbgbeebkvvyhibb #登陆密码（或授权码）
 
 # Mybatis-plus
 mybatis-plus:
@@ -41,3 +47,5 @@ logging:
   level:
     com.dj.mall.auth.mapper:
       debug
+server:
+  port: 8087
