@@ -14,48 +14,6 @@
 
     <!--添加依赖-->
     <dependencies>
-        <!-- Shiro WEB 项目依赖 -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-web-starter</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_auth_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_order_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_dict_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_cmpt_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_product_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dj.mall</groupId>
-            <artifactId>djmall_model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
         <!-- Spring Boot WEB 支持包-->
         <dependency>
